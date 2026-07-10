@@ -460,8 +460,8 @@
 
 
   import React from 'react';
- import Hero from '../components/Hero'; // እዚ እቲ ፋይል ኮምፖነንት እዩ
-import heroVideo from '../assets/videos/robi-v1.mp4'; // እዚ ቪዲዮ እዩ
+import Hero from '../components/Hero'; // እዚ ኮምፖነንት እዩ
+import heroVideo from '../assets/videos/robi-v1.mp4';
  import wedding1 from '../assets/images/ሮቢ-png1.jpeg' // ናይ ስእልኻ Path ጽሓፍ
 import wedding2 from '../assets/images/ሮቢ-png2.jpeg'
 
