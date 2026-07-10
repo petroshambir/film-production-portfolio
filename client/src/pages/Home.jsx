@@ -461,15 +461,18 @@
 
   import React from 'react';
  import Hero from '../components/Hero';
+ import wedding1 from '../assets/images/wedding1.jpg'; // ናይ ስእልኻ Path ጽሓፍ
+import wedding2 from '../assets/images/ሮቢ-png2.jpeg';
 
  
 const workSections = [
   {
     title: "Weddings",
     desc: "We capture the raw emotion, the grand gestures, and the intimate whispers of your most special day, crafting a cinematic story that lasts a lifetime.",
-    images: ["src/assets/images/ሮቢ-png2.jpeg", "src/assets/images/ሮቢ-png1.jpeg"],
+    images: [wedding2],
     reverse: false 
   },
+   
   {
     title: "Bridal Shoots",
     desc: "Elegance defined. Our artistic direction highlights the grace of the bride in stunning settings, ensuring every portrait is a masterpiece of light and fashion.",
