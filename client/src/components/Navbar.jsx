@@ -31,7 +31,7 @@ function Navbar() {
   return (
     <nav className="absolute top-0 left-0 w-full z-50 px-12 py-8 flex justify-between items-center text-white">
       {/* ሎጎ */}
-      <img src="logo" alt="logo" className=" w-32  h-28" />
+      <img src={logo} alt="logo" className=" w-32  h-28" />
       
       {/* ናቪጌሽን ሊንክስ */}
       <div className="flex gap-8 uppercase tracking-widest text-xs font-semibold">
