@@ -492,7 +492,7 @@ function Home() {
   return (
     <div style={{ backgroundColor: '#0a0a0a' }} className="text-white min-h-screen">
       <Hero 
-        videoSrc="src/assets/videos/robi-v1.mp4" 
+        videoSrc="Hero" 
         buttonText="Explore Our Work"
       />
 

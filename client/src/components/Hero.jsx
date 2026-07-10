@@ -3,6 +3,7 @@
 
 import React from 'react';
 import Navbar from './Navbar';
+import heroVideo from '../assets/videos/robi-v1.mp4'
 
 function Hero({ videoSrc }) {
   return (
