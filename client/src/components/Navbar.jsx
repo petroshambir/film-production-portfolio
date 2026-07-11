@@ -75,11 +75,20 @@ function Navbar() {
       </button>
 
       {/* ናቪጌሽን ሊንክስ */}
+      // <div className={`
+      //   absolute md:static top-full left-0 w-full bg-black/95 md:bg-transparent p-6 md:p-0 
+      //   flex flex-col md:flex-row gap-6 md:gap-8 uppercase tracking-widest text-xs font-semibold
+      //   ${isOpen ? 'flex' : 'hidden md:flex'}
+        
+      // `}>
+
       <div className={`
-        absolute md:static top-full left-0 w-full bg-black/95 md:bg-transparent p-6 md:p-0 
-        flex flex-col md:flex-row gap-6 md:gap-8 uppercase tracking-widest text-xs font-semibold
-        ${isOpen ? 'flex' : 'hidden md:flex'}
-      `}>
+    absolute md:static top-full left-0 w-full bg-black/95 md:bg-transparent p-6 md:p-0 
+    flex flex-col md:flex-row gap-6 md:gap-8 uppercase tracking-widest text-xs font-semibold
+    md:ml-auto md:w-auto md:items-center  /* እዚ ክፋል እዩ ንማን ዝመልሶ */
+    ${isOpen ? 'flex' : 'hidden md:flex'}
+  `}>
+    
         <a href="/" className="hover:text-zinc-400">Home</a>
         <a href="#about" className="hover:text-zinc-400">About</a>
         <a href="#contact" className="hover:text-zinc-400">Contact</a>
