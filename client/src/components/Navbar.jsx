@@ -76,7 +76,6 @@ function Navbar() {
 
       {/* ናቪጌሽን ሊንክስ */}
     
-      // ... ካልእ ኮድካ ከም ዘለዎ
       {/* ናቪጌሽን ሊንክስ */}
       <div className={`
         absolute md:static top-full left-0 w-full bg-black/95 md:bg-transparent p-6 md:p-0 
@@ -84,8 +83,6 @@ function Navbar() {
         md:ml-auto md:w-auto md:items-center  /* እዚ ክፋል እዩ ሊንክታት ናብ የማን ዝድርፎ */
         ${isOpen ? 'flex' : 'hidden md:flex'}
       `}>
-// ... ዝተረፈ ኮድካ
-
 
         <a href="/" className="hover:text-zinc-400">Home</a>
         <a href="#about" className="hover:text-zinc-400">About</a>
