@@ -235,7 +235,7 @@ function Home() {
             className={`flex flex-col ${section.reverse ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-12 md:gap-24 mb-16 md:mb-32 py-24 px-6 md:px-12`}
             style={{
               // እቲ ለውጢ ኣብዚ እዩ: 0.9 ዝነበረ ናብ 0.7 ኣውሪደዮ ንስእሊ ክርአ
-              backgroundImage: `linear-gradient(rgba(10, 10, 10, 0.7), rgba(10, 10, 10, 0.7)), url(${section.bgImage})`,
+              backgroundImage: ` url(${section.bgImage})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundAttachment: 'fixed'
