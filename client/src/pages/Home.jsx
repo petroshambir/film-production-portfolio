@@ -192,7 +192,7 @@ import wedding2 from '../assets/images/ሮቢ-png2.jpeg';
 import Footer from "../components/Footer";
 
 // ናይ ባክግራውንድ ስእልታትካ ኢምፖርት ግበር
-import weddingBg from '../assets/images/background-img4.jpeg'; 
+import weddingBg from '../assets/images/background-img7.jpeg'; 
 import bridalBg from '../assets/images/background-img5.jpeg';
 import babyBg from '../assets/images/background-img6.jpeg';
 
