@@ -192,9 +192,9 @@ import wedding2 from '../assets/images/ሮቢ-png2.jpeg';
 import Footer from "../components/Footer";
 
 // ናይ ባክግራውንድ ስእልታትካ ኢምፖርት ግበር
-import weddingBg from '../assets/images/background-img1.jpeg'; 
-import bridalBg from '../assets/images/background-img2.jpeg';
-import babyBg from '../assets/images/background-img3.jpeg';
+import weddingBg from '../assets/images/background-img4.jpeg'; 
+import bridalBg from '../assets/images/background-img5.jpeg';
+import babyBg from '../assets/images/background-img6.jpeg';
 
 const workSections = [
   {
@@ -222,7 +222,7 @@ const workSections = [
 
 function Home() {
   return (
-    <div style={{ backgroundColor: '#0a0a0a' }} className=" text-white min-h-screen">
+    <div style={{ backgroundColor: '#0a0a0a' }} className="  min-h-screen">
       <Hero 
         videoSrc={heroVideo}
         buttonText="Explore Our Work"
