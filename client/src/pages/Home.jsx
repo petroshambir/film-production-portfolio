@@ -97,9 +97,9 @@ import wedding2 from '../assets/images/ሮቢ-png2.jpeg';
 import Footer from "../components/Footer";
 
 // ናይ ባክግራውንድ ስእልታትካ ኢምፖርት ግበር (ነቶም ቅኑዕ ፋይልካ ኣቐምጥ)
-import weddingBg from '../assets/images/backround-img1.jpg'; 
-import bridalBg from '../assets/images/backround-img2.jpg';
-import babyBg from '../assets/images/backround-img3.jpg';
+import weddingBg from '../assets/images/background-img1.jpeg'; 
+import bridalBg from '../assets/images/background-img2.jpeg';
+import babyBg from '../assets/images/background-img3.jpeg';
 
 const workSections = [
   {
