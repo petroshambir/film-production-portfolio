@@ -127,7 +127,7 @@ const workSections = [
 
 function Home() {
   return (
-    <div style={{  }} className=" min-h-screen">
+    <div style={{ backgroundColor: '#0a0a0a' }} className=" text-white min-h-screen">
       <Hero 
         videoSrc={heroVideo}
         buttonText="Explore Our Work"
