@@ -202,27 +202,27 @@ const workSections = [
     desc: "We capture the raw emotion, the grand gestures, and the intimate whispers of your most special day, crafting a cinematic story that lasts a lifetime.",
     images: [wedding2, wedding1],
     reverse: false,
-    bgImage: weddingBg
+    bgImage: ""
   },
   {
     title: "Bridal Shoots",
     desc: "Elegance defined. Our artistic direction highlights the grace of the bride in stunning settings, ensuring every portrait is a masterpiece of light and fashion.",
     images: [wedding1, wedding2],
     reverse: true,
-    bgImage: bridalBg
+    bgImage: ""
   },
   {
     title: "Baby Shower & Baptism",
     desc: "Celebrating new beginnings. We document the joy, the anticipation, and the sacred moments of your family's newest arrivals with warmth and tenderness.",
     images: [wedding2, wedding1],
     reverse: false,
-    bgImage: babyBg
+    bgImage: ""
   }
 ];
 
 function Home() {
   return (
-    <div style={{ backgroundColor: '#0a0a0a' }} className="  min-h-screen">
+    <div style={{ backgroundColor: 'white' }} className="  min-h-screen">
       <Hero 
         videoSrc={heroVideo}
         buttonText="Explore Our Work"
