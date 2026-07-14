@@ -187,8 +187,8 @@
 import React from 'react';
 import Hero from '../components/Hero';
 import heroVideo from '../assets/videos/robi-v1.mp4';
-import wedding1 from '../assets/images/ሮቢ-png1.jpeg';
-import wedding2 from '../assets/images/ሮቢ-png2.jpeg';
+import wedding1 from '../assets/images/ሮቢ-png1-removebg-preview.jpg';
+import wedding2 from '../assets/images/ሮቢ-png2-removebg-preview.jpg';
 import Footer from "../components/Footer";
 
 // ናይ ባክግራውንድ ስእልታትካ ኢምፖርት ግበር
