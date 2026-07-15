@@ -589,7 +589,6 @@
 
 // export default Home;
 
-
 import React, { useState } from 'react';
 import Hero from '../components/Hero';
 import heroVideo from '../assets/videos/robi-v1.mp4';
@@ -644,19 +643,18 @@ function Home() {
         {workSections.map((section, index) => (
           <div key={index} className="mb-32">
             
-            {/* ሽምን ዕለትን ኣብ ላዕሊ ናይ ኩሉ */}
-            <div className="mb-10">
-                <p className="text-2xl font-serif text-white italic">
-                  {section.names}
-                </p>
-                <p className="text-[12px] uppercase tracking-[0.2em] text-zinc-500">
-                  {section.date}
-                </p>
+            {/* ሽምን ዕለትን ኣብ ላዕሊ ሓንሳብ - ብስታይል ኢታሊክ */}
+            <div className="mb-8 border-l-2 border-zinc-700 pl-6">
+              <h3 className="text-4xl font-serif italic text-white tracking-wide">
+                {section.names}
+              </h3>
+              <p className="text-[12px] uppercase tracking-[0.3em] text-zinc-500 mt-2 font-light">
+                {section.date}
+              </p>
             </div>
 
             <div className={`flex flex-col ${section.reverse ? 'md:flex-row-reverse' : 'md:flex-row'} items-center text-center md:text-left gap-12 md:gap-24`}>
               
-              {/* ጽሑፍ ጥራሕ */}
               <div className="flex-1 flex flex-col items-center md:items-start justify-center space-y-4">
                 <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-500 font-bold">
                   0{index + 1} — Selection
@@ -669,27 +667,16 @@ function Home() {
                 </p>
               </div>
 
-              {/* ስእልታት */}
               <div className="flex-1 flex flex-col items-center md:items-start w-full">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
                   {section.images.slice(0, 2).map((img, i) => (
-                    <div 
-                      key={i} 
-                      className={`group aspect-[2/3] overflow-hidden bg-zinc-900 ${i === 1 ? 'md:mt-20' : ''}`}
-                    >
-                      <img 
-                        src={img} 
-                        alt={section.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                      />
+                    <div key={i} className={`group aspect-[2/3] overflow-hidden bg-zinc-900 ${i === 1 ? 'md:mt-20' : ''}`}>
+                      <img src={img} alt={section.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     </div>
                   ))}
                 </div>
                 <div className="mt-8">
-                  <button 
-                    onClick={() => openGallery(section.images)}
-                    className="text-[12px] font-bold uppercase tracking-[0.4em] border-2 border-white/20 px-8 py-3 hover:border-white hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105"
-                  >
+                  <button onClick={() => openGallery(section.images)} className="text-[12px] font-bold uppercase tracking-[0.4em] border-2 border-white/20 px-8 py-3 hover:border-white hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105">
                     View Gallery
                   </button>
                 </div>
@@ -699,12 +686,7 @@ function Home() {
         ))}
       </section>
 
-      <Lightbox 
-        open={open} 
-        close={() => setOpen(false)} 
-        slides={currentImages} 
-      />
-
+      <Lightbox open={open} close={() => setOpen(false)} slides={currentImages} />
       <Footer />
     </div>
   );
