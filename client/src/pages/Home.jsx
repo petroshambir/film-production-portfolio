@@ -640,9 +640,9 @@ function Home() {
           <div key={index} className="mb-32">
             
             {/* ሽምን ዕለትን ኣብ ላዕሊ ሓንሳብ - ብስታይል ኢታሊክ */}
-            <div className="mb-8 border-l-2 border-zinc-700 pl-6">
+            <div className="mb-8 border-l-2 border-zinc-700 pl-6 items-center">
               <h3 className="text-4xl font-serif italic text-amber-300 tracking-wide text-center">
-                {section.names}
+                {section.names}m
               </h3>
               <p className="text-[12px] uppercase tracking-[0.3em] text-zinc-500 mt-2 font-light text-center">
                 {section.date}
