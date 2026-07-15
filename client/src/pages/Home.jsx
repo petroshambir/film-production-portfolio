@@ -333,7 +333,8 @@
 //   );
 // }
 
-// export default Home;import React, { useState } from 'react';
+// export default Home;
+ import React, { useState } from 'react';
 import Hero from '../components/Hero';
 import heroVideo from '../assets/videos/robi-v1.mp4';
 import wedding1 from '../assets/images/ሮቢ-png1-removebg-preview.png';
