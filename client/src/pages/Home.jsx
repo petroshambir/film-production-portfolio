@@ -644,7 +644,7 @@ function Home() {
               <h3 className="text-4xl font-serif italic text-amber-300 tracking-wide text-center">
                 {section.names}
               </h3>
-              <p className="text-[12px] uppercase tracking-[0.3em] text-zinc-500 mt-2 font-light">
+              <p className="text-[12px] uppercase tracking-[0.3em] text-zinc-500 mt-2 font-light text-center">
                 {section.date}
               </p>
             </div>
