@@ -610,16 +610,12 @@ const workSections = [
   },
   {
     title: "Bridal Shoots",
-    names: "Nahom & Selam",
-    date: "August 20, 2026 — Photography Studio",
     desc: "Elegance defined. Our artistic direction highlights the grace of the bride in stunning settings, ensuring every portrait is a masterpiece of light and fashion.",
     images: [wedding2, wedding1],
     reverse: true
   },
   {
     title: "Baby Shower & Baptism",
-    names: "Elias Family",
-    date: "September 05, 2026 — Family Event",
     desc: "Celebrating new beginnings. We document the joy, the anticipation, and the sacred moments of your family's newest arrivals with warmth and tenderness.",
     images: [wedding1, wedding2],
     reverse: false
@@ -645,7 +641,7 @@ function Home() {
             
             {/* ሽምን ዕለትን ኣብ ላዕሊ ሓንሳብ - ብስታይል ኢታሊክ */}
             <div className="mb-8 border-l-2 border-zinc-700 pl-6">
-              <h3 className="text-4xl font-serif italic text-white tracking-wide">
+              <h3 className="text-4xl font-serif italic text-amber-300 tracking-wide text-center">
                 {section.names}
               </h3>
               <p className="text-[12px] uppercase tracking-[0.3em] text-zinc-500 mt-2 font-light">
