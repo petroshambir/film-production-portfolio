@@ -10,9 +10,9 @@ import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
 const workSections = [
-  { title: "Weddings", desc: "...", images: [wedding1, wedding2, wedding1, wedding2], reverse: false },
-  { title: "Bridal Shoots", desc: "...", images: [wedding2, wedding1, wedding2], reverse: true },
-  { title: "Baby Shower & Baptism", desc: "...", images: [wedding1, wedding2, wedding1, wedding2, wedding1], reverse: false }
+  { title: "Weddings", desc: "...", images: [wedding1, wedding2, ], reverse: false },
+  { title: "Bridal Shoots", desc: "...", images: [wedding2, wedding1, ], reverse: true },
+  { title: "Baby Shower & Baptism", desc: "...", images: [wedding1, wedding2], reverse: false }
 ];
 
 function Home() {
