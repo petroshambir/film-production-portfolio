@@ -333,8 +333,7 @@
 //   );
 // }
 
-// export default Home;
-import React, { useState } from 'react';
+// export default Home;import React, { useState } from 'react';
 import Hero from '../components/Hero';
 import heroVideo from '../assets/videos/robi-v1.mp4';
 import wedding1 from '../assets/images/ሮቢ-png1-removebg-preview.png';
@@ -394,24 +393,27 @@ function Home() {
             
             {/* ጽሑፍ */}
             <div className="flex-1 flex flex-col items-center md:items-start justify-center space-y-4">
-              <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-500 font-bold">
-                0{index + 1} — Selection
-              </span>
               
-              {/* እቲ ሽምን ዕለትን ናብ ላዕሊ ተቐይሩ ኣሎ */}
-              <div className="space-y-1">
+              {/* እቲ ሽምን ዕለትን መጀመርያ ኣብ ላዕሊ */}
+              <div className="space-y-1 w-full text-center md:text-left">
                 <p className="text-[16px] font-medium text-white/90 tracking-wide">
                   {section.names}
                 </p>
-                <p className="text-[11px] uppercase tracking-[0.3em] text-zinc-500 italic pb-2">
+                <p className="text-[11px] uppercase tracking-[0.3em] text-zinc-500 italic">
                   {section.date}
                 </p>
-                <h2 className="text-5xl md:text-7xl font-light tracking-tighter leading-none">
-                  {section.title}
-                </h2>
               </div>
 
-              <p className="text-lg leading-relaxed text-zinc-400 max-w-md pt-4">
+              {/* ድሕሪኡ እቲ Selection */}
+              <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-500 font-bold pt-4">
+                0{index + 1} — Selection
+              </span>
+              
+              <h2 className="text-5xl md:text-7xl font-light tracking-tighter leading-none">
+                {section.title}
+              </h2>
+
+              <p className="text-lg leading-relaxed text-zinc-400 max-w-md pt-2">
                 {section.desc}
               </p>
             </div>
