@@ -10,16 +10,30 @@ import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
 const workSections = [
-  { title: "Weddings", desc: "...", images: [wedding1, wedding2, ], reverse: false },
-  { title: "Bridal Shoots", desc: "...", images: [wedding2, wedding1, ], reverse: true },
-  { title: "Baby Shower & Baptism", desc: "...", images: [wedding1, wedding2], reverse: false }
+  {
+    title: "Weddings",
+    desc: "We capture the raw emotion, the grand gestures, and the intimate whispers of your most special day, crafting a cinematic story that lasts a lifetime.",
+    images: [wedding1, wedding2],
+    reverse: false
+  },
+  {
+    title: "Bridal Shoots",
+    desc: "Elegance defined. Our artistic direction highlights the grace of the bride in stunning settings, ensuring every portrait is a masterpiece of light and fashion.",
+    images: [wedding2, wedding1],
+    reverse: true
+  },
+  {
+    title: "Baby Shower & Baptism",
+    desc: "Celebrating new beginnings. We document the joy, the anticipation, and the sacred moments of your family's newest arrivals with warmth and tenderness.",
+    images: [wedding1, wedding2],
+    reverse: false
+  }
 ];
 
 function Home() {
   const [open, setOpen] = useState(false);
   const [currentImages, setCurrentImages] = useState([]);
 
-  // View Gallery ክሊክ ምስ ተገብረ ዝሰርሕ
   const openGallery = (images) => {
     setCurrentImages(images.map(img => ({ src: img })));
     setOpen(true);
@@ -38,7 +52,6 @@ function Home() {
               <h2 className="text-5xl md:text-6xl font-light tracking-tighter leading-none">{section.title}</h2>
               <p className="text-lg leading-relaxed text-zinc-600 max-w-md">{section.desc}</p>
               
-              {/* ክሊክ ምስ ዝግበር ናብ ጋለሪ ይወስድ */}
               <button 
                 onClick={() => openGallery(section.images)}
                 className="w-fit text-[11px] uppercase tracking-[0.4em] border-b border-white/20 pb-1 hover:border-white transition-all"
@@ -48,7 +61,7 @@ function Home() {
             </div>
 
             <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-4 w-full">
-              {section.images.slice(0, 3).map((img, i) => ( // ንዕቤት ክልተ ስእሊ ጥራይ የርኢ
+              {section.images.slice(0, 3).map((img, i) => (
                 <div key={i} className="aspect-[3/4] overflow-hidden bg-zinc-900">
                   <img src={img} className="w-full h-full object-cover" />
                 </div>
@@ -58,7 +71,6 @@ function Home() {
         ))}
       </section>
 
-      {/* Lightbox Component */}
       <Lightbox
         open={open}
         close={() => setOpen(false)}
