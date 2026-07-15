@@ -43,38 +43,60 @@ function Home() {
     <div style={{ backgroundColor: '#0a0a0a' }} className="min-h-screen text-white">
       <Hero videoSrc={heroVideo} buttonText="Explore Our Work" />
 
-      <section className="px-6 py-12 md:px-24">
+      <section className="px-6 py-20 md:px-24">
         {workSections.map((section, index) => (
-          <div key={index} className={`flex flex-col ${section.reverse ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-12 mb-24`}>
+          <div 
+            key={index} 
+            className={`flex flex-col ${section.reverse ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-12 md:gap-24 mb-32`}
+          >
             
+            {/* ጽሑፍ */}
             <div className="flex-1 flex flex-col justify-center space-y-6">
-              <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-400 font-bold">0{index + 1} — Selection</span>
-              <h2 className="text-5xl md:text-6xl font-light tracking-tighter leading-none">{section.title}</h2>
-              <p className="text-lg leading-relaxed text-zinc-600 max-w-md">{section.desc}</p>
-              
-              <button 
-                onClick={() => openGallery(section.images)}
-                className="w-fit text-[11px] uppercase tracking-[0.4em] border-b border-white/20 pb-1 hover:border-white transition-all"
-              >
-                View Gallery
-              </button>
+              <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-500 font-bold">
+                0{index + 1} — Selection
+              </span>
+              <h2 className="text-5xl md:text-7xl font-light tracking-tighter leading-none">
+                {section.title}
+              </h2>
+              <p className="text-lg leading-relaxed text-zinc-400 max-w-md">
+                {section.desc}
+              </p>
             </div>
 
-            <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-4 w-full">
-              {section.images.slice(0, 3).map((img, i) => (
-                <div key={i} className="aspect-[3/4] overflow-hidden bg-zinc-900">
-                  <img src={img} className="w-full h-full object-cover" />
+            {/* ስእልታት ግሪድ */}
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+              {section.images.slice(0, 2).map((img, i) => (
+                <div 
+                  key={i} 
+                  className={`group aspect-[2/3] overflow-hidden bg-zinc-900 ${i === 1 ? 'md:mt-20' : ''}`}
+                >
+                  <img 
+                    src={img} 
+                    alt={section.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                  />
                 </div>
               ))}
+              
+              {/* View Gallery ኣብ ትሕቲ ስእልታት */}
+              <div className="col-span-1 md:col-span-2 mt-4">
+                <button 
+                  onClick={() => openGallery(section.images)}
+                  className="text-[11px] uppercase tracking-[0.4em] border-b border-white/20 pb-1 hover:border-white transition-all duration-300"
+                >
+                  View Gallery
+                </button>
+              </div>
             </div>
           </div>
         ))}
       </section>
 
-      <Lightbox
-        open={open}
-        close={() => setOpen(false)}
-        slides={currentImages}
+      {/* Lightbox Component */}
+      <Lightbox 
+        open={open} 
+        close={() => setOpen(false)} 
+        slides={currentImages} 
       />
 
       <Footer />
