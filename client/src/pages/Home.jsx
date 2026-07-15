@@ -335,7 +335,6 @@
 
 // export default Home;
 
-
 import React, { useState } from 'react';
 import Hero from '../components/Hero';
 import heroVideo from '../assets/videos/robi-v1.mp4';
@@ -350,24 +349,24 @@ import "yet-another-react-lightbox/styles.css";
 const workSections = [
   {
     title: "Weddings",
-    names: "Sara & Robel", // ሽም መርዓውቲ
-    date: "July 15, 2026 — Addis Ababa", // ዕለት
+    names: "Sara & Robel", 
+    date: "July 15, 2026 — Addis Ababa", 
     desc: "We capture the raw emotion, the grand gestures, and the intimate whispers of your most special day, crafting a cinematic story that lasts a lifetime.",
     images: [wedding1, wedding2],
     reverse: false
   },
   {
     title: "Bridal Shoots",
-    names: "Nahom & Selam", // ሽም መርዓውቲ
-    date: "August 20, 2026 — Photography Studio", // ዕለት
+    names: "Nahom & Selam", 
+    date: "August 20, 2026 — Photography Studio", 
     desc: "Elegance defined. Our artistic direction highlights the grace of the bride in stunning settings, ensuring every portrait is a masterpiece of light and fashion.",
     images: [wedding2, wedding1],
     reverse: true
   },
   {
     title: "Baby Shower & Baptism",
-    names: "Elias Family", // ሽም መርዓውቲ
-    date: "September 05, 2026 — Family Event", // ዕለት
+    names: "Elias Family", 
+    date: "September 05, 2026 — Family Event", 
     desc: "Celebrating new beginnings. We document the joy, the anticipation, and the sacred moments of your family's newest arrivals with warmth and tenderness.",
     images: [wedding1, wedding2],
     reverse: false
@@ -400,17 +399,17 @@ function Home() {
                 0{index + 1} — Selection
               </span>
               
-              {/* ናይ ሽምን ዕለትን ጽሑፍ */}
+              {/* እቲ ሽምን ዕለትን ናብ ላዕሊ ተቐይሩ ኣሎ */}
               <div className="space-y-1">
+                <p className="text-[16px] font-medium text-white/90 tracking-wide">
+                  {section.names}
+                </p>
+                <p className="text-[11px] uppercase tracking-[0.3em] text-zinc-500 italic pb-2">
+                  {section.date}
+                </p>
                 <h2 className="text-5xl md:text-7xl font-light tracking-tighter leading-none">
                   {section.title}
                 </h2>
-                <p className="text-[16px] font-medium text-white/90 tracking-wide mt-3">
-                  {section.names}
-                </p>
-                <p className="text-[11px] uppercase tracking-[0.3em] text-zinc-500 italic">
-                  {section.date}
-                </p>
               </div>
 
               <p className="text-lg leading-relaxed text-zinc-400 max-w-md pt-4">
