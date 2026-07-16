@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // 1. Link ኢምፖርት ግበር
 
 function Footer() {
   return (
@@ -34,8 +35,16 @@ function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-white/5 mt-12 pt-8 text-center text-zinc-600 text-[10px] uppercase tracking-[0.3em]">
-        © 2026 JONI Studio. All rights reserved.
+      <div className="border-t border-white/5 mt-12 pt-8 flex justify-between items-center text-zinc-600 text-[10px] uppercase tracking-[0.3em]">
+        <div>© 2026 JONI Studio. All rights reserved.</div>
+        
+        {/* 2. እዚ እዩ እቲ ኣድሚን ሊንክ */}
+        <Link 
+          to="/admin-login" 
+          className="text-zinc-800 hover:text-zinc-500 transition-colors"
+        >
+          Admin
+        </Link>
       </div>
     </footer>
   );
