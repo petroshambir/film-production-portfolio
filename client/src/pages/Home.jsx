@@ -588,8 +588,8 @@
 // }
 
 // export default Home;
-
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; // እዚ ተወሰኸ
 import Hero from '../components/Hero';
 import heroVideo from '../assets/videos/robi-v1.mp4';
 import wedding1 from '../assets/images/ሮቢ-png1-removebg-preview.png';
@@ -639,15 +639,16 @@ function Home() {
         {workSections.map((section, index) => (
           <div key={index} className="mb-32">
             
-            {/* ሽምን ዕለትን ኣብ ላዕሊ ሓንሳብ - ብስታይል ኢታሊክ */}
-            <div className="mb-8 border-l-2 border-zinc-700 pl-6 items-center">
-              <h3 className="text-4xl font-serif italic text-amber-300 tracking-wide text-center">
-                {section.names}m
-              </h3>
-              <p className="text-[12px] uppercase tracking-[0.3em] text-zinc-500 mt-2 font-light text-center">
-                {section.date}
-              </p>
-            </div>
+            {section.names && (
+              <div className="mb-8 border-l-2 border-zinc-700 pl-6 items-center">
+                <h3 className="text-4xl font-serif italic text-amber-300 tracking-wide text-center">
+                  {section.names}
+                </h3>
+                <p className="text-[12px] uppercase tracking-[0.3em] text-zinc-500 mt-2 font-light text-center">
+                  {section.date}
+                </p>
+              </div>
+            )}
 
             <div className={`flex flex-col ${section.reverse ? 'md:flex-row-reverse' : 'md:flex-row'} items-center text-center md:text-left gap-12 md:gap-24`}>
               
@@ -672,9 +673,13 @@ function Home() {
                   ))}
                 </div>
                 <div className="mt-8">
-                  <button onClick={() => openGallery(section.images)} className="text-[12px] font-bold uppercase tracking-[0.4em] border-2 border-white/20 px-8 py-3 hover:border-white hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105">
+                  {/* እዚ እዩ እቲ Link */}
+                  <Link 
+                    to={`/gallery/${section.title.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="text-[12px] font-bold uppercase tracking-[0.4em] border-2 border-white/20 px-8 py-3 hover:border-white hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105 inline-block"
+                  >
                     View Gallery
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
