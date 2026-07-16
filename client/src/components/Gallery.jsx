@@ -1,32 +1,23 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import Lightbox from "yet-another-react-lightbox";
-// እቶም ናትካ ስእልታት ኣብዚ ኢምፖርት ግበር
-import wedding1 from '../assets/images/ሮቢ-png1-removebg-preview.png';
-import wedding2 from '../assets/images/ሮቢ-png2-removebg-preview.png';
 
 function Gallery() {
-  const { category } = useParams(); // ካብ URL ዝመጸ ስም (weddings, bridal-shoots)
-
-  // ንነፍሲ ወከፍ ክፍሊ ዝኸውን ስእልታት
-  const galleryData = {
-    'weddings': [wedding1, wedding2],
-    'bridal-shoots': [wedding2, wedding1],
-    'baby-shower-baptism': [wedding1, wedding2]
-  };
-
-  const images = galleryData[category] || [];
+  const { category } = useParams(); // እቲ 'weddings' ዝብል ካብ URL ይወስድ
 
   return (
-    <div style={{ backgroundColor: '#0a0a0a', minHeight: '100vh', padding: '50px' }}>
-      <h1 className="text-white text-3xl capitalize mb-10">{category.replace('-', ' ')}</h1>
+    <div style={{ backgroundColor: '#0a0a0a', minHeight: '100vh', padding: '50px', color: 'white' }}>
+      {/* እቲ ናትካ ርእሲ ኣብዚ ይርአ */}
+      <h1 className="text-6xl font-serif italic text-amber-300 capitalize text-center mb-10">
+        {category.replace(/-/g, ' ')}
+      </h1>
       
-      {/* ኣብዚ ስእልታት ብግሪድ ኣርእዮም ወይ Lightbox ክፈት */}
-      <Lightbox 
-        open={true} 
-        slides={images.map(img => ({ src: img }))} 
-        close={() => window.history.back()} 
-      />
+      <div className="text-center">
+        <p className="text-zinc-400">
+           Welcome to the {category.replace(/-/g, ' ')} gallery. 
+           Here you will find all the selected photos.
+        </p>
+        {/* ኣብዚ ናይ Lightbox ኮድካ ወይ ስእልታትካ ኣቐምጥ */}
+      </div>
     </div>
   );
 }
