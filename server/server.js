@@ -7,7 +7,13 @@ import authRoutes from './Route/authRoutes.js';
 
 const app = express();
 
-app.use(cors());
+// CORS configuration (ንኩሉ ሕቶታት ክፈቅድ)
+app.use(cors({
+    origin: '*', // ኣብ መወዳእታ ናብ ሊንክ ናይ ፍሮንት-ኢንድካ ክትቅይሮ ትኽእል
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
 
 // ዳታቤዝ ኣራኽብ
