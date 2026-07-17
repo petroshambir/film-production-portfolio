@@ -1,3 +1,12 @@
+// import mongoose from 'mongoose';
+
+// const AdminSchema = new mongoose.Schema({
+//     email: { type: String, required: true, unique: true },
+//     password: { type: String, required: true }
+// });
+
+// export default mongoose.model('Admin', AdminSchema);
+
 import mongoose from 'mongoose';
 
 const AdminSchema = new mongoose.Schema({
@@ -5,4 +14,5 @@ const AdminSchema = new mongoose.Schema({
     password: { type: String, required: true }
 });
 
-export default mongoose.model('Admin', AdminSchema);
+// ኣብዚ 'admin' ዝብል ኮሌክሽን ስም ወሲኽና ኣለና
+export default mongoose.model('Admin', AdminSchema, 'admin');

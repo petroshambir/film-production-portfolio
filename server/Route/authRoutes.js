@@ -5,51 +5,30 @@ import Admin from '../models/Admin.js';
 
 const router = express.Router();
 
-// router.post('/login', async (req, res) => {
-//     try {
-//         const { email, password } = req.body;
-//         console.log("Login attempt for:", email); // ኣብ Render Logs ክርአ እዩ
-
-//         const admin = await Admin.findOne({ email });
-//         if (!admin) {
-//             console.log("Admin not found for:", email);
-//             return res.status(400).json({ message: 'Invalid credentials' });
-//         }
-
-//         const isMatch = (password === admin.password);
-//         if (!isMatch) {
-//             console.log("Password mismatch for:", email);
-//             return res.status(400).json({ message: 'Invalid password' });
-//         }
-
-//         const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET || 'secretKey', { expiresIn: '1h' });
-//         res.json({ token, adminId: admin._id });
-//     } catch (err) {
-//         res.status(500).json({ message: 'Server error' });
-//     }
-// });
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-        
-        // 1. ኢሜይል ንምርካብ (trim() ንስፔስ ንምእላይ)
+        console.log("Looking for email:", email.trim().toLowerCase()); 
+
         const admin = await Admin.findOne({ email: email.trim().toLowerCase() });
         
         if (!admin) {
+            console.log("No admin found in DB!");
             return res.status(400).json({ message: 'Invalid credentials' });
         }
 
-        // 2. ፓስዎርድ ንምጽራይ (ምኽንያቱ plain text ስለ ዝኾነ)
-        // እንተ bcrypt ዘይትጥቀም እንተኾንካ፣ ቀጥታ ከምዚ ግበሮ፦
-        if (password !== admin.password) {
+        console.log("Admin found in DB:", admin);
+
+        if (password.trim() !== admin.password.trim()) {
+            console.log("Password mismatch! DB:", admin.password, "Input:", password);
             return res.status(400).json({ message: 'Invalid password' });
         }
 
-        // 3. ቶከን ምፍጣር
         const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET || 'secretKey', { expiresIn: '1h' });
         res.json({ token, adminId: admin._id });
         
     } catch (err) {
+        console.error("Login Server Error:", err);
         res.status(500).json({ message: 'Server error' });
     }
 });
