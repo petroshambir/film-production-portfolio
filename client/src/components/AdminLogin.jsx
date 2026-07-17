@@ -6,11 +6,36 @@ function AdminLogin() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+    
+  //   try {
+  //     const response = await fetch('https://film-production-portfolio.onrender.com', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({ email, password })
+  //     });
+
+  //     const data = await response.json();
+
+  //     if (response.ok) {
+  //       // ሎጊን ምስ ሰለጠ፡ ቶከን ኣብ localStorage ንሕዞ
+  //       localStorage.setItem('token', data.token);
+  //       localStorage.setItem('isAdmin', 'true');
+  //       navigate('/admin-panel');
+  //     } else {
+  //       alert(data.message || 'Invalid Credentials!');
+  //     }
+  //   } catch (err) {
+  //     alert('Server connection error. Make sure backend is running.');
+  //   }
+  // };
+const handleLogin = async (e) => {
     e.preventDefault();
     
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      // ኣብዚ ኣድራሻ /api/auth/login ተወሲኹ ኣሎ
+      const response = await fetch('https://film-production-portfolio.onrender.com/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -27,10 +52,10 @@ function AdminLogin() {
         alert(data.message || 'Invalid Credentials!');
       }
     } catch (err) {
+      console.error(err); // ጌጋ እንተለዎ ኣብ ኮንሶል ክርአ
       alert('Server connection error. Make sure backend is running.');
     }
   };
-
   return (
     <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
       <form onSubmit={handleLogin} className="bg-zinc-900 p-10 rounded-lg border border-zinc-800">
