@@ -32,4 +32,14 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
+
+const handleUpdateTitle = async () => {
+    const newTitle = "My New Portfolio Title"; // ካብ ኢንፑትካ እትረኽቦ
+    await fetch('https://film-production-portfolio.onrender.com/api/content/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: newTitle })
+    });
+    alert("Title Updated!");
+};
 export default router;
