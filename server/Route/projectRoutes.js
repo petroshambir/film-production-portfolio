@@ -1,5 +1,5 @@
 import express from 'express';
-import Project from '../models/Project.js'; // ኣብ ኣይነት ናይ ፕሮጀክት ሞዴል ኣሎ።
+import Project from '../models/project.js'; // ኣብ ኣይነት ናይ ፕሮጀክት ሞዴል ኣሎ።
 
 const router = express.Router();
 
