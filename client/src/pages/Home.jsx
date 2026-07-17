@@ -815,7 +815,6 @@
 
 // export default Home;
 
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
@@ -830,9 +829,9 @@ import "yet-another-react-lightbox/styles.css";
 function Home() {
   const [open, setOpen] = useState(false);
   const [currentImages, setCurrentImages] = useState([]);
-  
-  // ካብ ሰርቨር ዝመጽእ ዳታ
   const [title, setTitle] = useState('');
+  
+  // ንፕሮጀክትታት ካብ ሰርቨር ንምቕባል ዝሕግዝ ስቴት
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -858,10 +857,11 @@ function Home() {
     <div style={{ backgroundColor: '#0a0a0a' }} className="min-h-screen text-white">
       <Hero videoSrc={heroVideo} buttonText="Explore Our Work" />
       
-      {/* ሰርቨር ዝለኣኾ ጽሑፍ */}
-      {title && <h1 className="text-center text-4xl mt-10 text-white font-serif">{title}</h1>}
+      {/* ጽሑፍ ካብ ሰርቨር */}
+      {title && <h1 className="text-center text-4xl mt-10 text-white">{title}</h1>}
 
       <section className="px-6 py-20 md:px-24">
+        {/* ኣብ ክንዲ workSections.map፣ projects.map ንጥቀም */}
         {projects.map((section, index) => (
           <div key={index} className="mb-32">
             
@@ -892,7 +892,7 @@ function Home() {
 
               <div className="flex-1 flex flex-col items-center md:items-start w-full">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-                  {/* ኣብዚ እቲ ስእልታትካ ካብ ዳታቤዝ ክመጽእ ኣለዎ */}
+                  {/* ስእልታትካ ብግቡእ ክረኣዩ */}
                   {section.images && section.images.slice(0, 2).map((img, i) => (
                     <div key={i} className={`group aspect-[2/3] overflow-hidden bg-zinc-900 ${i === 1 ? 'md:mt-20' : ''}`}>
                       <img src={img} alt={section.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
