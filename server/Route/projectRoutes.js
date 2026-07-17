@@ -1,5 +1,5 @@
 import express from 'express';
-import Project from '../Models/Project.js'; // .js ዘይትረስዕ!
+import Project from '../models/project.js'; // .js ዘይትረስዕ!
 
 const router = express.Router();
 
