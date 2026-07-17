@@ -1005,6 +1005,21 @@
 //                 </p>
 //               </div>
 //             )}
+//             // ኣብ Home.jsx JSX ክፋል
+// {sections.map((section, index) => (
+//   <div key={index} className="mb-32">
+//      {/* እቲ ስምን ዕለትን ካብ ዳታቤዝካ ዝመጽእ */}
+//      <div className="mb-8 border-l-2 border-zinc-700 pl-6 items-center">
+//         <h3 className="text-4xl font-serif italic text-amber-300 tracking-wide text-center">
+//           {section.names}
+//         </h3>
+//         <p className="text-[12px] uppercase tracking-[0.3em] text-zinc-500 mt-2 font-light text-center">
+//           {section.date}
+//         </p>
+//      </div>
+//      {/* ... ዝተረፈ ኮድ ኣይተንከፍኩን ... */}
+//   </div>
+// ))}
 
 //             <div className={`flex flex-col ${section.reverse ? 'md:flex-row-reverse' : 'md:flex-row'} items-center text-center md:text-left gap-12 md:gap-24`}>
 //               <div className="flex-1 flex flex-col items-center md:items-start justify-center space-y-4">
@@ -1049,38 +1064,36 @@
 
 // export default Home;
 
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Hero from '../components/Hero';
-import heroVideo from '../assets/videos/robi-v1.mp4';
-import wedding1 from '../assets/images/ሮቢ-png1-removebg-preview.png';
-import wedding2 from '../assets/images/ሮቢ-png2-removebg-preview.png';
-import Footer from "../components/Footer";
-
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
+import React, { useState, useEffect } from 'react'; // React, useState, useEffect ኣእትዎም
 
 function Home() {
   const [open, setOpen] = useState(false);
   const [currentImages, setCurrentImages] = useState([]);
   const [title, setTitle] = useState('');
   
-  // ካብ ሰርቨር ዝመጽእ ፕሮጀክትታት
-  const [sections, setSections] = useState([]);
+  // እቲ ንስኻ ትደልዮ ዘለኻ፣ ዳታ ካብ ሰርቨርካ ንምቕባል
+  const [workSections, setWorkSections] = useState([]);
 
   useEffect(() => {
-    // ጽሑፍ ካብ ሰርቨር
+    // 1. Title ንምምጻእ
     fetch('https://film-production-portfolio.onrender.com/api/content')
       .then(res => res.json())
       .then(data => setTitle(data.title))
       .catch(err => console.log("Error fetching title:", err));
 
-    // ፕሮጀክትታት ካብ ሰርቨር
+    // 2. ስምን ዕለትን (names & date) ካብ ዳታቤዝ ንምምጻእ
     fetch('https://film-production-portfolio.onrender.com/api/projects')
       .then(res => res.json())
-      .then(data => setSections(data))
+      .then(data => setWorkSections(data))
       .catch(err => console.log("Error fetching projects:", err));
   }, []);
+
+  const openGallery = (images) => {
+    setCurrentImages(images.map(img => ({ src: img })));
+    setOpen(true);
+  };
 
   return (
     <div style={{ backgroundColor: '#0a0a0a' }} className="min-h-screen text-white">
@@ -1089,10 +1102,9 @@ function Home() {
       {title && <h1 className="text-center text-4xl mt-10 text-white">{title}</h1>}
 
       <section className="px-6 py-20 md:px-24">
-        {sections.map((section, index) => (
+        {workSections.map((section, index) => (
           <div key={index} className="mb-32">
-            
-            {/* ስም (names)ን ዕለትን (date) ካብ ሰርቨር ዝመጽእ */}
+            {/* እዚ ክፋል እዚ እዩ እቲ ሽምን ዕለትን ካብ ዳታቤዝካ ዝሕዝ */}
             {section.names && (
               <div className="mb-8 border-l-2 border-zinc-700 pl-6 items-center">
                 <h3 className="text-4xl font-serif italic text-amber-300 tracking-wide text-center">
@@ -1105,7 +1117,6 @@ function Home() {
             )}
 
             <div className={`flex flex-col ${section.reverse ? 'md:flex-row-reverse' : 'md:flex-row'} items-center text-center md:text-left gap-12 md:gap-24`}>
-              
               <div className="flex-1 flex flex-col items-center md:items-start justify-center space-y-4">
                 <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-500 font-bold">
                   0{index + 1} — Selection
@@ -1120,8 +1131,8 @@ function Home() {
 
               <div className="flex-1 flex flex-col items-center md:items-start w-full">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-                  {/* ስእልታት (ኣብዚ ሰርቨርካ ዝለኣኾ ኢሜጅ ትጥቀም) */}
-                  {section.images && section.images.slice(0, 2).map((img, i) => (
+                  {/* ምስሊ እንተለካ ሰርቨርካ ዝለኣኾ እዩ ዝጥቀም */}
+                  {section.images?.slice(0, 2).map((img, i) => (
                     <div key={i} className={`group aspect-[2/3] overflow-hidden bg-zinc-900 ${i === 1 ? 'md:mt-20' : ''}`}>
                       <img src={img} alt={section.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     </div>
