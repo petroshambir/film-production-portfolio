@@ -1067,6 +1067,9 @@
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import React, { useState, useEffect } from 'react'; // React, useState, useEffect ኣእትዎም
+import Hero from '../components/Hero'; // እዚ መስመር እዚ ብዘይምህላዉ እዩ እቲ ጌጋ ዝመጽእ ዘሎ
+import Footer from "../components/Footer";
+import { Link } from 'react-router-dom';
 
 function Home() {
   const [open, setOpen] = useState(false);
