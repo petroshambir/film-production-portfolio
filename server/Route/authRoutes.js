@@ -42,4 +42,5 @@ const handleUpdateTitle = async () => {
     });
     alert("Title Updated!");
 };
+
 export default router;
