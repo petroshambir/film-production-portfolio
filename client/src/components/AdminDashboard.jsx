@@ -50,14 +50,33 @@ function AdminDashboard() {
                 </div>
 
                 {/* ስእሊ */}
-                <div>
-                  <label className="text-[10px] uppercase text-zinc-500">Image URLs</label>
-                  <input 
-                    defaultValue={p.images.join(', ')}
-                    onChange={(e) => setEditFields({...editFields, [p.id]: { ...projects.find(x=>x.id===p.id), images: e.target.value.split(',') }})}
-                    className="bg-black p-3 border border-zinc-600 w-full rounded"
-                  />
-                </div>
+             <div>
+  <label className="text-[10px] uppercase text-zinc-500">Upload Images</label>
+  <input 
+    type="file" 
+    multiple 
+    onChange={async (e) => {
+      const files = e.target.files;
+      const formData = new FormData();
+      
+      // ኩሎም ዝተመርጹ ፋይላት ናብ FormData ንምስጋር
+      for (let i = 0; i < files.length; i++) {
+        formData.append('images', files[i]);
+      }
+
+      // እቲ ስእልታት ናብ ሰርቨር ንምልኣኽ
+      const res = await fetch(`https://film-production-portfolio.onrender.com/api/projects/${p.id}/upload`, {
+        method: 'POST',
+        body: formData
+      });
+      
+      const data = await res.json();
+      alert("Images Uploaded Successfully!");
+      window.location.reload(); // ንኽርአ ክሕደስ
+    }}
+    className="bg-black p-2 border border-zinc-600 w-full rounded text-sm"
+  />
+</div>
               </div>
               
               <button 
