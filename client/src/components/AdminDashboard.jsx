@@ -11,10 +11,43 @@ function AdminDashboard() {
   const [editFields, setEditFields] = useState({});
   const [selectedFiles, setSelectedFiles] = useState({}); // ንዝተመርጹ ፋይላት ክሕዝ
 
-  const handleUpdate = (id) => {
-    alert("Saved! (Now connect your API to update database)");
-    console.log("Updated data for id", id, ":", editFields[id]);
-  };
+  const handleUpdate = async (id) => {
+    // እቲ ዝተቀየረ ዳታ ካብ editFields ንወስድ
+    const updatedData = editFields[id];
+
+    if (!updatedData) {
+        alert("No changes detected!");
+        return;
+    }
+
+    try {
+        const res = await fetch(`https://film-production-portfolio.onrender.com/api/projects/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                names: updatedData.names,
+                date: updatedData.date
+            })
+        });
+
+        if (res.ok) {
+            alert("Project updated successfully!");
+            window.location.reload(); // ዳታ ንኽርአ ገጽካ ኣሐድሶ
+        } else {
+            alert("Failed to update.");
+        }
+    } catch (err) {
+        console.error("Error updating:", err);
+        alert("Server error.");
+    }
+};
+
+  // const handleUpdate = (id) => {
+  //   alert("Saved! (Now connect your API to update database)");
+  //   console.log("Updated data for id", id, ":", editFields[id]);
+  // };
 
   // ሓድሽ ፋንክሽን ን Upload
   // const handleUpload = async (id) => {
@@ -51,6 +84,19 @@ function AdminDashboard() {
     });
     alert("Uploaded!");
 };
+// ካብ API ዝመጸ ርክብ
+useEffect(() => {
+    fetch('https://film-production-portfolio.onrender.com/api/projects')
+        .then(res => res.json())
+        .then(data => setProjects(data));
+}, []);
+
+// ኣብ Map ክትገብር ከለኻ
+{projects.map((p) => (
+   <li key={p._id}> {/* id ኣይኮነን, _id እዩ */}
+     <button onClick={() => handleUpdate(p._id)}>Save</button>
+   </li>
+))}
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white p-10">
@@ -67,12 +113,25 @@ function AdminDashboard() {
                 {/* ሽም */}
                 <div>
                   <label className="text-[10px] uppercase text-zinc-500">Name (Sara & Robel)</label>
-                  <input 
+                  {/* <input 
                     defaultValue={p.names}
                     onChange={(e) => setEditFields({...editFields, [p.id]: { ...projects.find(x=>x.id===p.id), names: e.target.value }})}
                     className="bg-black p-3 border border-zinc-600 w-full rounded"
-                  />
+                  /> */}
+                  // እቲ onChange ንነፍሲ ወከፍ input ከምዚ ይኹን:
+<input 
+  defaultValue={p.names}
+  onChange={(e) => {
+    const val = e.target.value;
+    setEditFields(prev => ({
+      ...prev,
+      [p.id]: { ...(prev[p.id] || p), names: val } // p ንምሕዝነት ንጥቀም
+    }));
+  }}
+  className="bg-black p-3 border border-zinc-600 w-full rounded"
+/>
                 </div>
+ 
 
                 {/* ዕለት */}
                 <div>
