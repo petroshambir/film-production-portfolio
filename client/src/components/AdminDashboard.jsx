@@ -17,24 +17,40 @@ function AdminDashboard() {
   };
 
   // ሓድሽ ፋንክሽን ን Upload
+  // const handleUpload = async (id) => {
+  //   const files = selectedFiles[id];
+  //   if (!files) { alert("Please select images first!"); return; }
+    
+  //   const formData = new FormData();
+  //   for (let i = 0; i < files.length; i++) {
+  //     formData.append('images', files[i]);
+  //   }
+
+  //   const res = await fetch(`https://film-production-portfolio.onrender.com/api/projects/${id}/upload`, {
+  //     method: 'POST',
+  //     body: formData
+  //   });
+    
+  //   await res.json();
+  //   alert("Images Uploaded Successfully!");
+  //   window.location.reload();
+  // };
+
   const handleUpload = async (id) => {
     const files = selectedFiles[id];
-    if (!files) { alert("Please select images first!"); return; }
-    
+    if (!files) return;
+
     const formData = new FormData();
     for (let i = 0; i < files.length; i++) {
-      formData.append('images', files[i]);
+        formData.append('images', files[i]); // 'images' እቲ key እዩ
     }
 
-    const res = await fetch(`https://film-production-portfolio.onrender.com/api/projects/${id}/upload`, {
-      method: 'POST',
-      body: formData
+    await fetch(`https://film-production-portfolio.onrender.com/api/projects/${id}/upload`, {
+        method: 'POST',
+        body: formData
     });
-    
-    await res.json();
-    alert("Images Uploaded Successfully!");
-    window.location.reload();
-  };
+    alert("Uploaded!");
+};
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white p-10">
