@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 
 function AdminDashboard() {
   // እቲ ዳታ ኣብ ውሽጢ ኮድካ ባዕልና ንግበሮ (Static Data)
