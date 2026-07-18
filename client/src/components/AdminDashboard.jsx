@@ -305,16 +305,6 @@ function AdminDashboard() {
     alert("Saved successfully!");
   };
 
-  // 3. ስእሊ ንምጽዓን
-  // const handleUpload = (id, files) => {
-  //   if (!files || files.length === 0) return;
-  //   const fileNames = Array.from(files).map(f => f.name);
-  //   setProjects(projects.map(p => 
-  //     p.id === id ? { ...p, images: [...p.images, ...fileNames] } : p
-  //   ));
-  //   alert(`Uploaded: ${fileNames.join(', ')}`);
-  // };
-
   const handleUpload = async (id, files) => {
     if (!files || files.length === 0) return;
 
@@ -324,22 +314,26 @@ function AdminDashboard() {
     }
 
     try {
+        // id ትክክል ምዃኑ ንምርኣይ
+        console.log("Uploading for ID:", id); 
+
         const res = await fetch(`https://film-production-portfolio.onrender.com/api/projects/${id}/upload`, {
             method: 'POST',
             body: formData, 
         });
 
+        // እቲ ጌጋ እንታይ ምዃኑ ብልክዕ ንምርኣይ
+        const data = await res.json();
         if (res.ok) {
-            alert("Uploaded successfully to Cloudinary!");
-            // ኣብዚ ነቲ Local State ናይ 'projects' ኣሐድሶ
+            alert("Uploaded successfully!");
         } else {
-            alert("Failed to upload");
+            console.error("Server Error Detail:", data); // እዚ እዩ እቲ ቁልፊ!
+            alert(`Failed: ${data.message || "Unknown error"}`);
         }
     } catch (err) {
-        console.error("Error:", err);
+        console.error("Fetch Error:", err);
     }
 };
-
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white p-10">
       <h1 className="text-4xl font-serif mb-10 text-amber-500">Admin Dashboard</h1>
