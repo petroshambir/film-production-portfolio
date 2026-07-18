@@ -7,20 +7,6 @@ const router = express.Router();
 const storage = multer.memoryStorage(); 
 const upload = multer({ storage: storage });
 
-// ስእሊ ንምስጋር (Endpoint)
-// router.post('/:id/upload', upload.array('images', 5), async (req, res) => {
-//     try {
-//         // req.files ኣብዚ ኣሎ። ኣብዚ ናብ Cloudinary ወይ ባዕልኻ ዝሰርሕ ሎጂክ ክትጽሕፍ ኣለካ
-//         // ንጊዜው እዚ ስእልታት ኣብ DB ናይቲ ፕሮጀክት ክትጽሕፎ ኣለካ
-//         const project = await Project.findById(req.params.id);
-//         // እተን ስእልታት ናብ DB ትጽሕፈን (ለምሳሌ: project.images.push(...filenames))
-//         await project.save();
-//         res.json({ message: "Uploaded" });
-//     } catch (err) {
-//         res.status(500).json({ error: err.message });
-//     }
-// });
-
 router.post('/:id/upload', upload.array('images', 5), async (req, res) => {
     try {
         const project = await Project.findById(req.params.id);
