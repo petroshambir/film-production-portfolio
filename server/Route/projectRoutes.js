@@ -1,12 +1,8 @@
 import express from 'express';
 import Project from '../models/project.js'; // ኣብ ኣይነት ናይ ፕሮጀክት ሞዴል ኣሎ።
-import multer from 'multer';
 import { upload } from '../cloudinaryConfig.js'
 const router = express.Router();
 
-// ስእልታት ናብ ፎልደር ንምቕማጥ (ወይ cloud storage)
-const storage = multer.memoryStorage(); 
-const upload = multer({ storage: storage });
 
 router.post('/:id/upload', upload.array('images', 5), async (req, res) => {
     try {
