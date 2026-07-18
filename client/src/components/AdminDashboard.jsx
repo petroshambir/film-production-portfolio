@@ -534,12 +534,11 @@
 
 // export default AdminDashboard;
 
-
 import React, { useState, useEffect } from 'react';
 
 function AdminDashboard() {
-  // ሓንቲ ግዜ ጥራሕ ንኣውጅ
-  const [projects, setProjects] = useState([]); 
+  // 1. useState ሓንቲ ግዜ ጥራሕ ንኣውጅ
+  const [projects, setProjects] = useState([]);
   const [editFields, setEditFields] = useState({});
 
   useEffect(() => {
@@ -583,7 +582,6 @@ function AdminDashboard() {
         const data = await res.json();
         if (res.ok) {
             alert("Uploaded successfully!");
-            // ስእሊ ምስ ሰቀልካ ዳታኻ ክትመልሶ (Refresh) ክትገብር ትኽእል
         } else {
             console.error("Server Error Detail:", data);
             alert(`Failed: ${data.message || "Unknown error"}`);
