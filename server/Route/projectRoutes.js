@@ -1,6 +1,7 @@
 import express from 'express';
 import Project from '../models/project.js'; // ኣብ ኣይነት ናይ ፕሮጀክት ሞዴል ኣሎ።
 import multer from 'multer';
+import { upload } from '../cloudinaryConfig.js'
 const router = express.Router();
 
 // ስእልታት ናብ ፎልደር ንምቕማጥ (ወይ cloud storage)
@@ -12,12 +13,10 @@ router.post('/:id/upload', upload.array('images', 5), async (req, res) => {
         const project = await Project.findById(req.params.id);
         if (!project) return res.status(404).json({ message: "Project not found" });
 
-        // ፋይላት ናብ Base64 ንምቕያር (ወይ ናብ Cloudinary እንተ ኣለኻ ኣብዚ ትጽውዖ)
-        const imageUrls = req.files.map(file => {
-            return `data:${file.mimetype};base64,${file.buffer.toString('base64')}`;
-        });
+        // Cloudinary ዝሃበና ሊንክታት
+        const imageUrls = req.files.map(file => file.path);
 
-        // እቶም ሓደስቲ ስእልታት ናብቲ ዝነበረ array ምውሳኽ
+        // ሊንክታት ጥራሕ ናብ DB ንወስኽ
         project.images.push(...imageUrls);
         
         await project.save();
