@@ -306,14 +306,39 @@ function AdminDashboard() {
   };
 
   // 3. ስእሊ ንምጽዓን
-  const handleUpload = (id, files) => {
+  // const handleUpload = (id, files) => {
+  //   if (!files || files.length === 0) return;
+  //   const fileNames = Array.from(files).map(f => f.name);
+  //   setProjects(projects.map(p => 
+  //     p.id === id ? { ...p, images: [...p.images, ...fileNames] } : p
+  //   ));
+  //   alert(`Uploaded: ${fileNames.join(', ')}`);
+  // };
+
+  const handleUpload = async (id, files) => {
     if (!files || files.length === 0) return;
-    const fileNames = Array.from(files).map(f => f.name);
-    setProjects(projects.map(p => 
-      p.id === id ? { ...p, images: [...p.images, ...fileNames] } : p
-    ));
-    alert(`Uploaded: ${fileNames.join(', ')}`);
-  };
+
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+        formData.append('images', files[i]);
+    }
+
+    try {
+        const res = await fetch(`https://film-production-portfolio.onrender.com/api/projects/${id}/upload`, {
+            method: 'POST',
+            body: formData, 
+        });
+
+        if (res.ok) {
+            alert("Uploaded successfully to Cloudinary!");
+            // ኣብዚ ነቲ Local State ናይ 'projects' ኣሐድሶ
+        } else {
+            alert("Failed to upload");
+        }
+    } catch (err) {
+        console.error("Error:", err);
+    }
+};
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white p-10">
