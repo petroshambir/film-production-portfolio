@@ -533,19 +533,24 @@
 // }
 
 // export default AdminDashboard;
-
 import React, { useState, useEffect } from 'react';
 
 function AdminDashboard() {
-  // 1. useState ሓንቲ ግዜ ጥራሕ ንኣውጅ
   const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true); // ዳታ ክሳብ ዝመጽእ ንምፍላጥ
   const [editFields, setEditFields] = useState({});
 
   useEffect(() => {
     fetch('https://film-production-portfolio.onrender.com/api/projects')
       .then(res => res.json())
-      .then(data => setProjects(data))
-      .catch(err => console.error("Error fetching projects:", err));
+      .then(data => {
+        setProjects(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Error fetching projects:", err);
+        setLoading(false);
+      });
   }, []);
 
   const handleEdit = (id, field, value) => {
@@ -555,17 +560,11 @@ function AdminDashboard() {
     }));
   };
 
-  const handleSave = (id) => {
-    if (!editFields[id]) {
-      alert("No changes detected!");
-      return;
-    }
-    setProjects(projects.map(p => p._id === id ? { ...p, ...editFields[id] } : p));
-    alert("Saved successfully!");
-  };
-
   const handleUpload = async (id, files) => {
     if (!files || files.length === 0) return;
+    
+    // ንምፍታሽ: console.log
+    console.log("Files selected for ID:", id, files);
 
     const formData = new FormData();
     for (let i = 0; i < files.length; i++) {
@@ -573,7 +572,6 @@ function AdminDashboard() {
     }
 
     try {
-        console.log("Uploading for ID:", id); 
         const res = await fetch(`https://film-production-portfolio.onrender.com/api/projects/${id}/upload`, {
             method: 'POST',
             body: formData, 
@@ -582,14 +580,16 @@ function AdminDashboard() {
         const data = await res.json();
         if (res.ok) {
             alert("Uploaded successfully!");
+            window.location.reload(); // ስእሊ ምስ ሰቀልካ ገጽካ ክሕደስ
         } else {
-            console.error("Server Error Detail:", data);
             alert(`Failed: ${data.message || "Unknown error"}`);
         }
     } catch (err) {
-        console.error("Fetch Error:", err);
+        console.error("Upload Error:", err);
     }
   };
+
+  if (loading) return <div className="p-10 text-white">Loading projects...</div>;
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white p-10">
@@ -597,51 +597,50 @@ function AdminDashboard() {
 
       <div className="bg-zinc-900 p-8 rounded-lg border border-zinc-800">
         <h2 className="text-2xl mb-6">Manage Your Projects</h2>
-        <ul className="space-y-10">
-          {projects.map((p) => (
-            <li key={p._id} className="border-b border-zinc-700 pb-8">
-              <h3 className="text-xl font-bold mb-4">{p.title}</h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div>
-                  <label className="text-[10px] uppercase text-zinc-500">Name</label>
-                  <input
-                    defaultValue={p.names}
-                    onChange={(e) => handleEdit(p._id, 'names', e.target.value)}
-                    className="bg-black p-3 border border-zinc-600 w-full rounded"
-                  />
-                </div>
+        
+        {projects.length === 0 ? (
+          <p className="text-zinc-500">No projects found. Check your database connection.</p>
+        ) : (
+          <ul className="space-y-10">
+            {projects.map((p) => (
+              <li key={p._id} className="border-b border-zinc-700 pb-8">
+                <h3 className="text-xl font-bold mb-4">{p.title || "Untitled Project"}</h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div>
+                    <label className="text-[10px] uppercase text-zinc-500">Name</label>
+                    <input
+                      defaultValue={p.names}
+                      onBlur={(e) => handleEdit(p._id, 'names', e.target.value)}
+                      className="bg-black p-3 border border-zinc-600 w-full rounded text-white"
+                    />
+                  </div>
 
-                <div>
-                  <label className="text-[10px] uppercase text-zinc-500">Date & Location</label>
-                  <input
-                    defaultValue={p.date}
-                    onChange={(e) => handleEdit(p._id, 'date', e.target.value)}
-                    className="bg-black p-3 border border-zinc-600 w-full rounded"
-                  />
-                </div>
+                  <div>
+                    <label className="text-[10px] uppercase text-zinc-500">Date & Location</label>
+                    <input
+                      defaultValue={p.date}
+                      onBlur={(e) => handleEdit(p._id, 'date', e.target.value)}
+                      className="bg-black p-3 border border-zinc-600 w-full rounded text-white"
+                    />
+                  </div>
 
-                <div>
-                  <label className="text-[10px] uppercase text-zinc-500">Upload Images</label>
-                  <input
-                    type="file"
-                    multiple
-                    onChange={(e) => handleUpload(p._id, e.target.files)}
-                    className="bg-black p-2 border border-zinc-600 w-full rounded text-sm"
-                  />
-                  <p className="text-[10px] text-zinc-500 mt-1">Current: {p.images ? p.images.length : 0} images</p>
+                  <div>
+                    <label className="text-[10px] uppercase text-zinc-500">Upload Images</label>
+                    {/* እቲ input ዘይጠፍእ ንምግባር type="file" ዘለዎ */}
+                    <input
+                      type="file"
+                      multiple
+                      onChange={(e) => handleUpload(p._id, e.target.files)}
+                      className="bg-black p-2 border border-zinc-600 w-full rounded text-sm text-white"
+                    />
+                    <p className="text-[10px] text-zinc-500 mt-1">Current: {p.images ? p.images.length : 0} images</p>
+                  </div>
                 </div>
-              </div>
-
-              <button
-                onClick={() => handleSave(p._id)}
-                className="mt-6 bg-amber-500 text-black px-8 py-2 font-bold hover:bg-amber-400 rounded transition"
-              >
-                Save Changes to {p.title}
-              </button>
-            </li>
-          ))}
-        </ul>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
