@@ -275,10 +275,129 @@
 
 // export default AdminDashboard;
 
+// import React, { useState } from 'react';
+
+// function AdminDashboard() {
+//   // እቲ ዳታ (ስም፡ ዕለት፡ ስእሊ)
+//   const [projects, setProjects] = useState([
+//     { id: 1, title: 'Weddings', names: 'Sara & Robel', date: 'July 15, 2026', images: [] },
+//     { id: 2, title: 'Bridal Shoots', names: 'Abeba', date: 'August 20, 2026', images: [] },
+//     { id: 3, title: 'Baby Shower', names: 'John & Sarah', date: 'September 10, 2026', images: [] }
+//   ]);
+
+//   const [editFields, setEditFields] = useState({});
+
+//   // 1. ለውጢ ክትገብር ከለኻ (ስም ወይ ዕለት)
+//   const handleEdit = (id, field, value) => {
+//     setEditFields(prev => ({
+//       ...prev,
+//       [id]: { ...(prev[id] || projects.find(p => p.id === id)), [field]: value }
+//     }));
+//   };
+
+//   // 2. Save ክትብል ከለኻ
+//   const handleSave = (id) => {
+//     if (!editFields[id]) {
+//       alert("No changes detected!");
+//       return;
+//     }
+//     setProjects(projects.map(p => p_id === id ? { ...p, ...editFields[id] } : p));
+//     alert("Saved successfully!");
+//   };
+
+//   const handleUpload = async (id, files) => {
+//     if (!files || files.length === 0) return;
+
+//     const formData = new FormData();
+//     for (let i = 0; i < files.length; i++) {
+//         formData.append('images', files[i]);
+//     }
+
+//     try {
+//         // id ትክክል ምዃኑ ንምርኣይ
+//         console.log("Uploading for ID:", id); 
+
+//         const res = await fetch(`https://film-production-portfolio.onrender.com/api/projects/${id}/upload`, {
+//             method: 'POST',
+//             body: formData, 
+//         });
+
+//         // እቲ ጌጋ እንታይ ምዃኑ ብልክዕ ንምርኣይ
+//         const data = await res.json();
+//         if (res.ok) {
+//             alert("Uploaded successfully!");
+//         } else {
+//             console.error("Server Error Detail:", data); // እዚ እዩ እቲ ቁልፊ!
+//             alert(`Failed: ${data.message || "Unknown error"}`);
+//         }
+//     } catch (err) {
+//         console.error("Fetch Error:", err);
+//     }
+// };
+//   return (
+//     <div className="min-h-screen bg-[#0a0a0a] text-white p-10">
+//       <h1 className="text-4xl font-serif mb-10 text-amber-500">Admin Dashboard</h1>
+
+//       <div className="bg-zinc-900 p-8 rounded-lg border border-zinc-800">
+//         <h2 className="text-2xl mb-6">Manage Your Projects</h2>
+//         <ul className="space-y-10">
+//           {projects.map((p) => (
+//             <li key={p.id} className="border-b border-zinc-700 pb-8">
+//               <h3 className="text-xl font-bold mb-4">{p.title}</h3>
+              
+//               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+//                 {/* ሽም መቀየሪ */}
+//                 <div>
+//                   <label className="text-[10px] uppercase text-zinc-500">Name</label>
+//                   <input
+//                     defaultValue={p.names}
+//                     onChange={(e) => handleEdit(p_id, 'names', e.target.value)}
+//                     className="bg-black p-3 border border-zinc-600 w-full rounded"
+//                   />
+//                 </div>
+
+//                 {/* ዕለት መቀየሪ */}
+//                 <div>
+//                   <label className="text-[10px] uppercase text-zinc-500">Date & Location</label>
+//                   <input
+//                     defaultValue={p.date}
+//                     onChange={(e) => handleEdit(p_id, 'date', e.target.value)}
+//                     className="bg-black p-3 border border-zinc-600 w-full rounded"
+//                   />
+//                 </div>
+
+//                 {/* ስእሊ መጽዓኒ */}
+//                 <div>
+//                   <label className="text-[10px] uppercase text-zinc-500">Upload Images</label>
+//                   <input
+//                     type="file"
+//                     multiple
+//                     onChange={(e) => handleUpload(p_id, e.target.files)}
+//                     className="bg-black p-2 border border-zinc-600 w-full rounded text-sm"
+//                   />
+//                   <p className="text-[10px] text-zinc-500 mt-1">Current: {p.images.length} images</p>
+//                 </div>
+//               </div>
+
+//               <button
+//                 onClick={() => handleSave(p_id)}
+//                 className="mt-6 bg-amber-500 text-black px-8 py-2 font-bold hover:bg-amber-400 rounded transition"
+//               >
+//                 Save Changes to {p.title}
+//               </button>
+//             </li>
+//           ))}
+//         </ul>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default AdminDashboard;
+
 import React, { useState } from 'react';
 
 function AdminDashboard() {
-  // እቲ ዳታ (ስም፡ ዕለት፡ ስእሊ)
   const [projects, setProjects] = useState([
     { id: 1, title: 'Weddings', names: 'Sara & Robel', date: 'July 15, 2026', images: [] },
     { id: 2, title: 'Bridal Shoots', names: 'Abeba', date: 'August 20, 2026', images: [] },
@@ -287,7 +406,6 @@ function AdminDashboard() {
 
   const [editFields, setEditFields] = useState({});
 
-  // 1. ለውጢ ክትገብር ከለኻ (ስም ወይ ዕለት)
   const handleEdit = (id, field, value) => {
     setEditFields(prev => ({
       ...prev,
@@ -295,12 +413,12 @@ function AdminDashboard() {
     }));
   };
 
-  // 2. Save ክትብል ከለኻ
   const handleSave = (id) => {
     if (!editFields[id]) {
       alert("No changes detected!");
       return;
     }
+    // እቲ ጌጋ ዝነበረ ኣብዚ እዩ ነይሩ: p_id ኣብ ክንዲ p.id
     setProjects(projects.map(p => p.id === id ? { ...p, ...editFields[id] } : p));
     alert("Saved successfully!");
   };
@@ -314,26 +432,24 @@ function AdminDashboard() {
     }
 
     try {
-        // id ትክክል ምዃኑ ንምርኣይ
         console.log("Uploading for ID:", id); 
-
         const res = await fetch(`https://film-production-portfolio.onrender.com/api/projects/${id}/upload`, {
             method: 'POST',
             body: formData, 
         });
 
-        // እቲ ጌጋ እንታይ ምዃኑ ብልክዕ ንምርኣይ
         const data = await res.json();
         if (res.ok) {
             alert("Uploaded successfully!");
         } else {
-            console.error("Server Error Detail:", data); // እዚ እዩ እቲ ቁልፊ!
+            console.error("Server Error Detail:", data);
             alert(`Failed: ${data.message || "Unknown error"}`);
         }
     } catch (err) {
         console.error("Fetch Error:", err);
     }
-};
+  };
+
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white p-10">
       <h1 className="text-4xl font-serif mb-10 text-amber-500">Admin Dashboard</h1>
@@ -346,7 +462,6 @@ function AdminDashboard() {
               <h3 className="text-xl font-bold mb-4">{p.title}</h3>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* ሽም መቀየሪ */}
                 <div>
                   <label className="text-[10px] uppercase text-zinc-500">Name</label>
                   <input
@@ -356,7 +471,6 @@ function AdminDashboard() {
                   />
                 </div>
 
-                {/* ዕለት መቀየሪ */}
                 <div>
                   <label className="text-[10px] uppercase text-zinc-500">Date & Location</label>
                   <input
@@ -366,7 +480,6 @@ function AdminDashboard() {
                   />
                 </div>
 
-                {/* ስእሊ መጽዓኒ */}
                 <div>
                   <label className="text-[10px] uppercase text-zinc-500">Upload Images</label>
                   <input
