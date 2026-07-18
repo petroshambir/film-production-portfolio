@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 
 function AdminDashboard() {
@@ -10,11 +9,31 @@ function AdminDashboard() {
   ]);
 
   const [editFields, setEditFields] = useState({});
+  const [selectedFiles, setSelectedFiles] = useState({}); // ንዝተመርጹ ፋይላት ክሕዝ
 
   const handleUpdate = (id) => {
-    // ኣብዚ ንስኻ ናብ ሰርቨርካ ትልእኮ (API call)
     alert("Saved! (Now connect your API to update database)");
     console.log("Updated data for id", id, ":", editFields[id]);
+  };
+
+  // ሓድሽ ፋንክሽን ን Upload
+  const handleUpload = async (id) => {
+    const files = selectedFiles[id];
+    if (!files) { alert("Please select images first!"); return; }
+    
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append('images', files[i]);
+    }
+
+    const res = await fetch(`https://film-production-portfolio.onrender.com/api/projects/${id}/upload`, {
+      method: 'POST',
+      body: formData
+    });
+    
+    await res.json();
+    alert("Images Uploaded Successfully!");
+    window.location.reload();
   };
 
   return (
@@ -49,34 +68,22 @@ function AdminDashboard() {
                   />
                 </div>
 
-                {/* ስእሊ */}
-             <div>
-  <label className="text-[10px] uppercase text-zinc-500">Upload Images</label>
-  <input 
-    type="file" 
-    multiple 
-    onChange={async (e) => {
-      const files = e.target.files;
-      const formData = new FormData();
-      
-      // ኩሎም ዝተመርጹ ፋይላት ናብ FormData ንምስጋር
-      for (let i = 0; i < files.length; i++) {
-        formData.append('images', files[i]);
-      }
-
-      // እቲ ስእልታት ናብ ሰርቨር ንምልኣኽ
-      const res = await fetch(`https://film-production-portfolio.onrender.com/api/projects/${p.id}/upload`, {
-        method: 'POST',
-        body: formData
-      });
-      
-      const data = await res.json();
-      alert("Images Uploaded Successfully!");
-      window.location.reload(); // ንኽርአ ክሕደስ
-    }}
-    className="bg-black p-2 border border-zinc-600 w-full rounded text-sm"
-  />
-</div>
+                {/* ስእሊ መምረጺን ኡፕሎድ ቁልፍን */}
+                <div>
+                  <label className="text-[10px] uppercase text-zinc-500">Select Images</label>
+                  <input 
+                    type="file" 
+                    multiple 
+                    onChange={(e) => setSelectedFiles({...selectedFiles, [p.id]: e.target.files})}
+                    className="bg-black p-2 border border-zinc-600 w-full rounded text-sm mb-2"
+                  />
+                  <button 
+                    onClick={() => handleUpload(p.id)}
+                    className="bg-blue-600 text-white px-4 py-1 text-xs font-bold hover:bg-blue-500 rounded transition w-full"
+                  >
+                    Upload Images
+                  </button>
+                </div>
               </div>
               
               <button 
