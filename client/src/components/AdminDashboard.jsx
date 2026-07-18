@@ -1,57 +1,56 @@
 import React, { useState } from 'react';
 
 function AdminDashboard() {
-  // እዚ እቲ ናይ መጀመርታ ዳታኻ እዩ
   const [sections, setSections] = useState([
-    { id: 1, title: 'Weddings', names: 'Sara & Robel', date: 'July 15, 2026' },
-    { id: 2, title: 'Bridal Shoots', names: 'Abeba', date: 'August 20, 2026' }
+    { id: 1, title: 'Weddings', names: 'Sara & Robel', images: ['img1.jpg', 'img2.jpg'] },
+    { id: 2, title: 'Bridal Shoots', names: 'Abeba', images: ['img3.jpg'] }
   ]);
 
-  // ፕሮጀክት ንምድምሳስ
-  const handleDelete = (id) => {
-    setSections(sections.filter(section => section.id !== id));
+  // ስእሊ በብሓደ ንምድምሳስ
+  const deleteImage = (sectionId, imageIndex) => {
+    setSections(prevSections => 
+      prevSections.map(sec => 
+        sec.id === sectionId 
+          ? { ...sec, images: sec.images.filter((_, i) => i !== imageIndex) }
+          : sec
+      )
+    );
   };
 
-  // ሓድሽ ፕሮጀክት ንምውሳኽ (መሰረታዊ)
-  const addProject = () => {
-    const newProject = { 
-      id: Date.now(), 
-      title: 'New Event', 
-      names: 'New Couple', 
-      date: 'TBD' 
-    };
-    setSections([...sections, newProject]);
+  // ፕሮጀክት ንምድምሳስ
+  const deleteSection = (id) => {
+    setSections(sections.filter(s => s.id !== id));
   };
 
   return (
     <div className="p-10 bg-zinc-900 min-h-screen text-white">
-      <div className="flex justify-between items-center mb-10">
-        <h1 className="text-3xl">Admin Dashboard (Local)</h1>
-        <button 
-          onClick={addProject}
-          className="bg-blue-600 px-6 py-2 rounded hover:bg-blue-700"
-        >
-          + Add Project
-        </button>
-      </div>
-      
-      <div className="grid gap-6">
-        {sections.map((section) => (
-          <div key={section.id} className="p-6 border border-zinc-700 rounded-lg flex justify-between items-center bg-zinc-800">
-            <div>
-              <h2 className="text-xl font-bold text-amber-300">{section.names}</h2>
-              <p className="text-sm text-zinc-400">{section.title} - {section.date}</p>
-            </div>
-            
-            <button 
-              onClick={() => handleDelete(section.id)}
-              className="bg-red-600 px-4 py-2 rounded hover:bg-red-700 transition"
-            >
-              Delete
-            </button>
+      <h1 className="text-3xl mb-10">Admin Control Panel</h1>
+
+      {sections.map(section => (
+        <div key={section.id} className="mb-10 p-6 border border-zinc-700 rounded-xl bg-zinc-800">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-bold text-amber-300">{section.title} - {section.names}</h2>
+            <button onClick={() => deleteSection(section.id)} className="bg-red-600 px-4 py-1 rounded">Delete Category</button>
           </div>
-        ))}
-      </div>
+
+          <div className="flex gap-4 flex-wrap">
+            {section.images.map((img, index) => (
+              <div key={index} className="relative group">
+                <div className="w-24 h-24 bg-zinc-700 rounded flex items-center justify-center">
+                  {img} {/* ኣብዚ ናይ ስእሊ ዩአርኤል ይኸውን */}
+                </div>
+                {/* በብሓደ ንምድምሳስ */}
+                <button 
+                  onClick={() => deleteImage(section.id, index)}
+                  className="absolute -top-2 -right-2 bg-red-500 rounded-full w-6 h-6 flex items-center justify-center text-xs"
+                >
+                  X
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
