@@ -948,6 +948,7 @@ function Home() {
   const [open, setOpen] = useState(false);
   const [currentImages, setCurrentImages] = useState([]);
   const [title, setTitle] = useState('');
+  const [sections, setSections] = useState([]); // እዚ መስመር እዚ ኣሎ ዲዩ?
 
   // 1. እቲ workSections ኣብ ውሽጢ function ተቀሚጡ ኣሎ
   // ሕጂ ኣብዚ ስም (names) ወይ ዕለት (date) ክትቀያይር ትኽእል ኢኻ
