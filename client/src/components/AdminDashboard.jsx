@@ -147,7 +147,6 @@
 // }
 
 // export default AdminDashboard;
-
 import React, { useState, useEffect } from 'react';
 
 function AdminDashboard() {
@@ -155,15 +154,18 @@ function AdminDashboard() {
   const [editFields, setEditFields] = useState({});
   const [selectedFiles, setSelectedFiles] = useState({});
 
-  // 1. Fetching logic (ካብ API ዝመጸ ርክብ - ኣብ ውሽጢ እዩ)
-  useEffect(() => {
+  // ዳታ ካብ ሰርቨር ንምምጻእ ዝሕግዝ ፋንክሽን
+  const fetchProjects = () => {
     fetch('https://film-production-portfolio.onrender.com/api/projects')
       .then(res => res.json())
       .then(data => setProjects(data))
       .catch(err => console.error("Error fetching:", err));
+  };
+
+  useEffect(() => {
+    fetchProjects();
   }, []);
 
-  // 2. Update logic
   const handleUpdate = async (id) => {
     const updatedData = editFields[id];
     if (!updatedData) {
@@ -178,7 +180,7 @@ function AdminDashboard() {
       });
       if (res.ok) {
         alert("Project updated successfully!");
-        window.location.reload();
+        fetchProjects(); // ገጽ ከይጸዓንካ ዳታ የሐድስ
       } else {
         alert("Failed to update.");
       }
@@ -188,22 +190,29 @@ function AdminDashboard() {
     }
   };
 
-  // 3. Upload logic
   const handleUpload = async (id) => {
     const files = selectedFiles[id];
-    if (!files) return;
+    if (!files) { alert("Please select files first!"); return; }
+    
     const formData = new FormData();
     for (let i = 0; i < files.length; i++) {
       formData.append('images', files[i]);
     }
-    await fetch(`https://film-production-portfolio.onrender.com/api/projects/${id}/upload`, {
-      method: 'POST',
-      body: formData
-    });
-    alert("Uploaded!");
+    
+    try {
+      const res = await fetch(`https://film-production-portfolio.onrender.com/api/projects/${id}/upload`, {
+        method: 'POST',
+        body: formData
+      });
+      if (res.ok) {
+        alert("Uploaded successfully!");
+        fetchProjects(); // ገጽ ከይጸዓንካ ዳታ የሐድስ
+      }
+    } catch (err) {
+      console.error("Error:", err);
+    }
   };
 
-  // 4. Return (UI)
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white p-10">
       <h1 className="text-4xl font-serif mb-10">Admin Dashboard</h1>
