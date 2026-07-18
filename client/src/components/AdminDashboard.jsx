@@ -12,15 +12,19 @@ function AdminDashboard() {
   }, []);
 
   const handleUpdate = async (id) => {
-    // እቲ URL ናብቲ ናይ ሰርቨርካ route ይኸይድ
-    // editFields[id] ካብቲ መጽሓፊ ዝመጽእ ዘሎ ሓድሽ ዳታ እዩ
+    const updatedData = editFields[id];
+    if (!updatedData) {
+      alert("No changes made!");
+      return;
+    }
+
     await fetch(`https://film-production-portfolio.onrender.com/api/projects/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(editFields[id])
+      body: JSON.stringify(updatedData)
     })
     .then(res => res.json())
-    .then(data => {
+    .then(() => {
         alert("Updated Successfully!");
         window.location.reload(); 
     })
@@ -35,39 +39,42 @@ function AdminDashboard() {
         <h2 className="text-2xl mb-6">Manage Projects</h2>
         <ul className="space-y-6">
           {projects.map((p) => (
-            <li key={p._id || p.id} className="border-b border-zinc-800 pb-4">
-              <div className="flex flex-col md:flex-row gap-4 items-center">
-                
-                {/* ናይ ሽም መጽሓፊ */}
-                <div className="w-full">
-                  <label className="text-[10px] uppercase text-zinc-500">Name</label>
-                  <input 
-                    defaultValue={p.names}
-                    onChange={(e) => setEditFields({
-                      ...editFields, 
-                      [p._id || p.id]: { ...editFields[p._id || p.id], names: e.target.value }
-                    })}
-                    className="bg-black p-2 border border-zinc-700 w-full focus:border-amber-500 outline-none"
-                  />
+            <li key={p._id || p.id} className="border-b border-zinc-800 pb-8">
+              <div className="flex flex-col gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* Name Input */}
+                  <div>
+                    <label className="text-[10px] uppercase text-zinc-500">Name</label>
+                    <input 
+                      defaultValue={p.names}
+                      onChange={(e) => setEditFields({...editFields, [p._id || p.id]: { ...(editFields[p._id || p.id] || { names: p.names, date: p.date, images: p.images }), names: e.target.value }})}
+                      className="bg-black p-2 border border-zinc-700 w-full"
+                    />
+                  </div>
+                  {/* Date Input */}
+                  <div>
+                    <label className="text-[10px] uppercase text-zinc-500">Date & Location</label>
+                    <input 
+                      defaultValue={p.date}
+                      onChange={(e) => setEditFields({...editFields, [p._id || p.id]: { ...(editFields[p._id || p.id] || { names: p.names, date: p.date, images: p.images }), date: e.target.value }})}
+                      className="bg-black p-2 border border-zinc-700 w-full"
+                    />
+                  </div>
+                  {/* Image URL Input */}
+                  <div>
+                    <label className="text-[10px] uppercase text-zinc-500">Image URLs (comma separated)</label>
+                    <input 
+                      defaultValue={p.images ? p.images.join(', ') : ''}
+                      placeholder="https://image1.jpg, https://image2.jpg"
+                      onChange={(e) => setEditFields({...editFields, [p._id || p.id]: { ...(editFields[p._id || p.id] || { names: p.names, date: p.date, images: p.images }), images: e.target.value.split(',').map(s => s.trim()) }})}
+                      className="bg-black p-2 border border-zinc-700 w-full"
+                    />
+                  </div>
                 </div>
 
-                {/* ናይ ዕለት መጽሓፊ */}
-                <div className="w-full">
-                  <label className="text-[10px] uppercase text-zinc-500">Date & Location</label>
-                  <input 
-                    defaultValue={p.date}
-                    onChange={(e) => setEditFields({
-                      ...editFields, 
-                      [p._id || p.id]: { ...editFields[p._id || p.id], date: e.target.value }
-                    })}
-                    className="bg-black p-2 border border-zinc-700 w-full focus:border-amber-500 outline-none"
-                  />
-                </div>
-
-                {/* ናይ መዐቀሪ ቁልፊ */}
                 <button 
                   onClick={() => handleUpdate(p._id || p.id)}
-                  className="bg-amber-500 text-black px-6 py-2 mt-4 md:mt-4 font-bold hover:bg-amber-400 transition"
+                  className="bg-amber-500 text-black px-6 py-2 font-bold w-full md:w-32 hover:bg-amber-400 transition"
                 >
                   Save
                 </button>
