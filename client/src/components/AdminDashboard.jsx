@@ -5,7 +5,6 @@ function AdminDashboard() {
   const [editFields, setEditFields] = useState({});
   const [selectedFiles, setSelectedFiles] = useState({});
 
-  // እዚ ኣብ ውሽጢ ፋንክሽን ክኸውን ኣለዎ
   useEffect(() => {
     fetch('https://film-production-portfolio.onrender.com/api/projects')
       .then(res => res.json())
@@ -57,7 +56,6 @@ function AdminDashboard() {
         <h2 className="text-2xl mb-6">Manage Your Projects</h2>
         <ul className="space-y-10">
           {projects.map((p) => (
-            // ኣብዚ `p._id` ተጠቒምና ኣለና
             <li key={p._id} className="border-b border-zinc-700 pb-8">
               <h3 className="text-amber-500 text-xl font-bold mb-4">{p.title}</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
