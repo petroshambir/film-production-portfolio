@@ -5,7 +5,9 @@ import connectDB from './Database Connection/DB.js';
 import projectRoutes from './Route/projectRoutes.js';
 import authRoutes from './Route/authRoutes.js';
 
-const app = express();
+
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // CORS configuration (ንኩሉ ሕቶታት ክፈቅድ)
 app.use(cors({
