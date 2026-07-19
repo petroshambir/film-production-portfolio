@@ -501,76 +501,167 @@
 
 // export default AdminDashboard;
 
+// import React, { useState } from 'react';
+
+// function AdminDashboard() {
+//   // ነፍሲ ወከፍ ክፍሊ ናቱ ፍሉይ 'key' ከም ዘለዎ ጌርና ንጽዕኖ
+//   const sectionsConfig = [
+//     { id: 1, title: 'Weddings', storageKey: 'portfolio_weddings' },
+//     { id: 2, title: 'Bridal Shoots', storageKey: 'portfolio_bridal' },
+//     { id: 3, title: 'Baby Shower & Baptism', storageKey: 'portfolio_babyshower' }
+//   ];
+
+//   // ነፍሲ ወከፍ ክፍሊ ካብ localStorage ናቱ ዳታ ይወስድ
+//   const getInitialData = (key, defaultName) => {
+//     const saved = localStorage.getItem(key);
+//     return saved ? JSON.parse(saved) : { names: defaultName, images: [] };
+//   };
+
+//   const [wedding, setWedding] = useState(() => getInitialData('portfolio_weddings', 'Sara & Robel'));
+//   const [bridal, setBridal] = useState(() => getInitialData('portfolio_bridal', 'Abeba'));
+//   const [baby, setBaby] = useState(() => getInitialData('portfolio_babyshower', 'John & Sarah'));
+
+// const handleSave = async (id, data) => {
+//   try {
+//     await fetch(`https://film-production-portfolio.onrender.com/api/projects/${id}`, {
+//       method: 'PUT',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify(data)
+//     });
+//     alert("ብሰላም ናብ ዳታቤዝ ተዓቂቡ ኣሎ!");
+//   } catch (err) {
+//     console.error("Error saving to DB", err);
+//   }
+// };
+//   return (
+//     <div className="p-8 bg-zinc-950 min-h-screen text-white">
+//       <h1 className="text-4xl font-bold mb-10 text-amber-500">Admin Content Manager</h1>
+
+//       {/* Wedding Control */}
+//       <SectionRenderer 
+//         title="Weddings" 
+//         data={wedding} 
+//         setData={setWedding} 
+//         onSave={() => handleSave('portfolio_weddings', wedding)} 
+//       />
+
+//       {/* Bridal Control */}
+//       <SectionRenderer 
+//         title="Bridal Shoots" 
+//         data={bridal} 
+//         setData={setBridal} 
+//         onSave={() => handleSave('portfolio_bridal', bridal)} 
+//       />
+
+//       {/* Baby Shower Control */}
+//       <SectionRenderer 
+//         title="Baby Shower & Baptism" 
+//         data={baby} 
+//         setData={setBaby} 
+//         onSave={() => handleSave('portfolio_babyshower', baby)} 
+//       />
+//     </div>
+//   );
+// }
+
+// // እዚ እቲ ንነፍሲ ወከፍ ክፍሊ ዝሰርሕ ሰልኪ (Renderer) እዩ
+// function SectionRenderer({ title, data, setData, onSave }) {
+//   const handleImageUpload = (event) => {
+//     const file = event.target.files[0];
+//     if (file) {
+//       const reader = new FileReader();
+//       reader.onloadend = () => {
+//         setData(prev => ({ ...prev, images: [...prev.images, reader.result] }));
+//       };
+//       reader.readAsDataURL(file);
+//     }
+//   };
+
+//   const deleteImage = (imgIndex) => {
+//     setData(prev => ({ ...prev, images: prev.images.filter((_, i) => i !== imgIndex) }));
+//   };
+
+//   return (
+//     <div className="mb-16 p-8 border border-zinc-700 rounded-2xl bg-zinc-900 shadow-2xl">
+//       <div className="flex justify-between items-center mb-6 border-b border-zinc-700 pb-4">
+//         <h2 className="text-3xl font-bold text-amber-300">{title} Control Panel</h2>
+//         <button onClick={onSave} className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-bold">
+//           Save {title}
+//         </button>
+//       </div>
+
+//       <div className="grid md:grid-cols-2 gap-10">
+//         <input 
+//           type="text" value={data.names}
+//           onChange={(e) => setData(prev => ({ ...prev, names: e.target.value }))}
+//           className="bg-zinc-800 border border-zinc-600 p-3 rounded-lg w-full"
+//         />
+//         <input type="file" onChange={handleImageUpload} className="text-zinc-400" />
+//       </div>
+
+//       <div className="mt-8 grid grid-cols-2 md:grid-cols-6 gap-4">
+//         {data.images.map((img, index) => (
+//           <div key={index} className="relative h-32 border border-zinc-700 rounded-lg overflow-hidden">
+//             <img src={img} className="w-full h-full object-cover" />
+//             <button onClick={() => deleteImage(index)} className="absolute top-0 right-0 bg-red-600 px-2">&times;</button>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default AdminDashboard;
+
+
 import React, { useState } from 'react';
 
 function AdminDashboard() {
-  // ነፍሲ ወከፍ ክፍሊ ናቱ ፍሉይ 'key' ከም ዘለዎ ጌርና ንጽዕኖ
+  // ኣገዳሲ: እዞም id ክትብል ትጽሕፎም ዘለኻ፣ ናይ MongoDB _id ክኾኑ ኣለዎም
+  // ንኣብነት: '66a5f...' 
   const sectionsConfig = [
-    { id: 1, title: 'Weddings', storageKey: 'portfolio_weddings' },
-    { id: 2, title: 'Bridal Shoots', storageKey: 'portfolio_bridal' },
-    { id: 3, title: 'Baby Shower & Baptism', storageKey: 'portfolio_babyshower' }
+    { id: 'YOUR_WEDDING_DB_ID', title: 'Weddings', key: 'wedding' },
+    { id: 'YOUR_BRIDAL_DB_ID', title: 'Bridal Shoots', key: 'bridal' },
+    { id: 'YOUR_BABY_DB_ID', title: 'Baby Shower & Baptism', key: 'baby' }
   ];
 
-  // ነፍሲ ወከፍ ክፍሊ ካብ localStorage ናቱ ዳታ ይወስድ
-  const getInitialData = (key, defaultName) => {
-    const saved = localStorage.getItem(key);
-    return saved ? JSON.parse(saved) : { names: defaultName, images: [] };
+  const [wedding, setWedding] = useState({ names: 'Sara & Robel', images: [] });
+  const [bridal, setBridal] = useState({ names: 'Abeba', images: [] });
+  const [baby, setBaby] = useState({ names: 'John & Sarah', images: [] });
+
+  const handleSave = async (id, data) => {
+    try {
+      const response = await fetch(`https://film-production-portfolio.onrender.com/api/projects/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      
+      if (response.ok) {
+        alert("ብሰላም ናብ ዳታቤዝ ተዓቂቡ ኣሎ!");
+      } else {
+        const errorData = await response.json();
+        alert("ጌጋ ኣጋጢሙ: " + errorData.message);
+      }
+    } catch (err) {
+      console.error("Error saving to DB", err);
+    }
   };
 
-  const [wedding, setWedding] = useState(() => getInitialData('portfolio_weddings', 'Sara & Robel'));
-  const [bridal, setBridal] = useState(() => getInitialData('portfolio_bridal', 'Abeba'));
-  const [baby, setBaby] = useState(() => getInitialData('portfolio_babyshower', 'John & Sarah'));
-
-  // ነፍሲ ወከፍ ክፍሊ ብፍሉይ ዝዕቅብ
-  // const handleSave = (key, data) => {
-  //   localStorage.setItem(key, JSON.stringify(data));
-  //   alert("ተዓቂቡ ኣሎ!");
-  // };// ኣብ AdminDashboard.js
-const handleSave = async (id, data) => {
-  try {
-    await fetch(`https://film-production-portfolio.onrender.com/api/projects/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    alert("ብሰላም ናብ ዳታቤዝ ተዓቂቡ ኣሎ!");
-  } catch (err) {
-    console.error("Error saving to DB", err);
-  }
-};
   return (
     <div className="p-8 bg-zinc-950 min-h-screen text-white">
       <h1 className="text-4xl font-bold mb-10 text-amber-500">Admin Content Manager</h1>
 
-      {/* Wedding Control */}
-      <SectionRenderer 
-        title="Weddings" 
-        data={wedding} 
-        setData={setWedding} 
-        onSave={() => handleSave('portfolio_weddings', wedding)} 
-      />
-
-      {/* Bridal Control */}
-      <SectionRenderer 
-        title="Bridal Shoots" 
-        data={bridal} 
-        setData={setBridal} 
-        onSave={() => handleSave('portfolio_bridal', bridal)} 
-      />
-
-      {/* Baby Shower Control */}
-      <SectionRenderer 
-        title="Baby Shower & Baptism" 
-        data={baby} 
-        setData={setBaby} 
-        onSave={() => handleSave('portfolio_babyshower', baby)} 
-      />
+      <SectionRenderer title="Weddings" data={wedding} setData={setWedding} onSave={() => handleSave('YOUR_WEDDING_DB_ID', wedding)} />
+      <SectionRenderer title="Bridal Shoots" data={bridal} setData={setBridal} onSave={() => handleSave('YOUR_BRIDAL_DB_ID', bridal)} />
+      <SectionRenderer title="Baby Shower & Baptism" data={baby} setData={setBaby} onSave={() => handleSave('YOUR_BABY_DB_ID', baby)} />
     </div>
   );
 }
 
-// እዚ እቲ ንነፍሲ ወከፍ ክፍሊ ዝሰርሕ ሰልኪ (Renderer) እዩ
 function SectionRenderer({ title, data, setData, onSave }) {
+  // ስእሊ ብቐጥታ ናብ Cloudinary ንምስቋል እዩ ዝያዳ ዝሓሸ
+  // ንግዚኡ ግን እቲ ዝነበረካ FileReader ተጠቒምናዮ ኣለና
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
