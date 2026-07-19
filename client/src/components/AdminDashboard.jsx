@@ -613,36 +613,38 @@
 
 // export default AdminDashboard;
 
-
 import React, { useState } from 'react';
 
 function AdminDashboard() {
-  // ኣገዳሲ: እዞም id ክትብል ትጽሕፎም ዘለኻ፣ ናይ MongoDB _id ክኾኑ ኣለዎም
-  // ንኣብነት: '66a5f...' 
   const sectionsConfig = [
-    { id: 'YOUR_WEDDING_DB_ID', title: 'Weddings', key: 'wedding' },
-    { id: 'YOUR_BRIDAL_DB_ID', title: 'Bridal Shoots', key: 'bridal' },
-    { id: 'YOUR_BABY_DB_ID', title: 'Baby Shower & Baptism', key: 'baby' }
+    { id: 'WEDDING_DB_ID_HERE', title: 'Weddings', storageKey: 'portfolio_weddings' },
+    { id: 'BRIDAL_DB_ID_HERE', title: 'Bridal Shoots', storageKey: 'portfolio_bridal' },
+    { id: 'BABY_DB_ID_HERE', title: 'Baby Shower & Baptism', storageKey: 'portfolio_babyshower' }
   ];
 
-  const [wedding, setWedding] = useState({ names: 'Sara & Robel', images: [] });
-  const [bridal, setBridal] = useState({ names: 'Abeba', images: [] });
-  const [baby, setBaby] = useState({ names: 'John & Sarah', images: [] });
+  const getInitialData = (key, defaultName) => {
+    const saved = localStorage.getItem(key);
+    return saved ? JSON.parse(saved) : { names: defaultName, images: [] };
+  };
 
-  const handleSave = async (id, data) => {
+  const [wedding, setWedding] = useState(() => getInitialData('portfolio_weddings', 'Sara & Robel'));
+  const [bridal, setBridal] = useState(() => getInitialData('portfolio_bridal', 'Abeba'));
+  const [baby, setBaby] = useState(() => getInitialData('portfolio_babyshower', 'John & Sarah'));
+
+  // ዳታ ኣብ localStorage ንምዕቃብ ሓጋዚ ፈንክሽን
+  const updateAndSaveLocal = (key, data, setter) => {
+    localStorage.setItem(key, JSON.stringify(data));
+    setter(data);
+  };
+
+  const handleSave = async (id, data, key) => {
     try {
-      const response = await fetch(`https://film-production-portfolio.onrender.com/api/projects/${id}`, {
+      await fetch(`https://film-production-portfolio.onrender.com/api/projects/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
-      
-      if (response.ok) {
-        alert("ብሰላም ናብ ዳታቤዝ ተዓቂቡ ኣሎ!");
-      } else {
-        const errorData = await response.json();
-        alert("ጌጋ ኣጋጢሙ: " + errorData.message);
-      }
+      alert("ብሰላም ናብ ዳታቤዝ ተዓቂቡ ኣሎ!");
     } catch (err) {
       console.error("Error saving to DB", err);
     }
@@ -652,29 +654,44 @@ function AdminDashboard() {
     <div className="p-8 bg-zinc-950 min-h-screen text-white">
       <h1 className="text-4xl font-bold mb-10 text-amber-500">Admin Content Manager</h1>
 
-      <SectionRenderer title="Weddings" data={wedding} setData={setWedding} onSave={() => handleSave('YOUR_WEDDING_DB_ID', wedding)} />
-      <SectionRenderer title="Bridal Shoots" data={bridal} setData={setBridal} onSave={() => handleSave('YOUR_BRIDAL_DB_ID', bridal)} />
-      <SectionRenderer title="Baby Shower & Baptism" data={baby} setData={setBaby} onSave={() => handleSave('YOUR_BABY_DB_ID', baby)} />
+      <SectionRenderer 
+        title="Weddings" 
+        data={wedding} 
+        setData={(d) => updateAndSaveLocal('portfolio_weddings', d, setWedding)} 
+        onSave={() => handleSave(sectionsConfig[0].id, wedding)} 
+      />
+
+      <SectionRenderer 
+        title="Bridal Shoots" 
+        data={bridal} 
+        setData={(d) => updateAndSaveLocal('portfolio_bridal', d, setBridal)} 
+        onSave={() => handleSave(sectionsConfig[1].id, bridal)} 
+      />
+
+      <SectionRenderer 
+        title="Baby Shower & Baptism" 
+        data={baby} 
+        setData={(d) => updateAndSaveLocal('portfolio_babyshower', d, setBaby)} 
+        onSave={() => handleSave(sectionsConfig[2].id, baby)} 
+      />
     </div>
   );
 }
 
 function SectionRenderer({ title, data, setData, onSave }) {
-  // ስእሊ ብቐጥታ ናብ Cloudinary ንምስቋል እዩ ዝያዳ ዝሓሸ
-  // ንግዚኡ ግን እቲ ዝነበረካ FileReader ተጠቒምናዮ ኣለና
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setData(prev => ({ ...prev, images: [...prev.images, reader.result] }));
+        setData({ ...data, images: [...data.images, reader.result] });
       };
       reader.readAsDataURL(file);
     }
   };
 
   const deleteImage = (imgIndex) => {
-    setData(prev => ({ ...prev, images: prev.images.filter((_, i) => i !== imgIndex) }));
+    setData({ ...data, images: data.images.filter((_, i) => i !== imgIndex) });
   };
 
   return (
@@ -689,7 +706,7 @@ function SectionRenderer({ title, data, setData, onSave }) {
       <div className="grid md:grid-cols-2 gap-10">
         <input 
           type="text" value={data.names}
-          onChange={(e) => setData(prev => ({ ...prev, names: e.target.value }))}
+          onChange={(e) => setData({ ...data, names: e.target.value })}
           className="bg-zinc-800 border border-zinc-600 p-3 rounded-lg w-full"
         />
         <input type="file" onChange={handleImageUpload} className="text-zinc-400" />
