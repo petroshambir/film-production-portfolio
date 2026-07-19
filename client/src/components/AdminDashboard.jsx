@@ -522,11 +522,22 @@ function AdminDashboard() {
   const [baby, setBaby] = useState(() => getInitialData('portfolio_babyshower', 'John & Sarah'));
 
   // ነፍሲ ወከፍ ክፍሊ ብፍሉይ ዝዕቅብ
-  const handleSave = (key, data) => {
-    localStorage.setItem(key, JSON.stringify(data));
-    alert("ተዓቂቡ ኣሎ!");
-  };
-
+  // const handleSave = (key, data) => {
+  //   localStorage.setItem(key, JSON.stringify(data));
+  //   alert("ተዓቂቡ ኣሎ!");
+  // };// ኣብ AdminDashboard.js
+const handleSave = async (id, data) => {
+  try {
+    await fetch(`https://film-production-portfolio.onrender.com/api/projects/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    alert("ብሰላም ናብ ዳታቤዝ ተዓቂቡ ኣሎ!");
+  } catch (err) {
+    console.error("Error saving to DB", err);
+  }
+};
   return (
     <div className="p-8 bg-zinc-950 min-h-screen text-white">
       <h1 className="text-4xl font-bold mb-10 text-amber-500">Admin Content Manager</h1>

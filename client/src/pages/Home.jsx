@@ -150,16 +150,24 @@ function Home() {
   // ካብ ዳታቤዝ ዝመጽእ ዳታ ኣብዚ ይኽዘን
   const [sections, setSections] = useState([]); 
 
-  useEffect(() => {
-    // ካብ API ዳታ ትወስድ
-    fetch('https://film-production-portfolio.onrender.com/api/content')
-      .then(res => res.json())
-      .then(data => {
-        setTitle(data.title);
-        setSections(data.sections || []); // ዳታ እንተዘየለ ባዶ array ይኹን
-      })
-      .catch(err => console.log("Error fetching data:", err));
-  }, []);
+  // useEffect(() => {
+  //   // ካብ API ዳታ ትወስድ
+  //   fetch('https://film-production-portfolio.onrender.com/api/content')
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       setTitle(data.title);
+  //       setSections(data.sections || []); // ዳታ እንተዘየለ ባዶ array ይኹን
+  //     })
+  //     .catch(err => console.log("Error fetching data:", err));
+  // }, []);
+// ኣብ Home.js
+
+useEffect(() => {
+  fetch('https://film-production-portfolio.onrender.com/api/projects')
+    .then(res => res.json())
+    .then(data => setSections(data)) // ዳታ ካብ DB ይመጽእ ኣሎ
+    .catch(err => console.log(err));
+}, []);
 
   return (
     <div style={{ backgroundColor: '#0a0a0a' }} className="min-h-screen text-white">
