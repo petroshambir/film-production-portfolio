@@ -141,26 +141,20 @@
 // export default AdminDashboard;
 import React, { useState, useEffect } from 'react';
 
+// 1. sectionsConfig ኣብ ወጻኢ ኣቐምጦ፣ ንኹሉ Components ንኽርእዮ
+const sectionsConfig = [
+  { id: '66a1b2c3d4e5f6g7h8i9j0k1', title: 'Weddings', storageKey: 'portfolio_weddings' },
+  { id: '66a1b2c3d4e5f6g7h8i9j0k2', title: 'Bridal Shoots', storageKey: 'portfolio_bridal' },
+  { id: '66a1b2c3d4e5f6g7h8i9j0k3', title: 'Baby Shower & Baptism', storageKey: 'portfolio_babyshower' }
+];
+
 function AdminDashboard() {
-  const sectionsConfig = [
-    { id: 'WEDDING_DB_ID_HERE', title: 'Weddings', storageKey: 'portfolio_weddings' },
-    { id: 'BRIDAL_DB_ID_HERE', title: 'Bridal Shoots', storageKey: 'portfolio_bridal' },
-    { id: 'BABY_DB_ID_HERE', title: 'Baby Shower & Baptism', storageKey: 'portfolio_babyshower' }
-  ];
-  const [projects, setProjects] = useState([]);
-
-  useEffect(() => {
-    fetch('https://film-production-portfolio.onrender.com/api/projects')
-      .then(res => res.json())
-      .then(data => setProjects(data))
-      .catch(err => console.error(err));
-  }, []);
-
   const getInitialData = (key, defaultName) => {
     const saved = localStorage.getItem(key);
     return saved ? JSON.parse(saved) : { names: defaultName, images: [] };
   };
 
+  // State-ታት ኣብዚ ኣለዋ
   const [wedding, setWedding] = useState(() => getInitialData('portfolio_weddings', 'Sara & Robel'));
   const [bridal, setBridal] = useState(() => getInitialData('portfolio_bridal', 'Abeba'));
   const [baby, setBaby] = useState(() => getInitialData('portfolio_babyshower', 'John & Sarah'));
@@ -170,7 +164,7 @@ function AdminDashboard() {
     setter(data);
   };
 
-  const handleSave = async (id, data, key) => {
+  const handleSave = async (id, data) => {
     try {
       await fetch(`https://film-production-portfolio.onrender.com/api/projects/${id}`, {
         method: 'PUT',
@@ -195,70 +189,32 @@ function AdminDashboard() {
 }
 
 function SectionRenderer({ title, data, setData, onSave }) {
-  // እዚ እቲ ናይ ስእሊ ምስቃል ሎጂክ እዩ
-  // const handleImageUpload = async (event) => {
-  //   const file = event.target.files[0];
-  //   if (!file) return;
-
-  //   const formData = new FormData();
-  //   formData.append('images', file);
-
-  //   // እቲ ID ኣብዚ ክትጽሕፎ ኣለካ (ንኣብነት ናይ weddings ID)
-  //   const projectId = "WEDDING_DB_ID_HERE"; 
-
-  //   try {
-  //     const res = await fetch(`https://film-production-portfolio.onrender.com/api/projects/${projectId}/upload`, {
-  //       method: 'POST',
-  //       body: formData
-  //     });
-  //     const result = await res.json();
-  //     // ስእሊ ናብ State ንምውሳኽ
-  //     setData({ ...data, images: [...data.images, ...result.images.slice(-1)] });
-  //     alert("ስእሊ ተሰቒሉ ኣሎ!");
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
+  // 2. handleImageUpload ውሽጢ SectionRenderer
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
 
-    // 1. projectId ካብቲ props ዝመጽእ section (title/ID) ክኸውን ኣለዎ
-    // ንስኻ ኣብ AdminDashboard ፕሮጀክትታትካ ትቕበል ስለዘለኻ፡ 
-    // ካብ `projects` state ናይቲ Section ID ክንወስድ ንኽእል
-    const projectId = sectionsConfig.find(s => s.title === title)?.id;
-
-    if (!projectId || projectId === 'WEDDING_DB_ID_HERE') {
-      alert("Error: ትኽክለኛ ናይ ፕሮጀክት ID የልቦን።");
-      return;
-    }
-
     const formData = new FormData();
-    formData.append('images', file); 
+    formData.append('images', file);
+
+    const section = sectionsConfig.find(s => s.title === title);
+    const projectId = section ? section.id : 'NONE';
 
     try {
       const res = await fetch(`https://film-production-portfolio.onrender.com/api/projects/${projectId}/upload`, {
         method: 'POST',
-        body: formData,
-        // Header ኣይትወሰኽ (Browser ባዕሉ ይገብሮ)
+        body: formData
       });
 
-      // 2. ሰርቨር 500 እንተመሊሱ፡ ዝርዝር ጌጋ ንምርኣይ እዚ ቼክ ንግበር
-      if (!res.ok) {
-        const errorText = await res.text();
-        console.error("Server Error Response:", errorText);
-        throw new Error(`Upload failed: ${res.status}`);
-      }
-
-      const result = await res.json();
+      if (!res.ok) throw new Error("Upload failed");
       
-      // 3. እቲ Backend ዝመለሶ ፎርማት ንምርግጋጽ
-      // result.images ወይ result ዝብል ክኸውን ይኽእል እዩ
+      const result = await res.json();
+      // result.images ንምርግጋጽ console.log(result) ግበር
       setData({ ...data, images: [...data.images, ...result.images] });
-      alert("ስእሊ ብዓወት ተሰቒሉ!");
+      alert("ስእሊ ተሰቒሉ ኣሎ!");
     } catch (err) {
-      console.error("Upload error details:", err);
-      alert("ስእሊ ክሰቅል ኣይከኣለን፡ ብኸመይ ምዃኑ Console ተራእ።");
+      console.error("Upload Error:", err);
+      alert("ስእሊ ክስቀል ኣይከኣለን!");
     }
   };
 
