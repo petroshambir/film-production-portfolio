@@ -140,7 +140,6 @@
 
 // export default AdminDashboard;
 
-
 import React, { useState, useEffect } from 'react';
 
 function AdminDashboard() {
@@ -173,8 +172,7 @@ function AdminDashboard() {
     setter(data);
   };
 
-  // ናይ Cloudinary upload
-  const handleImageUploadToCloudinary = async (file, projectId, currentData, setter, key) => {
+  const handleImageUpload = async (file, projectId, currentData, setter, key) => {
     const formData = new FormData();
     formData.append('images', file);
 
@@ -184,8 +182,6 @@ function AdminDashboard() {
         body: formData
       });
       const data = await res.json();
-      
-      // ካብ Cloudinary ዝመጸ URL ናብ LocalStorage ንምውሳኽ
       const newData = { ...currentData, images: [...currentData.images, ...data.images.slice(-1)] };
       updateAndSaveLocal(key, newData, setter);
       alert("ስእሊ ናብ Cloudinary ተሰቒሉ!");
@@ -211,26 +207,18 @@ function AdminDashboard() {
     <div className="p-8 bg-zinc-950 min-h-screen text-white">
       <h1 className="text-4xl font-bold mb-10 text-amber-500">Admin Content Manager</h1>
 
-      <SectionRenderer 
-        title="Weddings" data={wedding} setData={(d) => updateAndSaveLocal('portfolio_weddings', d, setWedding)} 
-        onSave={() => handleSave(sectionsConfig[0].id, wedding)}
-        onUpload={(file) => handleImageUploadToCloudinary(file, sectionsConfig[0].id, wedding, setWedding, 'portfolio_weddings')}
-      />
-      <SectionRenderer 
-        title="Bridal Shoots" data={bridal} setData={(d) => updateAndSaveLocal('portfolio_bridal', d, setBridal)} 
-        onSave={() => handleSave(sectionsConfig[1].id, bridal)}
-        onUpload={(file) => handleImageUploadToCloudinary(file, sectionsConfig[1].id, bridal, setBridal, 'portfolio_bridal')}
-      />
-      <SectionRenderer 
-        title="Baby Shower & Baptism" data={baby} setData={(d) => updateAndSaveLocal('portfolio_babyshower', d, setBaby)} 
-        onSave={() => handleSave(sectionsConfig[2].id, baby)}
-        onUpload={(file) => handleImageUploadToCloudinary(file, sectionsConfig[2].id, baby, setBaby, 'portfolio_babyshower')}
-      />
+      <SectionRenderer title="Weddings" data={wedding} setData={(d) => updateAndSaveLocal('portfolio_weddings', d, setWedding)} onSave={() => handleSave(sectionsConfig[0].id, wedding)} onUpload={(file) => handleImageUpload(file, sectionsConfig[0].id, wedding, setWedding, 'portfolio_weddings')} />
+      <SectionRenderer title="Bridal Shoots" data={bridal} setData={(d) => updateAndSaveLocal('portfolio_bridal', d, setBridal)} onSave={() => handleSave(sectionsConfig[1].id, bridal)} onUpload={(file) => handleImageUpload(file, sectionsConfig[1].id, bridal, setBridal, 'portfolio_bridal')} />
+      <SectionRenderer title="Baby Shower & Baptism" data={baby} setData={(d) => updateAndSaveLocal('portfolio_babyshower', d, setBaby)} onSave={() => handleSave(sectionsConfig[2].id, baby)} onUpload={(file) => handleImageUpload(file, sectionsConfig[2].id, baby, setBaby, 'portfolio_babyshower')} />
     </div>
   );
 }
 
 function SectionRenderer({ title, data, setData, onSave, onUpload }) {
+  const deleteImage = (imgIndex) => {
+    setData({ ...data, images: data.images.filter((_, i) => i !== imgIndex) });
+  };
+
   return (
     <div className="mb-16 p-8 border border-zinc-700 rounded-2xl bg-zinc-900 shadow-2xl">
       <div className="flex justify-between items-center mb-6 border-b border-zinc-700 pb-4">
@@ -249,7 +237,7 @@ function SectionRenderer({ title, data, setData, onSave, onUpload }) {
         {data.images.map((img, index) => (
           <div key={index} className="relative h-32 border border-zinc-700 rounded-lg overflow-hidden">
             <img src={img} className="w-full h-full object-cover" />
-            <button onClick={() => setData({...data, images: data.images.filter((_, i) => i !== index)})} className="absolute top-0 right-0 bg-red-600 px-2">&times;</button>
+            <button onClick={() => deleteImage(index)} className="absolute top-0 right-0 bg-red-600 px-2 text-white font-bold">&times;</button>
           </div>
         ))}
       </div>
