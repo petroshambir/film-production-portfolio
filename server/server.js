@@ -54,7 +54,11 @@ connectDB();
 // 4. Routes
 app.use('/api/projects', projectRoutes);
 app.use('/api/auth', authRoutes);
-
+// ኣብ server.js
+app.use((req, res, next) => {
+    console.log(`${req.method} request to ${req.url}`);
+    next();
+});
 // 5. ሰርቨር ኣበግሶ
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
