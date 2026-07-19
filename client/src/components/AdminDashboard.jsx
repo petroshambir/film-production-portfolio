@@ -139,7 +139,6 @@
 // }
 
 // export default AdminDashboard;
-
 import React, { useState, useEffect } from 'react';
 
 function AdminDashboard() {
@@ -172,6 +171,7 @@ function AdminDashboard() {
     setter(data);
   };
 
+  // ስእሊ ናብ Backend/Cloudinary ንምስቃል። እዚ እቲ ዝተስተኻኸለ Function እዩ።
   const handleImageUpload = async (file, projectId, currentData, setter, key) => {
     const formData = new FormData();
     formData.append('images', file);
@@ -182,6 +182,7 @@ function AdminDashboard() {
         body: formData
       });
       const data = await res.json();
+      // Backend ካብ Cloudinary ዝመለሶ URL ኣብቲ LocalState ንውስኾ
       const newData = { ...currentData, images: [...currentData.images, ...data.images.slice(-1)] };
       updateAndSaveLocal(key, newData, setter);
       alert("ስእሊ ናብ Cloudinary ተሰቒሉ!");
