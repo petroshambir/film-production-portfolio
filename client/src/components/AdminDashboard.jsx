@@ -147,7 +147,6 @@ function AdminDashboard() {
     { id: 'BRIDAL_DB_ID_HERE', title: 'Bridal Shoots', storageKey: 'portfolio_bridal' },
     { id: 'BABY_DB_ID_HERE', title: 'Baby Shower & Baptism', storageKey: 'portfolio_babyshower' }
   ];
-  
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -171,27 +170,7 @@ function AdminDashboard() {
     setter(data);
   };
 
-  // ስእሊ ናብ Backend/Cloudinary ንምስቃል። እዚ እቲ ዝተስተኻኸለ Function እዩ።
-  const handleImageUpload = async (file, projectId, currentData, setter, key) => {
-    const formData = new FormData();
-    formData.append('images', file);
-
-    try {
-      const res = await fetch(`https://film-production-portfolio.onrender.com/api/projects/${projectId}/upload`, {
-        method: 'POST',
-        body: formData
-      });
-      const data = await res.json();
-      // Backend ካብ Cloudinary ዝመለሶ URL ኣብቲ LocalState ንውስኾ
-      const newData = { ...currentData, images: [...currentData.images, ...data.images.slice(-1)] };
-      updateAndSaveLocal(key, newData, setter);
-      alert("ስእሊ ናብ Cloudinary ተሰቒሉ!");
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const handleSave = async (id, data) => {
+  const handleSave = async (id, data, key) => {
     try {
       await fetch(`https://film-production-portfolio.onrender.com/api/projects/${id}`, {
         method: 'PUT',
@@ -208,14 +187,39 @@ function AdminDashboard() {
     <div className="p-8 bg-zinc-950 min-h-screen text-white">
       <h1 className="text-4xl font-bold mb-10 text-amber-500">Admin Content Manager</h1>
 
-      <SectionRenderer title="Weddings" data={wedding} setData={(d) => updateAndSaveLocal('portfolio_weddings', d, setWedding)} onSave={() => handleSave(sectionsConfig[0].id, wedding)} onUpload={(file) => handleImageUpload(file, sectionsConfig[0].id, wedding, setWedding, 'portfolio_weddings')} />
-      <SectionRenderer title="Bridal Shoots" data={bridal} setData={(d) => updateAndSaveLocal('portfolio_bridal', d, setBridal)} onSave={() => handleSave(sectionsConfig[1].id, bridal)} onUpload={(file) => handleImageUpload(file, sectionsConfig[1].id, bridal, setBridal, 'portfolio_bridal')} />
-      <SectionRenderer title="Baby Shower & Baptism" data={baby} setData={(d) => updateAndSaveLocal('portfolio_babyshower', d, setBaby)} onSave={() => handleSave(sectionsConfig[2].id, baby)} onUpload={(file) => handleImageUpload(file, sectionsConfig[2].id, baby, setBaby, 'portfolio_babyshower')} />
+      <SectionRenderer title="Weddings" data={wedding} setData={(d) => updateAndSaveLocal('portfolio_weddings', d, setWedding)} onSave={() => handleSave(sectionsConfig[0].id, wedding)} />
+      <SectionRenderer title="Bridal Shoots" data={bridal} setData={(d) => updateAndSaveLocal('portfolio_bridal', d, setBridal)} onSave={() => handleSave(sectionsConfig[1].id, bridal)} />
+      <SectionRenderer title="Baby Shower & Baptism" data={baby} setData={(d) => updateAndSaveLocal('portfolio_babyshower', d, setBaby)} onSave={() => handleSave(sectionsConfig[2].id, baby)} />
     </div>
   );
 }
 
-function SectionRenderer({ title, data, setData, onSave, onUpload }) {
+function SectionRenderer({ title, data, setData, onSave }) {
+  // እዚ እቲ ናይ ስእሊ ምስቃል ሎጂክ እዩ
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('images', file);
+
+    // እቲ ID ኣብዚ ክትጽሕፎ ኣለካ (ንኣብነት ናይ weddings ID)
+    const projectId = "WEDDING_DB_ID_HERE"; 
+
+    try {
+      const res = await fetch(`https://film-production-portfolio.onrender.com/api/projects/${projectId}/upload`, {
+        method: 'POST',
+        body: formData
+      });
+      const result = await res.json();
+      // ስእሊ ናብ State ንምውሳኽ
+      setData({ ...data, images: [...data.images, ...result.images.slice(-1)] });
+      alert("ስእሊ ተሰቒሉ ኣሎ!");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const deleteImage = (imgIndex) => {
     setData({ ...data, images: data.images.filter((_, i) => i !== imgIndex) });
   };
@@ -230,15 +234,19 @@ function SectionRenderer({ title, data, setData, onSave, onUpload }) {
       </div>
 
       <div className="grid md:grid-cols-2 gap-10">
-        <input type="text" value={data.names} onChange={(e) => setData({ ...data, names: e.target.value })} className="bg-zinc-800 border border-zinc-600 p-3 rounded-lg w-full" />
-        <input type="file" onChange={(e) => onUpload(e.target.files[0])} className="text-zinc-400" />
+        <input 
+          type="text" value={data.names}
+          onChange={(e) => setData({ ...data, names: e.target.value })}
+          className="bg-zinc-800 border border-zinc-600 p-3 rounded-lg w-full"
+        />
+        <input type="file" onChange={handleImageUpload} className="text-zinc-400" />
       </div>
 
       <div className="mt-8 grid grid-cols-2 md:grid-cols-6 gap-4">
         {data.images.map((img, index) => (
           <div key={index} className="relative h-32 border border-zinc-700 rounded-lg overflow-hidden">
             <img src={img} className="w-full h-full object-cover" />
-            <button onClick={() => deleteImage(index)} className="absolute top-0 right-0 bg-red-600 px-2 text-white font-bold">&times;</button>
+            <button onClick={() => deleteImage(index)} className="absolute top-0 right-0 bg-red-600 px-2">&times;</button>
           </div>
         ))}
       </div>
