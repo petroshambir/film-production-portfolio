@@ -45,15 +45,28 @@ router.post('/add', async (req, res) => {
 });
 
 
-
-// projectRoutes.js
 // እቲ URL '/:id' ጥራሕ ይኹን
+
+// router.put('/:id', async (req, res) => {
+//     try {
+//         const { names, date } = req.body;
+//         const updatedProject = await Project.findByIdAndUpdate(
+//             req.params.id, 
+//             { names, date }, 
+//             { new: true }
+//         );
+//         res.json(updatedProject);
+//     } catch (err) {
+//         res.status(500).json({ message: "Error updating" });
+//     }
+// });
+
 router.put('/:id', async (req, res) => {
     try {
-        const { names, date } = req.body;
+        // names, date ከምኡውን images ኣብ body ክህሉ ኣለዎ
         const updatedProject = await Project.findByIdAndUpdate(
             req.params.id, 
-            { names, date }, 
+            { $set: req.body }, // ኩሉ ዝመጸ ዳታ ኣዘምኖ
             { new: true }
         );
         res.json(updatedProject);
@@ -61,6 +74,7 @@ router.put('/:id', async (req, res) => {
         res.status(500).json({ message: "Error updating" });
     }
 });
+
 router.delete('/:projectId/images/:imgIndex', async (req, res) => {
     const project = await Project.findById(req.params.projectId);
     project.images.splice(req.params.imgIndex, 1);
