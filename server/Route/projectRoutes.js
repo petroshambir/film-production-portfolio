@@ -61,4 +61,10 @@ router.put('/:id', async (req, res) => {
         res.status(500).json({ message: "Error updating" });
     }
 });
+router.delete('/:projectId/images/:imgIndex', async (req, res) => {
+    const project = await Project.findById(req.params.projectId);
+    project.images.splice(req.params.imgIndex, 1);
+    await project.save();
+    res.json(project);
+});
 export default router;
