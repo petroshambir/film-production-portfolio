@@ -4,53 +4,6 @@ import Project from '../models/project.js'; // ኣብ ኣይነት ናይ ፕሮ
 import { upload } from '../cloudinaryConfig.js'
 const router = express.Router();
 
-
-// router.post('/:id/upload', upload.array('images', 5), async (req, res) => {
-//     try {
-//         const project = await Project.findById(req.params.id);
-//         if (!project) return res.status(404).json({ message: "Project not found" });
-
-//         // Cloudinary ዝሃበና ሊንክታት
-//         const imageUrls = req.files.map(file => file.path);
-
-//         // ሊንክታት ጥራሕ ናብ DB ንወስኽ
-//         project.images.push(...imageUrls);
-        
-//         await project.save();
-//         res.json({ message: "Uploaded Successfully", images: project.images });
-//     } catch (err) {
-//         res.status(500).json({ error: err.message });
-//     }
-// });
-// projectRoutes.js
-router.post('/:id/upload', (req, res) => {
-    // ሚድልዌር ኣብ ውሽጢ ክንጽውዖ መታን ጌጋታት ክንቆጻጸር ንኽእል
-    upload.array('images', 5)(req, res, async (err) => {
-        if (err) {
-            console.error("Multer Error:", err);
-            return res.status(500).json({ message: "File upload failed", error: err.message });
-        }
-
-        try {
-            if (!req.files || req.files.length === 0) {
-                return res.status(400).json({ message: "No file uploaded" });
-            }
-
-            const project = await Project.findById(req.params.id);
-            if (!project) return res.status(404).json({ message: "Project not found" });
-
-            const imageUrls = req.files.map(file => file.path);
-            project.images.push(...imageUrls);
-            await project.save();
-            
-            res.json({ message: "Uploaded Successfully", images: project.images });
-        } catch (error) {
-            console.error("Database Error:", error);
-            res.status(500).json({ message: "Internal server error" });
-        }
-    });
-});
-// ኩሎም ፕሮጀክትታት ንምርኣይ
 router.get('/', async (req, res) => {
     try {
         const projects = await Project.find();
@@ -72,25 +25,74 @@ router.post('/add', async (req, res) => {
 });
 
 
+// 1. ስእሊ ንምጽዓን (Upload) - ብ Title ይሰርሕ
+router.post('/:title/upload', (req, res) => {
+    upload.array('images', 5)(req, res, async (err) => {
+        if (err) {
+            console.error("Multer Error:", err);
+            return res.status(500).json({ message: "File upload failed", error: err.message });
+        }
 
-router.put('/:id', async (req, res) => {
+        try {
+            if (!req.files || req.files.length === 0) {
+                return res.status(400).json({ message: "No file uploaded" });
+            }
+
+            // ብ Title ንደልዮ (ንኣብነት Weddings, Bridal Shoots)
+            let project = await Project.findOne({ title: req.params.title });
+
+            // እቲ ፕሮጀክት ገና ኣብ DB ከይነበረ እንተተረኺቡ፡ ብኣውቶማቲክ ንፈጥሮ
+            if (!project) {
+                project = new Project({ title: req.params.title, names: "", images: [] });
+            }
+
+            const imageUrls = req.files.map(file => file.path);
+            project.images.push(...imageUrls);
+            await project.save();
+            
+            res.json({ message: "Uploaded Successfully", images: project.images });
+        } catch (error) {
+            console.error("Database Error:", error);
+            res.status(500).json({ message: "Internal server error" });
+        }
+    });
+});
+
+// 2. ሽምን ካልእ ዳታን ንምቕያር (PUT) - ብ Title ይሰርሕ
+router.put('/:title', async (req, res) => {
     try {
-        // names, date ከምኡውን images ኣብ body ክህሉ ኣለዎ
-        const updatedProject = await Project.findByIdAndUpdate(
-            req.params.id, 
-            { $set: req.body }, // ኩሉ ዝመጸ ዳታ ኣዘምኖ
-            { new: true }
+        let updatedProject = await Project.findOneAndUpdate(
+            { title: req.params.title }, 
+            { $set: req.body }, 
+            { new: true, upsert: true } // ዛጊት ካብ ዘይነበረ ባዕሉ ይፈጥሮ
         );
         res.json(updatedProject);
     } catch (err) {
+        console.error("Update Error:", err);
         res.status(500).json({ message: "Error updating" });
     }
 });
 
-router.delete('/:projectId/images/:imgIndex', async (req, res) => {
-    const project = await Project.findById(req.params.projectId);
-    project.images.splice(req.params.imgIndex, 1);
-    await project.save();
-    res.json(project);
+
+// router.delete('/:projectId/images/:imgIndex', async (req, res) => {
+//     const project = await Project.findById(req.params.projectId);
+//     project.images.splice(req.params.imgIndex, 1);
+//     await project.save();
+//     res.json(project);
+// });
+
+// ስእሊ ንምድምساس ብ Title
+router.delete('/:title/images', async (req, res) => {
+    try {
+        const { imgUrl } = req.body;
+        let project = await Project.findOne({ title: req.params.title });
+        if (!project) return res.status(404).json({ message: "Project not found" });
+
+        project.images = project.images.filter(img => img !== imgUrl);
+        await project.save();
+        res.json(project);
+    } catch (err) {
+        res.status(500).json({ message: "Error deleting image" });
+    }
 });
 export default router;
