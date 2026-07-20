@@ -95,8 +95,6 @@
 
 // export default Home;
 
-
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
@@ -141,13 +139,6 @@ function Home() {
                 <p className="text-[12px] uppercase tracking-[0.3em] text-zinc-500 mt-2 font-light text-center">
                   {section.date}
                 </p>
-                {/* ናይ ነፍሰ ወከፍ ክፍሊ ዝኸውን ናይ ሓጎስ/መርዓ ጽሑፍ ኣብ ትሕቲኡ */}
-                <p className="text-zinc-400 text-sm italic text-center mt-3 max-w-lg mx-auto font-serif">
-                  {section.title.toLowerCase().includes('wedding') && "A celebration of eternal love, beautifully captured in every frame."}
-                  {section.title.toLowerCase().includes('bridal') && "Capturing the elegance, grace, and magic of her special day."}
-                  {section.title.toLowerCase().includes('baby') && "Welcoming new life and pure joy with unforgettable memories."}
-                  {!section.title.toLowerCase().includes('wedding') && !section.title.toLowerCase().includes('bridal') && !section.title.toLowerCase().includes('baby') && "Cherished moments frozen in time with cinematic elegance."}
-                </p>
               </div>
             )}
 
@@ -158,11 +149,18 @@ function Home() {
                 <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-500 font-bold">
                   0{index + 1} — Selection
                 </span>
+                
+                {/* ርእሲ (Weddings, Bridal Shoots, ወዘተ) */}
                 <h2 className="text-5xl md:text-7xl font-light tracking-tighter leading-none">
                   {section.title}
                 </h2>
+
+                {/* ኣብ ትሕቲ ነፍሰ ወከፍ ርእሲ ዝውቱርን ዝርዝርን መግለጫ (Description) */}
                 <p className="text-lg leading-relaxed text-zinc-400 max-w-md pt-4">
-                  {section.desc}
+                  {section.title.toLowerCase().includes('wedding') && "Every wedding is a unique story of love, laughter, and unforgettable moments. We capture the deep emotions, authentic connections, and cinematic beauty of your special day so you can relive the magic forever."}
+                  {section.title.toLowerCase().includes('bridal') && "Celebrating grace, elegance, and individuality. Our bridal sessions are crafted to highlight timeless beauty, delicate details, and the majestic radiance of the bride in stunning artistic frames."}
+                  {section.title.toLowerCase().includes('baby') && "Welcoming a new life brings pure warmth and boundless joy. We lovingly preserve these tender, fleeting first moments of your little one and family with gentle, heartwarming cinematic storytelling."}
+                  {!section.title.toLowerCase().includes('wedding') && !section.title.toLowerCase().includes('bridal') && !section.title.toLowerCase().includes('baby') && section.desc}
                 </p>
               </div>
 
