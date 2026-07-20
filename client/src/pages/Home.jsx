@@ -154,7 +154,7 @@ function Home() {
                 </h2>
                 {/* ካብ ኣድሚን ዳታቤዝ ዝመጽእ ዲስክሪፕሽን (Description) */}
                 <p className="text-lg leading-relaxed text-zinc-400 max-w-md pt-4">
-                  {section.desc}
+                  {section.desc || section.description}
                 </p>
               </div>
 
