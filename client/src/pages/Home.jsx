@@ -94,6 +94,7 @@
 // }
 
 // export default Home;
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
@@ -111,13 +112,12 @@ function Home() {
   // ካብ ዳታቤዝ ዝመጽእ ዳታ ኣብዚ ይኽዘን
   const [sections, setSections] = useState([]); 
 
-
-useEffect(() => {
-  fetch('https://film-production-portfolio.onrender.com/api/projects')
-    .then(res => res.json())
-    .then(data => setSections(data)) // ዳታ ካብ DB ይመጽእ ኣሎ
-    .catch(err => console.log(err));
-}, []);
+  useEffect(() => {
+    fetch('https://film-production-portfolio.onrender.com/api/projects')
+      .then(res => res.json())
+      .then(data => setSections(data)) // ዳታ ካብ DB ይመጽእ ኣሎ
+      .catch(err => console.log(err));
+  }, []);
 
   return (
     <div style={{ backgroundColor: '#0a0a0a' }} className="min-h-screen text-white">
@@ -142,8 +142,8 @@ useEffect(() => {
               </div>
             )}
 
-            {/* ኣቀማምጣ ስእልን ጽሑፍን (Cross: section.reverse ብምጥቃም ሓደ ብየማን ሓደ ብጸጋም ይለዋወጥ) */}
-            <div className={`flex flex-col ${section.reverse ? 'md:flex-row-reverse' : 'md:flex-row'} items-center text-center md:text-left gap-12 md:gap-24`}>
+            {/* ኣቀማምጣ ስእልን ጽሑፍን (index % 2 !== 0 ብምግባር ብጽኑዕ ሓደ ብየማን ሓደ ብጸጋም ይለዋወጥ) */}
+            <div className={`flex flex-col ${index % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center text-center md:text-left gap-12 md:gap-24`}>
               
               <div className="flex-1 flex flex-col items-center md:items-start justify-center space-y-4">
                 <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-500 font-bold">
@@ -152,7 +152,7 @@ useEffect(() => {
                 <h2 className="text-5xl md:text-7xl font-light tracking-tighter leading-none">
                   {section.title}
                 </h2>
-                {/* ካብቲ Admin Dashboard ዝተጻሕፈ desc ብቐጥታ ኣብዚ ይጽሓፍ */}
+                {/* ካብ ኣድሚን ዳታቤዝ ዝመጽእ ዲስክሪፕሽን (Description) */}
                 <p className="text-lg leading-relaxed text-zinc-400 max-w-md pt-4">
                   {section.desc}
                 </p>
@@ -168,7 +168,7 @@ useEffect(() => {
                   ))}
                 </div>
                 
-                {/* View Gallery ቁልፊ (ብወርቃዊ ቦርደር ከምኡውን ኣብ ማእከል/ብጸጋም ከሰማምዕ ተገይሩ) */}
+                {/* View Gallery ቁልፊ (ብወርቃዊ ቦርደርን ሆቨርን፣ ማእከል ዝኾነ) */}
                 <div className="mt-8 w-full text-center md:text-left flex justify-center md:justify-start">
                   <Link 
                     to={`/gallery/${section.title.toLowerCase().replace(/\s+/g, '-')}`}
