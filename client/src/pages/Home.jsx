@@ -250,7 +250,7 @@ function Home() {
               {isWedding ? (
                 <div className="w-full space-y-24">
                   
-                  {/* ቅጥሪ 1: መጀመርያ 100% ሙሉእ ካብ ጫፍ ናብ ጫፍ ስእሊ (Sharp corners) */}
+                  {/* 1. መጀመርያ ሙሉእ ስእሊ (ቁመታ ተቐንዩ - Reduced Height) */}
                   {Array.isArray(section.images) && section.images[0] && (
                     <div className="w-full">
                       <div className="text-center max-w-2xl mx-auto mb-8 px-6">
@@ -261,7 +261,7 @@ function Home() {
                           {section.desc || section.description}
                         </p>
                       </div>
-                      <div className="group w-full h-[600px] md:h-[800px] overflow-hidden shadow-2xl bg-zinc-200">
+                      <div className="group w-full h-[400px] md:h-[550px] overflow-hidden shadow-xl bg-zinc-200">
                         <img 
                           src={section.images[0]} 
                           alt={section.title} 
@@ -271,11 +271,11 @@ function Home() {
                     </div>
                   )}
 
-                  {/* ቅጥሪ 2: ዚግ-ዛግ ስእልታት (ላዕለዋይ ኩርናዕ ጥራይ ቀስታዊ/Arch) ምስ መግለጺታት */}
+                  {/* 2. ዚግ-ዛግ ስእልታት (ኣብ ሞባይልን ዴስክቶፕን ብተመሳሳሊ ዝግዛግ ዝስርዑ) */}
                   {Array.isArray(section.images) && section.images.length > 1 && (
-                    <div className="max-w-7xl mx-auto px-6 md:px-24 space-y-24">
+                    <div className="max-w-7xl mx-auto px-6 md:px-24 space-y-20">
                       {section.images.slice(1, 4).map((img, i) => (
-                        <div key={i} className={`flex flex-col ${i % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-16`}>
+                        <div key={i} className={`flex flex-col ${i % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-12`}>
                           <div className="flex-1 space-y-4 text-center md:text-left">
                             <span className="text-[10px] tracking-[0.4em] uppercase text-zinc-400 font-bold">
                               Moment 0{i + 2}
@@ -297,7 +297,7 @@ function Home() {
                     </div>
                   )}
 
-                  {/* ቅጥሪ 3: ከምቲ ኣብ ቪድዮ ዘሎ ካልኣይ ሙሉእ ካብ ጫፍ ናብ ጫፍ ስእሊ (Full-width banner) */}
+                  {/* 3. ካልኣይ ሙሉእ ስእሊ (ቁመታ ተቐንዩ - Reduced Height) */}
                   {Array.isArray(section.images) && section.images[4] && (
                     <div className="w-full pt-6">
                       <div className="text-center max-w-2xl mx-auto mb-8 px-6">
@@ -308,15 +308,14 @@ function Home() {
                           {section.desc || section.description}
                         </p>
                       </div>
-                      <div className="group w-full h-[600px] md:h-[800px] overflow-hidden shadow-2xl bg-zinc-200 relative flex items-center justify-center">
+                      <div className="group w-full h-[400px] md:h-[550px] overflow-hidden shadow-xl bg-zinc-200 relative flex items-center justify-center">
                         <img 
                           src={section.images[4]} 
                           alt={section.title} 
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 absolute inset-0" 
                         />
-                        {/* ኣብ ልዕሊ እቲ ሙሉእ ስእሊ ዝግለጽ ጽሑፍ (ከምቲ ኣብ ቪድዮ ዘሎ) */}
                         <div className="relative z-10 text-center text-white p-6 bg-black/30 w-full h-full flex flex-col items-center justify-center">
-                          <h2 className="text-5xl md:text-7xl font-serif italic tracking-wider drop-shadow-lg">
+                          <h2 className="text-4xl md:text-6xl font-serif italic tracking-wider drop-shadow-lg">
                             {section.names || section.title}
                           </h2>
                         </div>
@@ -324,11 +323,11 @@ function Home() {
                     </div>
                   )}
 
-                  {/* ቅጥሪ 4: ተወሳኺ ስእልታት ክሳብ 15 ብተመሳሳሊ ቅጥሪ ይደጋገሙ */}
+                  {/* 4. ተወሳኺ ስእልታት ክሳብ 15 ብዚግ-ዛግ ቅጥሪ ይደጋገሙ */}
                   {Array.isArray(section.images) && section.images.length > 5 && (
-                    <div className="max-w-7xl mx-auto px-6 md:px-24 space-y-24 pt-6">
+                    <div className="max-w-7xl mx-auto px-6 md:px-24 space-y-20 pt-6">
                       {section.images.slice(5, 15).map((img, i) => (
-                        <div key={i} className={`flex flex-col ${i % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-16`}>
+                        <div key={i} className={`flex flex-col ${i % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-12`}>
                           <div className="flex-1 space-y-4 text-center md:text-left">
                             <span className="text-[10px] tracking-[0.4em] uppercase text-zinc-400 font-bold">
                               Moment 0{i + 5}
