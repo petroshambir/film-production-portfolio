@@ -214,7 +214,6 @@ function Home() {
   const [currentImages, setCurrentImages] = useState([]);
   const [title, setTitle] = useState('');
   
-  // ካብ ዳታቤዝ ዝመጽእ ዳታ ኣብዚ ይኽዘን
   const [sections, setSections] = useState([]); 
 
   useEffect(() => {
@@ -232,14 +231,13 @@ function Home() {
 
       <section className="px-6 py-20 md:px-24 max-w-7xl mx-auto">
         {sections.map((section, index) => {
-          const isWeddingOrBridal = section.title && (section.title.toLowerCase().includes('wedding') || section.title.toLowerCase().includes('bridal'));
+          const isWedding = section.title && section.title.toLowerCase().includes('wedding');
 
           return (
             <div key={section.id || index} className="mb-32">
               
-              {/* ስም ስራሕን ዕለትን */}
               {section.names && (
-                <div className="mb-10 text-center">
+                <div className="mb-12 text-center">
                   <h3 className="text-4xl md:text-5xl font-serif italic text-zinc-800 tracking-wide">
                     {section.names}
                   </h3>
@@ -249,20 +247,41 @@ function Home() {
                 </div>
               )}
 
-              {isWeddingOrBridal ? (
+              {isWedding ? (
                 <div className="bg-white p-6 md:p-16 rounded-3xl shadow-xl border border-zinc-200 space-y-20">
                   
-                  {/* 1. ሰለስተ ስእልታት ብዚግ-ዛግ (Zig-zag) ኣቀማምጣ ምስ ነናቶም መግለጺታት */}
-                  {Array.isArray(section.images) && section.images.length > 0 && (
+                  {/* 1. መጀመርታ ሙሉእ ስእሊ (Full-width Arch Image) ምስ መግለጺ */}
+                  {Array.isArray(section.images) && section.images[0] && (
+                    <div className="w-full">
+                      <div className="text-center max-w-2xl mx-auto mb-8">
+                        <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-400 font-bold block mb-2">
+                          {section.title} — Story
+                        </span>
+                        <p className="text-lg leading-relaxed text-zinc-600">
+                          {section.desc || section.description}
+                        </p>
+                      </div>
+                      <div className="group w-full h-[500px] md:h-[650px] overflow-hidden rounded-t-[160px] rounded-b-2xl shadow-lg bg-zinc-100">
+                        <img 
+                          src={section.images[0]} 
+                          alt={section.title} 
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 2. ሰለስተ ስእልታት ብዚግ-ዛግ (Zig-zag) ኣቀማምጣ ምስ መግለጺታት */}
+                  {Array.isArray(section.images) && section.images.length > 1 && (
                     <div className="space-y-20">
-                      {section.images.slice(0, 3).map((img, i) => (
+                      {section.images.slice(1, 4).map((img, i) => (
                         <div key={i} className={`flex flex-col ${i % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-12`}>
                           <div className="flex-1 space-y-4 text-center md:text-left">
                             <span className="text-[10px] tracking-[0.4em] uppercase text-zinc-400 font-bold">
-                              Highlight 0{i + 1}
+                              Moment 0{i + 2}
                             </span>
                             <h3 className="text-3xl font-serif text-zinc-900">
-                              {section.title} Moment
+                              {section.title} Highlight
                             </h3>
                             <p className="text-base text-zinc-600 leading-relaxed">
                               {section.desc || section.description}
@@ -278,12 +297,12 @@ function Home() {
                     </div>
                   )}
 
-                  {/* 2. ድሕሪኡ ሓደ ሙሉእ ዓቢ ስእሊ (Full-width / ከምቲ ዝደለኻዮ ካብ ጫፍ ናብ ጫፍ) */}
-                  {Array.isArray(section.images) && section.images[3] && (
+                  {/* 3. ድሕሪኡ ካልኣይ ሙሉእ ዓቢ ስእሊ (Full-width) */}
+                  {Array.isArray(section.images) && section.images[4] && (
                     <div className="w-full pt-6">
                       <div className="text-center max-w-2xl mx-auto mb-8">
                         <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-400 font-bold block mb-2">
-                          Featured View
+                          Featured Memory
                         </span>
                         <p className="text-lg leading-relaxed text-zinc-600">
                           {section.desc || section.description}
@@ -291,7 +310,7 @@ function Home() {
                       </div>
                       <div className="group w-full h-[500px] md:h-[650px] overflow-hidden rounded-t-[160px] rounded-b-2xl shadow-lg bg-zinc-100">
                         <img 
-                          src={section.images[3]} 
+                          src={section.images[4]} 
                           alt={section.title} 
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                         />
