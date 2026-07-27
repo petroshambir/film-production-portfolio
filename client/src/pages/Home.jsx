@@ -248,9 +248,9 @@ function Home() {
               )}
 
               {isWedding ? (
-                <div className="w-full space-y-28">
+                <div className="w-full space-y-24">
                   
-                  {/* 1. መጀመርያ 100% ሙሉእ ካብ ጫፍ ናብ ጫፍ ስእሊ (Sharp 4 corners - ማዕዘናዊ) */}
+                  {/* ቅጥሪ 1: መጀመርያ 100% ሙሉእ ካብ ጫፍ ናብ ጫፍ ስእሊ (Sharp corners) */}
                   {Array.isArray(section.images) && section.images[0] && (
                     <div className="w-full">
                       <div className="text-center max-w-2xl mx-auto mb-8 px-6">
@@ -271,7 +271,7 @@ function Home() {
                     </div>
                   )}
 
-                  {/* 2. 3 ስእልታት ብዚግ-ዛግ (Zig-zag) ኣቀማምጣ (ላዕለዋይ ኩርናዕ ጥራይ ቀስታዊ/Arch) */}
+                  {/* ቅጥሪ 2: ዚግ-ዛግ ስእልታት (ላዕለዋይ ኩርናዕ ጥራይ ቀስታዊ/Arch) ምስ መግለጺታት */}
                   {Array.isArray(section.images) && section.images.length > 1 && (
                     <div className="max-w-7xl mx-auto px-6 md:px-24 space-y-24">
                       {section.images.slice(1, 4).map((img, i) => (
@@ -297,7 +297,7 @@ function Home() {
                     </div>
                   )}
 
-                  {/* 3. ካልኣይቲ ሙሉእ ካብ ጫፍ ናብ ጫፍ ስእሊ (Sharp 4 corners - ማዕዘናዊ) */}
+                  {/* ቅጥሪ 3: ከምቲ ኣብ ቪድዮ ዘሎ ካልኣይ ሙሉእ ካብ ጫፍ ናብ ጫፍ ስእሊ (Full-width banner) */}
                   {Array.isArray(section.images) && section.images[4] && (
                     <div className="w-full pt-6">
                       <div className="text-center max-w-2xl mx-auto mb-8 px-6">
@@ -308,17 +308,23 @@ function Home() {
                           {section.desc || section.description}
                         </p>
                       </div>
-                      <div className="group w-full h-[600px] md:h-[800px] overflow-hidden shadow-2xl bg-zinc-200">
+                      <div className="group w-full h-[600px] md:h-[800px] overflow-hidden shadow-2xl bg-zinc-200 relative flex items-center justify-center">
                         <img 
                           src={section.images[4]} 
                           alt={section.title} 
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 absolute inset-0" 
                         />
+                        {/* ኣብ ልዕሊ እቲ ሙሉእ ስእሊ ዝግለጽ ጽሑፍ (ከምቲ ኣብ ቪድዮ ዘሎ) */}
+                        <div className="relative z-10 text-center text-white p-6 bg-black/30 w-full h-full flex flex-col items-center justify-center">
+                          <h2 className="text-5xl md:text-7xl font-serif italic tracking-wider drop-shadow-lg">
+                            {section.names || section.title}
+                          </h2>
+                        </div>
                       </div>
                     </div>
                   )}
 
-                  {/* 4. ተወሳኺ ስእልታት ክሳብ 15 ብተመሳሳሊ ቅጥሪ ይቕጽሉ */}
+                  {/* ቅጥሪ 4: ተወሳኺ ስእልታት ክሳብ 15 ብተመሳሳሊ ቅጥሪ ይደጋገሙ */}
                   {Array.isArray(section.images) && section.images.length > 5 && (
                     <div className="max-w-7xl mx-auto px-6 md:px-24 space-y-24 pt-6">
                       {section.images.slice(5, 15).map((img, i) => (
