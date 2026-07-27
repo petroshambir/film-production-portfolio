@@ -251,7 +251,7 @@ function Home() {
               {isWedding ? (
                 <div className="w-full space-y-20 md:space-y-24">
                   
-                  {/* 1. መጀመርያ ሙሉእ ስእሊ (ቁመታ ንሞባይልን ዴስክቶፕን ዝምችእ) */}
+                  {/* 1. መጀመርያ ሙሉእ ስእሊ */}
                   {Array.isArray(section.images) && section.images[0] && (
                     <div className="w-full">
                       <div className="text-center max-w-2xl mx-auto mb-6 md:mb-8 px-6">
@@ -272,24 +272,24 @@ function Home() {
                     </div>
                   )}
 
-                  {/* 2. ዚግ-ዛግ ስእልታት (ኣብ ሞባይልን ዴስክቶፕን ብተመሳሳሊ flex-row-reverse ብምጥቃም ብዚግ-ዛግ ዝስርዑ) */}
+                  {/* 2. ዚግ-ዛግ ስእልታት (ብማዕረ ኣብ ሞባይልን ዴስክቶፕን ብተመሳሳሊ ዝግዛግ ዝስርዑ) */}
                   {Array.isArray(section.images) && section.images.length > 1 && (
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-24 space-y-16 md:space-y-20">
                       {section.images.slice(1, 4).map((img, i) => (
-                        <div key={i} className={`flex flex-col ${i % 2 !== 0 ? 'flex-col-reverse md:flex-row-reverse' : 'flex-col md:flex-row'} items-center gap-6 md:gap-12`}>
-                          <div className="flex-1 space-y-3 md:space-y-4 text-center md:text-left px-2">
-                            <span className="text-[10px] tracking-[0.4em] uppercase text-zinc-400 font-bold">
+                        <div key={i} className={`flex ${i % 2 !== 0 ? 'flex-row-reverse md:flex-row-reverse' : 'flex-row md:flex-row'} items-center gap-4 sm:gap-8 md:gap-12`}>
+                          <div className="flex-1 space-y-2 sm:space-y-3 md:space-y-4 text-left px-1 sm:px-2">
+                            <span className="text-[9px] sm:text-[10px] tracking-[0.4em] uppercase text-zinc-400 font-bold block">
                               Moment 0{i + 2}
                             </span>
-                            <h3 className="text-2xl md:text-4xl font-serif text-zinc-900">
+                            <h3 className="text-xl sm:text-2xl md:text-4xl font-serif text-zinc-900 leading-tight">
                               {section.title} Highlight
                             </h3>
-                            <p className="text-sm md:text-base text-zinc-600 leading-relaxed">
+                            <p className="text-xs sm:text-sm md:text-base text-zinc-600 leading-relaxed">
                               {section.desc || section.description}
                             </p>
                           </div>
                           <div className="flex-1 w-full flex justify-center">
-                            <div className="group aspect-[3/4] w-2/3 sm:w-1/2 md:max-w-md overflow-hidden rounded-t-[100px] sm:rounded-t-[120px] md:rounded-t-[140px] rounded-b-none shadow-xl bg-zinc-200">
+                            <div className="group aspect-[3/4] w-[130px] sm:w-[200px] md:max-w-md overflow-hidden rounded-t-[80px] sm:rounded-t-[120px] md:rounded-t-[140px] rounded-b-none shadow-xl bg-zinc-200">
                               <img src={img} alt={section.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                             </div>
                           </div>
@@ -328,20 +328,20 @@ function Home() {
                   {Array.isArray(section.images) && section.images.length > 5 && (
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-24 space-y-16 md:space-y-20 pt-4">
                       {section.images.slice(5, 15).map((img, i) => (
-                        <div key={i} className={`flex flex-col ${i % 2 !== 0 ? 'flex-col-reverse md:flex-row-reverse' : 'flex-col md:flex-row'} items-center gap-6 md:gap-12`}>
-                          <div className="flex-1 space-y-3 md:space-y-4 text-center md:text-left px-2">
-                            <span className="text-[10px] tracking-[0.4em] uppercase text-zinc-400 font-bold">
+                        <div key={i} className={`flex ${i % 2 !== 0 ? 'flex-row-reverse md:flex-row-reverse' : 'flex-row md:flex-row'} items-center gap-4 sm:gap-8 md:gap-12`}>
+                          <div className="flex-1 space-y-2 sm:space-y-3 md:space-y-4 text-left px-1 sm:px-2">
+                            <span className="text-[9px] sm:text-[10px] tracking-[0.4em] uppercase text-zinc-400 font-bold block">
                               Moment 0{i + 5}
                             </span>
-                            <h3 className="text-2xl md:text-4xl font-serif text-zinc-900">
+                            <h3 className="text-xl sm:text-2xl md:text-4xl font-serif text-zinc-900 leading-tight">
                               {section.title} Scene
                             </h3>
-                            <p className="text-sm md:text-base text-zinc-600 leading-relaxed">
+                            <p className="text-xs sm:text-sm md:text-base text-zinc-600 leading-relaxed">
                               {section.desc || section.description}
                             </p>
                           </div>
                           <div className="flex-1 w-full flex justify-center">
-                            <div className="group aspect-[3/4] w-2/3 sm:w-1/2 md:max-w-md overflow-hidden rounded-t-[100px] sm:rounded-t-[120px] md:rounded-t-[140px] rounded-b-none shadow-xl bg-zinc-200">
+                            <div className="group aspect-[3/4] w-[130px] sm:w-[200px] md:max-w-md overflow-hidden rounded-t-[80px] sm:rounded-t-[120px] md:rounded-t-[140px] rounded-b-none shadow-xl bg-zinc-200">
                               <img src={img} alt={section.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                             </div>
                           </div>
