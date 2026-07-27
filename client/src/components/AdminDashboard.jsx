@@ -397,7 +397,6 @@
 // }
 
 // export default AdminDashboard;
-
 import React, { useState, useEffect } from 'react';
 
 const sectionsConfig = [
@@ -415,10 +414,25 @@ function AdminDashboard() {
       .then(data => {
         const dataMap = {};
         data.forEach(item => {
+          // ካብቲ ሰርቨር ዝመጽእ ጽሑፍ ጸሪና ንዕቀቦ
+          let parsedDescriptions = [];
+          let parsedHeadings = [];
+          
+          try {
+            if (typeof item.description === 'string' && item.description.includes('||DESCS||')) {
+              const parts = item.description.split('||DESCS||');
+              parsedDescriptions = JSON.parse(parts[1] || '[]');
+              parsedHeadings = JSON.parse(parts[2] || '[]');
+            }
+          } catch (e) {
+            console.log("Parsing error", e);
+          }
+
           dataMap[item.title] = {
             ...item,
-            descriptions: item.descriptions || [],
-            headings: item.headings || []
+            desc: item.desc || item.description || '',
+            descriptions: item.descriptions || parsedDescriptions,
+            headings: item.headings || parsedHeadings
           };
         });
         setSectionsData(dataMap);
@@ -428,12 +442,16 @@ function AdminDashboard() {
 
   const handleSave = async (title, data) => {
     try {
-      // ኣብዚ ነቲ ዝጸሓፍካዮ descriptionsን headingsን ምስ ሙሉእ ዳታ ብግቡእ ንሰዶ ኣለና
+      // ሰርቨርካ ን descriptions ብቐጥታ ክቕበሎ ስለዘይክእል፡ 
+      // ንሕና ነቲ ዝጸሓፍናዮ ጽሑፋት ብሓደ መልክዕ (Stringified) ኣብቲ "description" ዝብል ሰርቨር ዝፈልጦ Field ንሰዶ
+      const combinedPayloadString = `${data.desc || ''}||DESCS||${JSON.stringify(data.descriptions || [])}||DESCS||${JSON.stringify(data.headings || [])}`;
+
       const payload = {
         ...data,
-        description: data.desc,
-        descriptions: data.descriptions || [],
-        headings: data.headings || []
+        description: combinedPayloadString,
+        desc: data.desc,
+        descriptions: data.descriptions,
+        headings: data.headings
       };
 
       const res = await fetch(`https://film-production-portfolio.onrender.com/api/projects/${title}`, {
@@ -441,11 +459,12 @@ function AdminDashboard() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
+      
       if (!res.ok) throw new Error("Failed to save");
       alert(`ብሰላም ናብ ዳታቤዝ ተዓቂቡ ኣሎ! (${title})`);
     } catch (err) {
       console.error("Error saving to DB", err);
-      alert("ዓወት ኣይተረኽበን!");
+      alert("ዓወት ኣይተረኽበን! መርመሮ (F12 Console)");
     }
   };
 
@@ -503,7 +522,7 @@ function SectionRenderer({ title, data, setData, onSave }) {
       };
 
       setData(newData);
-      alert("ስእሊ ተሰቒሉ ኣሎ! ሕጂ ኣብ ታሕቲ ጽሑፍካ ክትጽሕፍ ትኽእል ኢኻ።");
+      alert("ስእሊ ተሰቒሉ ኣሎ!");
     } catch (err) {
       console.error("Upload Error:", err);
       alert("ስእሊ ክስቀል ኣይከኣለን!");
@@ -522,17 +541,6 @@ function SectionRenderer({ title, data, setData, onSave }) {
       descriptions: updatedDescriptions
     };
     setData(newData);
-    
-    await fetch(`https://film-production-portfolio.onrender.com/api/projects/${title}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        ...newData, 
-        description: newData.desc,
-        descriptions: newData.descriptions,
-        headings: newData.headings 
-      })
-    });
   };
 
   const handleHeadingChange = (index, value) => {
