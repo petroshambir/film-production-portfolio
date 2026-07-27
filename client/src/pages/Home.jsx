@@ -200,7 +200,6 @@
 // }
 
 // export default Home;
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
@@ -226,23 +225,21 @@ function Home() {
   }, []);
 
   return (
-    <div style={{ backgroundColor: '#0f0f0f' }} className="min-h-screen text-white font-sans">
+    <div style={{ backgroundColor: '#0a0a0a' }} className="min-h-screen text-white">
       <Hero videoSrc={heroVideo} buttonText="Explore Our Work" />
 
       {title && <h1 className="text-center text-4xl mt-10 text-white">{title}</h1>}
 
-      <section className="px-4 py-16 md:px-20 max-w-7xl mx-auto">
+      <section className="px-6 py-20 md:px-24">
         {sections.map((section, index) => {
-          // ንናይ Weddings ክፍሊ ጥራይ ልክዕ ከምቲ ዝለኣክካዮ ቪድዮ ዲዛይን ነተግበረሉ
-          const isWedding = section.title && section.title.toLowerCase().includes('wedding');
-
+          // ንኩሎም ስራሕቲ (Weddings, Bridal, Baby Shower) ልክዕ ከምታ ዝደለኻያ ናይ ቪድዮ ዲዛይን ነተግበረሎ
           return (
             <div key={section.id || index} className="mb-32">
               
-              {/* ስም ስራሕን ዕለትን */}
+              {/* ስም ስራሕን ዕለትን (ካብ ዳታቤዝ) */}
               {section.names && (
                 <div className="mb-8 text-center">
-                  <h3 className="text-3xl md:text-5xl font-serif italic text-amber-200 tracking-wide">
+                  <h3 className="text-4xl font-serif italic text-amber-200 tracking-wide">
                     {section.names}
                   </h3>
                   <p className="text-[12px] uppercase tracking-[0.4em] text-zinc-400 mt-2 font-light">
@@ -251,81 +248,46 @@ function Home() {
                 </div>
               )}
 
-              {/* ዲዛይን ናይ Weddings (ልክዕ ከምቲ ኣብ ቪድዮ ዘሎ ዌብሳይት) */}
-              {isWedding ? (
-                <div className="bg-[#f9f8f6] text-zinc-900 p-6 md:p-16 rounded-3xl shadow-2xl border border-zinc-200">
-                  <div className="text-center max-w-2xl mx-auto mb-12">
-                    <span className="text-[10px] tracking-[0.5em] uppercase text-zinc-500 font-bold block mb-3">
-                      Wedding Portfolio
-                    </span>
-                    <h2 className="text-4xl md:text-6xl font-light tracking-tight text-zinc-900 font-serif">
-                      {section.title}
-                    </h2>
-                    <p className="text-base leading-relaxed text-zinc-600 mt-4">
-                      {section.desc || section.description}
-                    </p>
-                  </div>
+              {/* ልክዕ ከምታ ናይ ቪድዮ ዌብሳይት ዝነደፈ ብርሃን ዘለዎ ድሕረ-ባይታን ጽፉፍ ኣቀማምጣን */}
+              <div className="bg-[#fcfbf9] text-zinc-900 p-8 md:p-16 rounded-3xl shadow-2xl border border-zinc-200">
+                <div className="text-center max-w-2xl mx-auto mb-12">
+                  <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-500 font-bold block mb-3">
+                    0{index + 1} — Portfolio Collection
+                  </span>
+                  <h2 className="text-4xl md:text-6xl font-light tracking-tight text-zinc-900 font-serif">
+                    {section.title}
+                  </h2>
+                  <p className="text-lg leading-relaxed text-zinc-600 mt-4">
+                    {section.desc || section.description}
+                  </p>
+                </div>
 
-                  {/* ስእልታት ብናይ ፒንተረስት ርብዒ/Arch ዲዛይን እስከ 15 ስእልታት */}
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-6 w-full">
-                    {Array.isArray(section.images) && section.images.slice(0, 15).map((img, i) => (
-                      <div 
-                        key={i} 
-                        className="group aspect-[3/4] overflow-hidden rounded-t-[120px] rounded-b-2xl shadow-md bg-zinc-200"
-                      >
-                        <img 
-                          src={img} 
-                          alt={section.title} 
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                        />
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-12 text-center">
-                    <Link 
-                      to={`/gallery/${section.title.toLowerCase().replace(/\s+/g, '-')}`}
-                      className="text-[12px] font-bold uppercase tracking-[0.4em] border-2 border-zinc-900 px-8 py-3 text-zinc-900 hover:bg-zinc-900 hover:text-white transition-all duration-300 inline-block rounded-full"
+                {/* ስእልታት ብናይ ፒንተረስት ርብዒ/Arch ዲዛይን ክሳብ 15 ስእልታት */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
+                  {Array.isArray(section.images) && section.images.slice(0, 15).map((img, i) => (
+                    <div 
+                      key={i} 
+                      className="group aspect-[3/4] overflow-hidden rounded-t-[120px] rounded-b-2xl shadow-lg bg-zinc-200"
                     >
-                      View Gallery
-                    </Link>
-                  </div>
+                      <img 
+                        src={img} 
+                        alt={section.title} 
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                      />
+                    </div>
+                  ))}
                 </div>
-              ) : (
-                /* ንኻልኦት ክፍሊታት (כምቲ ቀደም ዝነበሮ ኦርጅናል) */
-                <div className={`flex flex-col ${index % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center text-center md:text-left gap-12 md:gap-24`}>
-                  <div className="flex-1 flex flex-col items-center md:items-start justify-center space-y-4">
-                    <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-500 font-bold">
-                      0{index + 1} — Selection
-                    </span>
-                    <h2 className="text-5xl md:text-7xl font-light tracking-tighter leading-none">
-                      {section.title}
-                    </h2>
-                    <p className="text-lg leading-relaxed text-zinc-400 max-w-md pt-4">
-                      {section.desc || section.description}
-                    </p>
-                  </div>
 
-                  <div className="flex-1 flex flex-col items-center md:items-start w-full">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-                      {Array.isArray(section.images) && section.images.slice(0, 2).map((img, i) => (
-                        <div key={i} className={`group aspect-[2/3] overflow-hidden bg-zinc-900 ${i === 1 ? 'md:mt-20' : ''}`}>
-                          <img src={img} alt={section.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                        </div>
-                      ))}
-                    </div>
-                    
-                    <div className="mt-8 w-full text-center md:text-left flex justify-center md:justify-start">
-                      <Link 
-                        to={`/gallery/${section.title.toLowerCase().replace(/\s+/g, '-')}`}
-                        className="text-[12px] font-bold uppercase tracking-[0.4em] border-2 border-amber-400/60 px-8 py-3 text-amber-300 hover:border-amber-400 hover:bg-amber-400 hover:text-black transition-all duration-300 transform hover:scale-105 inline-block"
-                      >
-                        View Gallery
-                      </Link>
-                    </div>
-                  </div>
+                <div className="mt-12 text-center">
+                  <Link 
+                    to={`/gallery/${section.title.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="text-[12px] font-bold uppercase tracking-[0.4em] border-2 border-zinc-900 px-8 py-3 text-zinc-900 hover:bg-zinc-900 hover:text-white transition-all duration-300 inline-block rounded-full"
+                  >
+                    View Gallery
+                  </Link>
                 </div>
-              )}
+              </div>
+
             </div>
           );
         })}
