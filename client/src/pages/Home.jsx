@@ -200,6 +200,7 @@
 // }
 
 // export default Home;
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
@@ -237,23 +238,23 @@ function Home() {
             <div key={section.id || index} className="mb-32 w-full">
               
               {section.names && (
-                <div className="mb-12 text-center px-6">
-                  <h3 className="text-4xl md:text-5xl font-serif italic text-zinc-800 tracking-wide">
+                <div className="mb-16 text-center px-6">
+                  <h3 className="text-4xl md:text-6xl font-serif italic text-zinc-800 tracking-wide">
                     {section.names}
                   </h3>
-                  <p className="text-[12px] uppercase tracking-[0.4em] text-zinc-500 mt-2 font-light">
+                  <p className="text-[12px] uppercase tracking-[0.4em] text-zinc-500 mt-3 font-light">
                     {section.date}
                   </p>
                 </div>
               )}
 
               {isWedding ? (
-                <div className="w-full space-y-24">
+                <div className="w-full space-y-28">
                   
-                  {/* ብሎክ 1: 100% ሙሉእ ካብ ጫፍ ናብ ጫፍ እትወጽእ ስእሊ */}
+                  {/* 1. መጀመርያ 100% ሙሉእ ካብ ጫፍ ናብ ጫፍ ስእሊ (Sharp corners, No white background) */}
                   {Array.isArray(section.images) && section.images[0] && (
-                    <div className="w-full px-4 md:px-12">
-                      <div className="text-center max-w-2xl mx-auto mb-8">
+                    <div className="w-full">
+                      <div className="text-center max-w-2xl mx-auto mb-8 px-6">
                         <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-400 font-bold block mb-2">
                           {section.title} — Story
                         </span>
@@ -261,7 +262,7 @@ function Home() {
                           {section.desc || section.description}
                         </p>
                       </div>
-                      <div className="group w-full h-[600px] md:h-[750px] overflow-hidden rounded-t-[180px] rounded-b-3xl shadow-2xl bg-zinc-100">
+                      <div className="group w-full h-[600px] md:h-[800px] overflow-hidden shadow-2xl bg-zinc-100">
                         <img 
                           src={section.images[0]} 
                           alt={section.title} 
@@ -271,16 +272,16 @@ function Home() {
                     </div>
                   )}
 
-                  {/* ብሎክ 2: 3 ስእልታት ብዚግ-ዛግ (Zig-zag) ኣቀማምጣ */}
+                  {/* 2. 3 ስእልታት ብዚግ-ዛግ (Zig-zag) ኣቀማምጣ (Sharp corners) */}
                   {Array.isArray(section.images) && section.images.length > 1 && (
-                    <div className="max-w-7xl mx-auto px-6 md:px-24 space-y-20">
+                    <div className="max-w-7xl mx-auto px-6 md:px-24 space-y-24">
                       {section.images.slice(1, 4).map((img, i) => (
-                        <div key={i} className={`flex flex-col ${i % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-12 bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-zinc-200`}>
+                        <div key={i} className={`flex flex-col ${i % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-16`}>
                           <div className="flex-1 space-y-4 text-center md:text-left">
                             <span className="text-[10px] tracking-[0.4em] uppercase text-zinc-400 font-bold">
                               Moment 0{i + 2}
                             </span>
-                            <h3 className="text-3xl font-serif text-zinc-900">
+                            <h3 className="text-3xl md:text-4xl font-serif text-zinc-900">
                               {section.title} Highlight
                             </h3>
                             <p className="text-base text-zinc-600 leading-relaxed">
@@ -288,7 +289,7 @@ function Home() {
                             </p>
                           </div>
                           <div className="flex-1 w-full flex justify-center">
-                            <div className="group aspect-[3/4] w-full max-w-sm overflow-hidden rounded-t-[120px] rounded-b-xl shadow-md bg-zinc-100">
+                            <div className="group aspect-[3/4] w-full max-w-md overflow-hidden shadow-xl bg-zinc-100">
                               <img src={img} alt={section.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                             </div>
                           </div>
@@ -297,10 +298,10 @@ function Home() {
                     </div>
                   )}
 
-                  {/* ብሎክ 3: ካልኣይቲ 100% ሙሉእ ካብ ጫፍ ናብ ጫፍ እትወጽእ ስእሊ */}
+                  {/* 3. ካልኣይቲ ሙሉእ ካብ ጫፍ ናብ ጫፍ ስእሊ (100% Full-width, Sharp corners) */}
                   {Array.isArray(section.images) && section.images[4] && (
-                    <div className="w-full px-4 md:px-12 pt-6">
-                      <div className="text-center max-w-2xl mx-auto mb-8">
+                    <div className="w-full pt-6">
+                      <div className="text-center max-w-2xl mx-auto mb-8 px-6">
                         <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-400 font-bold block mb-2">
                           Featured Memory
                         </span>
@@ -308,7 +309,7 @@ function Home() {
                           {section.desc || section.description}
                         </p>
                       </div>
-                      <div className="group w-full h-[600px] md:h-[750px] overflow-hidden rounded-t-[180px] rounded-b-3xl shadow-2xl bg-zinc-100">
+                      <div className="group w-full h-[600px] md:h-[800px] overflow-hidden shadow-2xl bg-zinc-100">
                         <img 
                           src={section.images[4]} 
                           alt={section.title} 
@@ -318,16 +319,16 @@ function Home() {
                     </div>
                   )}
 
-                  {/* ብሎክ 4: ተወሳኺ ስእልታት እንተለዉ ክሳብ 15 ብተመሳሳሊ ቅጥሪ ይቕጽሉ */}
+                  {/* 4. ተወሳኺ ስእልታት ክሳብ 15 ብተመሳሳሊ ቅጥሪ ይቕጽሉ */}
                   {Array.isArray(section.images) && section.images.length > 5 && (
-                    <div className="max-w-7xl mx-auto px-6 md:px-24 space-y-20 pt-6">
+                    <div className="max-w-7xl mx-auto px-6 md:px-24 space-y-24 pt-6">
                       {section.images.slice(5, 15).map((img, i) => (
-                        <div key={i} className={`flex flex-col ${i % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-12 bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-zinc-200`}>
+                        <div key={i} className={`flex flex-col ${i % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-16`}>
                           <div className="flex-1 space-y-4 text-center md:text-left">
                             <span className="text-[10px] tracking-[0.4em] uppercase text-zinc-400 font-bold">
                               Moment 0{i + 5}
                             </span>
-                            <h3 className="text-3xl font-serif text-zinc-900">
+                            <h3 className="text-3xl md:text-4xl font-serif text-zinc-900">
                               {section.title} Scene
                             </h3>
                             <p className="text-base text-zinc-600 leading-relaxed">
@@ -335,7 +336,7 @@ function Home() {
                             </p>
                           </div>
                           <div className="flex-1 w-full flex justify-center">
-                            <div className="group aspect-[3/4] w-full max-w-sm overflow-hidden rounded-t-[120px] rounded-b-xl shadow-md bg-zinc-100">
+                            <div className="group aspect-[3/4] w-full max-w-md overflow-hidden shadow-xl bg-zinc-100">
                               <img src={img} alt={section.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                             </div>
                           </div>
@@ -344,10 +345,10 @@ function Home() {
                     </div>
                   )}
 
-                  <div className="text-center pt-8 px-6">
+                  <div className="text-center pt-12 px-6">
                     <Link 
                       to={`/gallery/${section.title.toLowerCase().replace(/\s+/g, '-')}`}
-                      className="text-[12px] font-bold uppercase tracking-[0.4em] border-2 border-zinc-900 px-8 py-3 text-zinc-900 hover:bg-zinc-900 hover:text-white transition-all duration-300 inline-block rounded-full"
+                      className="text-[12px] font-bold uppercase tracking-[0.4em] border-2 border-zinc-900 px-10 py-4 text-zinc-900 hover:bg-zinc-900 hover:text-white transition-all duration-300 inline-block"
                     >
                       View Gallery
                     </Link>
@@ -355,7 +356,7 @@ function Home() {
                 </div>
               ) : (
                 /* ንኻልኦት ክፍሊታት መደበኛ ዲዛይን */
-                <div className={`max-w-7xl mx-auto px-6 flex flex-col ${index % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center text-center md:text-left gap-12 bg-white p-8 md:p-16 rounded-3xl shadow-md`}>
+                <div className={`max-w-7xl mx-auto px-6 flex flex-col ${index % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center text-center md:text-left gap-16 py-12`}>
                   <div className="flex-1 flex flex-col items-center md:items-start justify-center space-y-4">
                     <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-400 font-bold">
                       0{index + 1} — Selection
@@ -371,7 +372,7 @@ function Home() {
                   <div className="flex-1 flex flex-col items-center md:items-start w-full">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
                       {Array.isArray(section.images) && section.images.slice(0, 2).map((img, i) => (
-                        <div key={i} className={`group aspect-[2/3] overflow-hidden rounded-t-[100px] rounded-b-xl bg-zinc-100 ${i === 1 ? 'md:mt-16' : ''}`}>
+                        <div key={i} className={`group aspect-[2/3] overflow-hidden bg-zinc-100 shadow-lg ${i === 1 ? 'md:mt-16' : ''}`}>
                           <img src={img} alt={section.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                         </div>
                       ))}
@@ -380,7 +381,7 @@ function Home() {
                     <div className="mt-8 w-full text-center md:text-left flex justify-center md:justify-start">
                       <Link 
                         to={`/gallery/${section.title.toLowerCase().replace(/\s+/g, '-')}`}
-                        className="text-[12px] font-bold uppercase tracking-[0.4em] border-2 border-zinc-900 px-8 py-3 text-zinc-900 hover:bg-zinc-900 hover:text-white transition-all duration-300 inline-block rounded-full"
+                        className="text-[12px] font-bold uppercase tracking-[0.4em] border-2 border-zinc-900 px-8 py-3 text-zinc-900 hover:bg-zinc-900 hover:text-white transition-all duration-300 inline-block"
                       >
                         View Gallery
                       </Link>
