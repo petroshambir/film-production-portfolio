@@ -201,7 +201,6 @@
 
 // export default Home;
 
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
@@ -234,13 +233,12 @@ function Home() {
 
       <section className="px-6 py-20 md:px-24 max-w-7xl mx-auto">
         {sections.map((section, index) => {
-          // ንናይ Weddings ክፍሊ ጥራይ ልክዕ ከምቲ ኣብ ቪድዮ ዘሎ ዲዛይን ነተግበረሉ
           const isWedding = section.title && section.title.toLowerCase().includes('wedding');
 
           return (
             <div key={section.id || index} className="mb-32">
               
-              {/* ስም ስራሕን ዕለትን (ካብ ዳታቤዝ) */}
+              {/* ስም ስራሕን ዕለትን */}
               {section.names && (
                 <div className="mb-10 text-center">
                   <h3 className="text-4xl md:text-5xl font-serif italic text-zinc-800 tracking-wide">
@@ -253,56 +251,67 @@ function Home() {
               )}
 
               {isWedding ? (
-                /* ልክዕ ከምቲ ዝለኣክካዮ ቪድዮ:
-                  - ድሕረ-ባይታ ጻዕዳ/ክሬም
-                  - ቀዳመይቲ ስእሊ ምስ መግለጺ (Description)
-                  - ድሕሪኡ ሰለስተ ስእልታት ብክሪስ-ክሮስ/ግራድ (Arch style)
-                */
-                <div className="bg-white p-6 md:p-16 rounded-3xl shadow-xl border border-zinc-200 space-y-16">
+                <div className="bg-white p-6 md:p-16 rounded-3xl shadow-xl border border-zinc-200 space-y-20">
                   
-                  {/* ክፍሊ 1: መግለጺ ምስ ቀዳመይቲ ስእሊ */}
-                  <div className="flex flex-col md:flex-row items-center gap-12">
-                    <div className="flex-1 space-y-6 text-center md:text-left">
-                      <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-400 font-bold block">
-                        Wedding Story — 01
-                      </span>
-                      <h2 className="text-4xl md:text-6xl font-light tracking-tight font-serif text-zinc-900">
-                        {section.title}
-                      </h2>
-                      <p className="text-lg leading-relaxed text-zinc-600 max-w-lg">
-                        {section.desc || section.description}
-                      </p>
+                  {/* ናይ መጀመርታ ሰለስተ ክፍሊታት ብቅጥሪ (ከምቲ ኣብ ቪድዮ ዘሎ) */}
+                  
+                  {/* 1. መጀመርያ ሓንቲ ሙሉእ ስእሊ (Full-width image) ከምቲ ዝበልካዮ */}
+                  {Array.isArray(section.images) && section.images[0] && (
+                    <div className="w-full">
+                      <div className="text-center max-w-2xl mx-auto mb-8">
+                        <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-400 font-bold block mb-2">
+                          {section.title}
+                        </span>
+                        <p className="text-lg leading-relaxed text-zinc-600">
+                          {section.desc || section.description}
+                        </p>
+                      </div>
+                      <div className="group w-full h-[500px] md:h-[650px] overflow-hidden rounded-t-[160px] rounded-b-2xl shadow-lg bg-zinc-100">
+                        <img 
+                          src={section.images[0]} 
+                          alt={section.title} 
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                        />
+                      </div>
                     </div>
-                    
-                    {/* ቀዳመይቲ ስእሊ ብናይ Arch ቅርጺ */}
-                    <div className="flex-1 w-full flex justify-center">
-                      {Array.isArray(section.images) && section.images[0] && (
-                        <div className="group aspect-[3/4] w-full max-w-sm overflow-hidden rounded-t-[140px] rounded-b-2xl shadow-lg bg-zinc-100">
-                          <img 
-                            src={section.images[0]} 
-                            alt={section.title} 
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                          />
-                        </div>
-                      )}
-                    </div>
-                  </div>
+                  )}
 
-                  {/* ክፍሊ 2: ዝተረፉ ስእልታት (ክሪስ-ክሮስ / 3 ስእልታት ብግሪድ) */}
+                  {/* 2. ድሕሪኡ ሰለስተ ስእልታት ብዚግ-ዛግ (Zig-zag) ኣቀማምጣ ምስ ነናቶም መግለጺታት */}
                   {Array.isArray(section.images) && section.images.length > 1 && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full pt-8">
-                      {section.images.slice(1, 13).map((img, i) => (
-                        <div 
-                          key={i} 
-                          className="group aspect-[3/4] overflow-hidden rounded-t-[120px] rounded-b-2xl shadow-md bg-zinc-100 border border-zinc-100"
-                        >
-                          <img 
-                            src={img} 
-                            alt={section.title} 
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                          />
+                    <div className="space-y-16 pt-10">
+                      {section.images.slice(1, 4).map((img, i) => (
+                        <div key={i} className={`flex flex-col ${i % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-12`}>
+                          <div className="flex-1 space-y-4 text-center md:text-left">
+                            <span className="text-[10px] tracking-[0.4em] uppercase text-zinc-400 font-bold">
+                              Moment 0{i + 2}
+                            </span>
+                            <h3 className="text-3xl font-serif text-zinc-900">
+                              {section.title} Highlight
+                            </h3>
+                            <p className="text-base text-zinc-600 leading-relaxed">
+                              {section.desc || section.description}
+                            </p>
+                          </div>
+                          <div className="flex-1 w-full flex justify-center">
+                            <div className="group aspect-[3/4] w-full max-w-sm overflow-hidden rounded-t-[120px] rounded-b-xl shadow-md bg-zinc-100">
+                              <img src={img} alt={section.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                            </div>
+                          </div>
                         </div>
                       ))}
+                    </div>
+                  )}
+
+                  {/* 3. ድሕሪኡ እንደገና ዓቢ ሙሉእ ስእሊ (Full-width image) ዝኣቱ */}
+                  {Array.isArray(section.images) && section.images[4] && (
+                    <div className="w-full pt-10">
+                      <div className="group w-full h-[500px] md:h-[650px] overflow-hidden rounded-t-[160px] rounded-b-2xl shadow-lg bg-zinc-100">
+                        <img 
+                          src={section.images[4]} 
+                          alt={section.title} 
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                        />
+                      </div>
                     </div>
                   )}
 
@@ -316,8 +325,8 @@ function Home() {
                   </div>
                 </div>
               ) : (
-                /* ንኻልኦት ክፍሊታት ዝተፈላለየ ዲዛይን እንተልዩ ወይ ድማ መደበኛ */
-                <div className={`flex flex-col ${index % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center text-center md:text-left gap-12 md:gap-24 bg-white p-8 md:p-16 rounded-3xl shadow-md`}>
+                /* ንኻልኦት ክፍሊታት መደበኛ ዲዛይን */
+                <div className={`flex flex-col ${index % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center text-center md:text-left gap-12 bg-white p-8 md:p-16 rounded-3xl shadow-md`}>
                   <div className="flex-1 flex flex-col items-center md:items-start justify-center space-y-4">
                     <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-400 font-bold">
                       0{index + 1} — Selection
