@@ -200,6 +200,7 @@
 // }
 
 // export default Home;
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
@@ -238,30 +239,30 @@ function Home() {
               
               {section.names && (
                 <div className="mb-16 text-center px-6">
-                  <h3 className="text-4xl md:text-6xl font-serif italic text-zinc-800 tracking-wide">
+                  <h3 className="text-3xl md:text-6xl font-serif italic text-zinc-800 tracking-wide">
                     {section.names}
                   </h3>
-                  <p className="text-[12px] uppercase tracking-[0.4em] text-zinc-500 mt-3 font-light">
+                  <p className="text-[11px] md:text-[12px] uppercase tracking-[0.4em] text-zinc-500 mt-3 font-light">
                     {section.date}
                   </p>
                 </div>
               )}
 
               {isWedding ? (
-                <div className="w-full space-y-24">
+                <div className="w-full space-y-20 md:space-y-24">
                   
-                  {/* 1. መጀመርያ ሙሉእ ስእሊ (ቁመታ ተቐንዩ - Reduced Height) */}
+                  {/* 1. መጀመርያ ሙሉእ ስእሊ (ቁመታ ንሞባይልን ዴስክቶፕን ዝምችእ) */}
                   {Array.isArray(section.images) && section.images[0] && (
                     <div className="w-full">
-                      <div className="text-center max-w-2xl mx-auto mb-8 px-6">
-                        <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-400 font-bold block mb-2">
+                      <div className="text-center max-w-2xl mx-auto mb-6 md:mb-8 px-6">
+                        <span className="text-[10px] md:text-[11px] tracking-[0.6em] uppercase text-zinc-400 font-bold block mb-2">
                           {section.title} — Story
                         </span>
-                        <p className="text-lg leading-relaxed text-zinc-600">
+                        <p className="text-base md:text-lg leading-relaxed text-zinc-600">
                           {section.desc || section.description}
                         </p>
                       </div>
-                      <div className="group w-full h-[400px] md:h-[550px] overflow-hidden shadow-xl bg-zinc-200">
+                      <div className="group w-full h-[320px] sm:h-[400px] md:h-[550px] overflow-hidden shadow-xl bg-zinc-200">
                         <img 
                           src={section.images[0]} 
                           alt={section.title} 
@@ -271,24 +272,24 @@ function Home() {
                     </div>
                   )}
 
-                  {/* 2. ዚግ-ዛግ ስእልታት (ኣብ ሞባይልን ዴስክቶፕን ብተመሳሳሊ ዝግዛግ ዝስርዑ) */}
+                  {/* 2. ዚግ-ዛግ ስእልታት (ንሞባይል ብግቡእ ዝተመጣጠነ መጠን) */}
                   {Array.isArray(section.images) && section.images.length > 1 && (
-                    <div className="max-w-7xl mx-auto px-6 md:px-24 space-y-20">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-24 space-y-16 md:space-y-20">
                       {section.images.slice(1, 4).map((img, i) => (
-                        <div key={i} className={`flex flex-col ${i % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-12`}>
-                          <div className="flex-1 space-y-4 text-center md:text-left">
+                        <div key={i} className={`flex flex-col ${i % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-8 md:gap-12`}>
+                          <div className="flex-1 space-y-3 md:space-y-4 text-center md:text-left px-2">
                             <span className="text-[10px] tracking-[0.4em] uppercase text-zinc-400 font-bold">
                               Moment 0{i + 2}
                             </span>
-                            <h3 className="text-3xl md:text-4xl font-serif text-zinc-900">
+                            <h3 className="text-2xl md:text-4xl font-serif text-zinc-900">
                               {section.title} Highlight
                             </h3>
-                            <p className="text-base text-zinc-600 leading-relaxed">
+                            <p className="text-sm md:text-base text-zinc-600 leading-relaxed">
                               {section.desc || section.description}
                             </p>
                           </div>
                           <div className="flex-1 w-full flex justify-center">
-                            <div className="group aspect-[3/4] w-full max-w-md overflow-hidden rounded-t-[140px] rounded-b-none shadow-xl bg-zinc-200">
+                            <div className="group aspect-[3/4] w-3/4 sm:w-2/3 md:max-w-md overflow-hidden rounded-t-[100px] sm:rounded-t-[120px] md:rounded-t-[140px] rounded-b-none shadow-xl bg-zinc-200">
                               <img src={img} alt={section.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                             </div>
                           </div>
@@ -297,25 +298,25 @@ function Home() {
                     </div>
                   )}
 
-                  {/* 3. ካልኣይ ሙሉእ ስእሊ (ቁመታ ተቐንዩ - Reduced Height) */}
+                  {/* 3. ካልኣይ ሙሉእ ስእሊ */}
                   {Array.isArray(section.images) && section.images[4] && (
-                    <div className="w-full pt-6">
-                      <div className="text-center max-w-2xl mx-auto mb-8 px-6">
-                        <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-400 font-bold block mb-2">
+                    <div className="w-full pt-4">
+                      <div className="text-center max-w-2xl mx-auto mb-6 md:mb-8 px-6">
+                        <span className="text-[10px] md:text-[11px] tracking-[0.6em] uppercase text-zinc-400 font-bold block mb-2">
                           Featured Memory
                         </span>
-                        <p className="text-lg leading-relaxed text-zinc-600">
+                        <p className="text-base md:text-lg leading-relaxed text-zinc-600">
                           {section.desc || section.description}
                         </p>
                       </div>
-                      <div className="group w-full h-[400px] md:h-[550px] overflow-hidden shadow-xl bg-zinc-200 relative flex items-center justify-center">
+                      <div className="group w-full h-[320px] sm:h-[400px] md:h-[550px] overflow-hidden shadow-xl bg-zinc-200 relative flex items-center justify-center">
                         <img 
                           src={section.images[4]} 
                           alt={section.title} 
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 absolute inset-0" 
                         />
                         <div className="relative z-10 text-center text-white p-6 bg-black/30 w-full h-full flex flex-col items-center justify-center">
-                          <h2 className="text-4xl md:text-6xl font-serif italic tracking-wider drop-shadow-lg">
+                          <h2 className="text-3xl sm:text-4xl md:text-6xl font-serif italic tracking-wider drop-shadow-lg">
                             {section.names || section.title}
                           </h2>
                         </div>
@@ -323,24 +324,24 @@ function Home() {
                     </div>
                   )}
 
-                  {/* 4. ተወሳኺ ስእልታት ክሳብ 15 ብዚግ-ዛግ ቅጥሪ ይደጋገሙ */}
+                  {/* 4. ተወሳኺ ስእልታት ክሳብ 15 ብዚግ-ዛግ ቅጥሪ */}
                   {Array.isArray(section.images) && section.images.length > 5 && (
-                    <div className="max-w-7xl mx-auto px-6 md:px-24 space-y-20 pt-6">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-24 space-y-16 md:space-y-20 pt-4">
                       {section.images.slice(5, 15).map((img, i) => (
-                        <div key={i} className={`flex flex-col ${i % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-12`}>
-                          <div className="flex-1 space-y-4 text-center md:text-left">
+                        <div key={i} className={`flex flex-col ${i % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-8 md:gap-12`}>
+                          <div className="flex-1 space-y-3 md:space-y-4 text-center md:text-left px-2">
                             <span className="text-[10px] tracking-[0.4em] uppercase text-zinc-400 font-bold">
                               Moment 0{i + 5}
                             </span>
-                            <h3 className="text-3xl md:text-4xl font-serif text-zinc-900">
+                            <h3 className="text-2xl md:text-4xl font-serif text-zinc-900">
                               {section.title} Scene
                             </h3>
-                            <p className="text-base text-zinc-600 leading-relaxed">
+                            <p className="text-sm md:text-base text-zinc-600 leading-relaxed">
                               {section.desc || section.description}
                             </p>
                           </div>
                           <div className="flex-1 w-full flex justify-center">
-                            <div className="group aspect-[3/4] w-full max-w-md overflow-hidden rounded-t-[140px] rounded-b-none shadow-xl bg-zinc-200">
+                            <div className="group aspect-[3/4] w-3/4 sm:w-2/3 md:max-w-md overflow-hidden rounded-t-[100px] sm:rounded-t-[120px] md:rounded-t-[140px] rounded-b-none shadow-xl bg-zinc-200">
                               <img src={img} alt={section.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                             </div>
                           </div>
@@ -349,10 +350,10 @@ function Home() {
                     </div>
                   )}
 
-                  <div className="text-center pt-12 px-6">
+                  <div className="text-center pt-10 px-6">
                     <Link 
                       to={`/gallery/${section.title.toLowerCase().replace(/\s+/g, '-')}`}
-                      className="text-[12px] font-bold uppercase tracking-[0.4em] border-2 border-zinc-900 px-10 py-4 text-zinc-900 hover:bg-zinc-900 hover:text-white transition-all duration-300 inline-block"
+                      className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.4em] border-2 border-zinc-900 px-8 md:px-10 py-3 md:py-4 text-zinc-900 hover:bg-zinc-900 hover:text-white transition-all duration-300 inline-block"
                     >
                       View Gallery
                     </Link>
@@ -360,15 +361,15 @@ function Home() {
                 </div>
               ) : (
                 /* ንኻልኦት ክፍሊታት መደበኛ ዲዛይን */
-                <div className={`max-w-7xl mx-auto px-6 flex flex-col ${index % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center text-center md:text-left gap-16 py-12`}>
+                <div className={`max-w-7xl mx-auto px-6 flex flex-col ${index % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center text-center md:text-left gap-12 md:gap-16 py-12`}>
                   <div className="flex-1 flex flex-col items-center md:items-start justify-center space-y-4">
                     <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-400 font-bold">
                       0{index + 1} — Selection
                     </span>
-                    <h2 className="text-4xl md:text-6xl font-light tracking-tighter leading-none text-zinc-900">
+                    <h2 className="text-3xl md:text-6xl font-light tracking-tighter leading-none text-zinc-900">
                       {section.title}
                     </h2>
-                    <p className="text-lg leading-relaxed text-zinc-600 max-w-md pt-4">
+                    <p className="text-base md:text-lg leading-relaxed text-zinc-600 max-w-md pt-4">
                       {section.desc || section.description}
                     </p>
                   </div>
@@ -385,7 +386,7 @@ function Home() {
                     <div className="mt-8 w-full text-center md:text-left flex justify-center md:justify-start">
                       <Link 
                         to={`/gallery/${section.title.toLowerCase().replace(/\s+/g, '-')}`}
-                        className="text-[12px] font-bold uppercase tracking-[0.4em] border-2 border-zinc-900 px-8 py-3 text-zinc-900 hover:bg-zinc-900 hover:text-white transition-all duration-300 inline-block"
+                        className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.4em] border-2 border-zinc-900 px-8 py-3 text-zinc-900 hover:bg-zinc-900 hover:text-white transition-all duration-300 inline-block"
                       >
                         View Gallery
                       </Link>
