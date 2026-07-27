@@ -200,7 +200,6 @@
 // }
 
 // export default Home;
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
@@ -251,7 +250,7 @@ function Home() {
               {isWedding ? (
                 <div className="w-full space-y-28">
                   
-                  {/* 1. መጀመርያ 100% ሙሉእ ካብ ጫፍ ናብ ጫፍ ስእሊ (Sharp corners, No white background) */}
+                  {/* 1. መጀመርያ 100% ሙሉእ ካብ ጫፍ ናብ ጫፍ ስእሊ (Sharp 4 corners - ማዕዘናዊ) */}
                   {Array.isArray(section.images) && section.images[0] && (
                     <div className="w-full">
                       <div className="text-center max-w-2xl mx-auto mb-8 px-6">
@@ -262,7 +261,7 @@ function Home() {
                           {section.desc || section.description}
                         </p>
                       </div>
-                      <div className="group w-full h-[600px] md:h-[800px] overflow-hidden shadow-2xl bg-zinc-100">
+                      <div className="group w-full h-[600px] md:h-[800px] overflow-hidden shadow-2xl bg-zinc-200">
                         <img 
                           src={section.images[0]} 
                           alt={section.title} 
@@ -272,7 +271,7 @@ function Home() {
                     </div>
                   )}
 
-                  {/* 2. 3 ስእልታት ብዚግ-ዛግ (Zig-zag) ኣቀማምጣ (Sharp corners) */}
+                  {/* 2. 3 ስእልታት ብዚግ-ዛግ (Zig-zag) ኣቀማምጣ (ላዕለዋይ ኩርናዕ ጥራይ ቀስታዊ/Arch) */}
                   {Array.isArray(section.images) && section.images.length > 1 && (
                     <div className="max-w-7xl mx-auto px-6 md:px-24 space-y-24">
                       {section.images.slice(1, 4).map((img, i) => (
@@ -289,7 +288,7 @@ function Home() {
                             </p>
                           </div>
                           <div className="flex-1 w-full flex justify-center">
-                            <div className="group aspect-[3/4] w-full max-w-md overflow-hidden shadow-xl bg-zinc-100">
+                            <div className="group aspect-[3/4] w-full max-w-md overflow-hidden rounded-t-[140px] rounded-b-none shadow-xl bg-zinc-200">
                               <img src={img} alt={section.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                             </div>
                           </div>
@@ -298,7 +297,7 @@ function Home() {
                     </div>
                   )}
 
-                  {/* 3. ካልኣይቲ ሙሉእ ካብ ጫፍ ናብ ጫፍ ስእሊ (100% Full-width, Sharp corners) */}
+                  {/* 3. ካልኣይቲ ሙሉእ ካብ ጫፍ ናብ ጫፍ ስእሊ (Sharp 4 corners - ማዕዘናዊ) */}
                   {Array.isArray(section.images) && section.images[4] && (
                     <div className="w-full pt-6">
                       <div className="text-center max-w-2xl mx-auto mb-8 px-6">
@@ -309,7 +308,7 @@ function Home() {
                           {section.desc || section.description}
                         </p>
                       </div>
-                      <div className="group w-full h-[600px] md:h-[800px] overflow-hidden shadow-2xl bg-zinc-100">
+                      <div className="group w-full h-[600px] md:h-[800px] overflow-hidden shadow-2xl bg-zinc-200">
                         <img 
                           src={section.images[4]} 
                           alt={section.title} 
@@ -336,7 +335,7 @@ function Home() {
                             </p>
                           </div>
                           <div className="flex-1 w-full flex justify-center">
-                            <div className="group aspect-[3/4] w-full max-w-md overflow-hidden shadow-xl bg-zinc-100">
+                            <div className="group aspect-[3/4] w-full max-w-md overflow-hidden rounded-t-[140px] rounded-b-none shadow-xl bg-zinc-200">
                               <img src={img} alt={section.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                             </div>
                           </div>
@@ -372,7 +371,7 @@ function Home() {
                   <div className="flex-1 flex flex-col items-center md:items-start w-full">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
                       {Array.isArray(section.images) && section.images.slice(0, 2).map((img, i) => (
-                        <div key={i} className={`group aspect-[2/3] overflow-hidden bg-zinc-100 shadow-lg ${i === 1 ? 'md:mt-16' : ''}`}>
+                        <div key={i} className={`group aspect-[2/3] overflow-hidden bg-zinc-200 shadow-lg ${i === 1 ? 'md:mt-16' : ''}`}>
                           <img src={img} alt={section.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                         </div>
                       ))}
