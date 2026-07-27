@@ -252,35 +252,14 @@ function Home() {
               {isWeddingOrBridal ? (
                 <div className="bg-white p-6 md:p-16 rounded-3xl shadow-xl border border-zinc-200 space-y-20">
                   
-                  {/* 1. መጀመርያ ሓንቲ ሙሉእ ስእሊ (Full-width image) ምስ መግለጺኣ */}
-                  {Array.isArray(section.images) && section.images[0] && (
-                    <div className="w-full">
-                      <div className="text-center max-w-2xl mx-auto mb-8">
-                        <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-400 font-bold block mb-2">
-                          {section.title} — 01
-                        </span>
-                        <p className="text-lg leading-relaxed text-zinc-600">
-                          {section.desc || section.description}
-                        </p>
-                      </div>
-                      <div className="group w-full h-[500px] md:h-[650px] overflow-hidden rounded-t-[160px] rounded-b-2xl shadow-lg bg-zinc-100">
-                        <img 
-                          src={section.images[0]} 
-                          alt={section.title} 
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  {/* 2. ዝተረፉ ስእልታት (ክሳብ 15 ስእልታት) ብዚግ-ዛግ ኣቀማምጣ ምስ ነናቶም መግለጺታት ይድገሙ */}
-                  {Array.isArray(section.images) && section.images.length > 1 && (
-                    <div className="space-y-20 pt-6">
-                      {section.images.slice(1, 15).map((img, i) => (
+                  {/* 1. ሰለስተ ስእልታት ብዚግ-ዛግ (Zig-zag) ኣቀማምጣ ምስ ነናቶም መግለጺታት */}
+                  {Array.isArray(section.images) && section.images.length > 0 && (
+                    <div className="space-y-20">
+                      {section.images.slice(0, 3).map((img, i) => (
                         <div key={i} className={`flex flex-col ${i % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-12`}>
                           <div className="flex-1 space-y-4 text-center md:text-left">
                             <span className="text-[10px] tracking-[0.4em] uppercase text-zinc-400 font-bold">
-                              Highlight 0{i + 2}
+                              Highlight 0{i + 1}
                             </span>
                             <h3 className="text-3xl font-serif text-zinc-900">
                               {section.title} Moment
@@ -296,6 +275,27 @@ function Home() {
                           </div>
                         </div>
                       ))}
+                    </div>
+                  )}
+
+                  {/* 2. ድሕሪኡ ሓደ ሙሉእ ዓቢ ስእሊ (Full-width / ከምቲ ዝደለኻዮ ካብ ጫፍ ናብ ጫፍ) */}
+                  {Array.isArray(section.images) && section.images[3] && (
+                    <div className="w-full pt-6">
+                      <div className="text-center max-w-2xl mx-auto mb-8">
+                        <span className="text-[11px] tracking-[0.6em] uppercase text-zinc-400 font-bold block mb-2">
+                          Featured View
+                        </span>
+                        <p className="text-lg leading-relaxed text-zinc-600">
+                          {section.desc || section.description}
+                        </p>
+                      </div>
+                      <div className="group w-full h-[500px] md:h-[650px] overflow-hidden rounded-t-[160px] rounded-b-2xl shadow-lg bg-zinc-100">
+                        <img 
+                          src={section.images[3]} 
+                          alt={section.title} 
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                        />
+                      </div>
                     </div>
                   )}
 
