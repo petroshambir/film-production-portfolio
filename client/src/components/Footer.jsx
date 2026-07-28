@@ -51,9 +51,14 @@
 // }
 
 // export default Footer;
-
 import React from 'react';
 import { Link } from 'react-router-dom'; // 1. Link ኢምፖርት ግበር
+
+// ነቶም ስእልታት ብትኽክል ካብቲ ፎልደሮም ኢምፖርት ንግብሮም
+import tiktokImg from '../assets/images/tiktok.jpeg';
+import instagramImg from '../assets/images/instagram.jpeg';
+import youtubeImg from '../assets/images/youtube.jpeg';
+import facebookImg from '../assets/images/facebook.jpeg';
 
 function Footer() {
   return (
@@ -85,22 +90,22 @@ function Footer() {
             
             {/* ቲክቶክ ስእሊ (Image Icon) */}
             <a href="https://www.tiktok.com/@robeltesfu21?_r=1&_t=ZS-98Ns0HOjzD3" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-              <img src="../assets/images/tiktok.jpeg" alt="TikTok" className="w-6 h-6 object-contain" />
+              <img src={tiktokImg} alt="TikTok" className="w-6 h-6 object-contain" />
             </a>
 
             {/* ኢንስታግራም ስእሊ (Image Icon) */}
             <a href="https://www.instagram.com/robel.tesfu.1848?igsh=MW51dnJzOW5oaHg5bg==" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-              <img src="../assets/images/instagram.jpeg" alt="Instagram" className="w-6 h-6 object-contain" />
+              <img src={instagramImg} alt="Instagram" className="w-6 h-6 object-contain" />
             </a>
 
             {/* ዩቱብ ስእሊ (Image Icon) */}
             <a href="https://youtube.com/@joniphotographyofficial?si=SukBYQWII9iwMgTt" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-              <img src="../assets/images/youtube.jpeg" alt="YouTube" className="w-6 h-6 object-contain" />
+              <img src={youtubeImg} alt="YouTube" className="w-6 h-6 object-contain" />
             </a>
 
             {/* ፌስቡክ ስእሊ (Image Icon) */}
             <a href="https://www.facebook.com/share/19H6NXFXJv/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-              <img src="../assets/images/facebook.jpeg" alt="Facebook" className="w-6 h-6 object-contain" />
+              <img src={facebookImg} alt="Facebook" className="w-6 h-6 object-contain" />
             </a>
 
           </div>
