@@ -96,22 +96,22 @@ function Footer() {
           <div className="flex items-center justify-center md:justify-start gap-6">
             
             {/* ቲክቶክ ስእሊ (w-8 h-8 ኣብ ሞባይል ይዓቢ፣ md:w-6 md:h-6 ኣብ ላፕቶፕ ንቁሩብ ይመጣጠን) */}
-            <a href="https://www.tiktok.com/@robeltesfu21?_r=1&_t=ZS-98Ns0HOjzD3" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+            <a href="https://www.tiktok.com/@robeltesfu21" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
               <img src={tiktokImg} alt="TikTok" className="w-8 h-8 md:w-6 md:h-6 object-contain rounded-md" />
             </a>
 
             {/* ኢንስታግራም ስእሊ */}
-            <a href="https://www.instagram.com/robel.tesfu.1848?igsh=MW51dnJzOW5oaHg5bg==" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+            <a href="https://www.instagram.com/_u/robel.tesfu.1848" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
               <img src={instagramImg} alt="Instagram" className="w-8 h-8 md:w-6 md:h-6 object-contain rounded-md" />
             </a>
 
             {/* ዩቱብ ስእሊ */}
-            <a href="https://youtube.com/@joniphotographyofficial?si=SukBYQWII9iwMgTt" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+            <a href="https://www.youtube.com/@joniphotographyofficial" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
               <img src={youtubeImg} alt="YouTube" className="w-8 h-8 md:w-6 md:h-6 object-contain rounded-md" />
             </a>
 
             {/* ፌስቡክ ስእሊ */}
-            <a href="https://www.facebook.com/share/19H6NXFXJv/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+            <a href="https://www.facebook.com/profile.php?id=61563600000000" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
               <img src={facebookImg} alt="Facebook" className="w-8 h-8 md:w-6 md:h-6 object-contain rounded-md" />
             </a>
 
